@@ -10,8 +10,7 @@
   touch-action: none;
   user-select: none;
   transition: transform 0.3s ease, opacity 0.3s ease;
-  top: 50%;
-  left: 50%;
+ 
   transform: translate(-50%, -50%);
 }
 

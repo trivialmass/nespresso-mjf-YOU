@@ -59,15 +59,5 @@ const getMockQuestions = () => {
     "Do you prefer coffee over tea?",
     "Do you like spicy food?",
     "Are you an introvert?",
-    "Do you enjoy reading?",
-    "Do you like dogs more than cats?",
-    "Are you organized?",
-    "Do you prefer the beach over mountains?",
-    "Are you a risk-taker?",
-    "Do you like to plan ahead?",
-    "Are you creative?",
-    "Do you enjoy cooking?",
-    "Do you like meeting new people?",
-    "Are you spontaneous?",
   ];
 };

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import QuestionCard from './components/QuestionCard';
+import Results from './components/Results';
 import { fetchQuestions } from './services/googleSheets';
+import { generateProfile } from './services/llmProfile';
 import './App.css';
 
 function App() {
@@ -9,6 +11,8 @@ function App() {
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showResults, setShowResults] = useState(false);
+  const [profile, setProfile] = useState('');
 
   useEffect(() => {
     loadQuestions();
@@ -43,20 +47,31 @@ function App() {
     } else {
       // All questions answered
       setTimeout(() => {
-        handleComplete();
+        handleComplete([...answers, answer]);
       }, 300);
     }
   };
 
-  const handleComplete = () => {
-    console.log('All questions answered!', answers);
-    // You can add logic here to show results, calculate horoscope, etc.
-    alert(`You've answered all ${answers.length + 1} questions! Check the console for your answers.`);
+  const handleComplete = async (finalAnswers) => {
+    try {
+      setLoading(true);
+      const generatedProfile = await generateProfile(finalAnswers);
+      setProfile(generatedProfile);
+      setShowResults(true);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error generating profile:', err);
+      setError('Failed to generate your profile. Please try again.');
+      setLoading(false);
+    }
   };
 
   const handleRestart = () => {
     setCurrentIndex(0);
     setAnswers([]);
+    setShowResults(false);
+    setProfile('');
+    setError(null);
   };
 
   if (loading) {
@@ -81,15 +96,9 @@ function App() {
     );
   }
 
-  if (questions.length === 0) {
-    return (
-      <div className="app">
-        <div className="error">
-          <p>No questions available.</p>
-          <button onClick={loadQuestions}>Retry</button>
-        </div>
-      </div>
-    );
+  // Show results if profile is generated
+  if (showResults && profile) {
+    return <Results profile={profile} answers={answers} onRestart={handleRestart} />;
   }
 
   const isComplete = currentIndex >= questions.length;
@@ -114,11 +123,9 @@ function App() {
         
         {isComplete && (
           <div className="complete-message">
-            <h2>🎉 All Done!</h2>
-            <p>You've answered all {questions.length} questions.</p>
-            <button className="restart-button" onClick={handleRestart}>
-              Start Over
-            </button>
+            <h2>🎉 Generating Your Profile...</h2>
+            <div className="spinner"></div>
+            <p>Analyzing your answers with AI magic ✨</p>
           </div>
         )}
       </div>
