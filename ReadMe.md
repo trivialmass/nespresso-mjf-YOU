@@ -1,4 +1,4 @@
-# Trivial Quizz
+# trivial YOU
 
 A fun, interactive quiz app built with React and Vite. Users answer questions by swiping cards left (No) or right (Yes) on mobile, or using buttons on desktop.
 

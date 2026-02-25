@@ -73,7 +73,7 @@ const Results = ({ profile, answers, onRestart }) => {
             if (navigator.share) {
               navigator.share({
                 title: 'My Personality Profile',
-                text: `I just took the Trivial Quizz! Check out my profile: ${title}`,
+                text: `I just took the trivial YOU! Check out my profile: ${title}`,
               });
             } else {
               alert('Sharing not supported on this browser');

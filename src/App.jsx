@@ -106,7 +106,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>Trivial Quizz</h1>
+        <h1>trivial YOU</h1>
         <div className="progress">
           Question {Math.min(currentIndex + 1, questions.length)} of {questions.length}
         </div>
