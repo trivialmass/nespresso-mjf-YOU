@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './QuestionCard.css';
 
+
+
 const QuestionCard = ({ question, onSwipe }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
