@@ -9,9 +9,9 @@
   cursor: grab;
   touch-action: none;
   user-select: none;
-  transition: transform 0.3s ease, opacity 0.3s ease;
- 
+  transition: transform 0.8s ease, opacity 0.8s ease;
   transform: translate(-50%, -50%);
+  overflow: hidden;
 }
 
 .question-card.dragging {
@@ -19,7 +19,26 @@
   transition: none;
 }
 
+.question-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  opacity: 1;
+  transition: filter 0.3s;
+  pointer-events: none;
+}
+
+.question-card.has-bg::before {
+  background-image: var(--bg-image);
+  filter: brightness(0.5);
+}
+
 .card-content {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,21 +57,22 @@
 .swipe-indicator {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  font-size: 80px;
+  transform: translate(-50%, -50%);
   font-weight: bold;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.5s ease;
+  left: 50%;
+  z-index: 1000;
 }
 
 .swipe-indicator.left {
-  left: 30px;
   color: #ff6b6b;
+  font-size: 200px;
 }
 
 .swipe-indicator.right {
-  right: 30px;
   color: #51cf66;
+  font-size: 450px;
 }
 
 .button-controls {

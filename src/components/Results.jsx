@@ -72,8 +72,8 @@ const Results = ({ profile, answers, onRestart }) => {
           <button className="share-button" onClick={() => {
             if (navigator.share) {
               navigator.share({
-                title: 'My Personality Profile',
-                text: `I just took the trivial YOU! Check out my profile: ${title}`,
+                title: title,
+                text: `I just took the trivial YOU! Check out my profile: ${content}`,
               });
             } else {
               alert('Sharing not supported on this browser');
@@ -82,6 +82,11 @@ const Results = ({ profile, answers, onRestart }) => {
             Share Results
           </button>
         </div>
+      </div>
+      <div className='results-subtext'>
+          <p>Votre profile trivial YOU vous a été envoyé par email.</p>
+          <p>Merci pour votre participation!</p>
+          <p>trivialmass.com</p>
       </div>
     </div>
   );

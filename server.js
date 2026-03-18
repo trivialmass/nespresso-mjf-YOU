@@ -114,7 +114,7 @@ Your vibe: [emoji] [trait] • [emoji] [trait] • [emoji] [trait]
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
   console.log(`📡 API endpoint: http://localhost:${PORT}/api/generate-profile`);
 });

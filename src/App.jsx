@@ -1,140 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import QuestionCard from './components/QuestionCard';
-import Results from './components/Results';
-import { fetchQuestions } from './services/googleSheets';
-import { generateProfile } from './services/llmProfile';
+import React, { useState, useEffect } from "react";
 import './App.css';
+import logoGame from './logo/logoGame.svg';
+import PopupInscription from "./components/PopupInscription";
+import Questions from './Questions';
 
 function App() {
-  const [questions, setQuestions] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [answers, setAnswers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [showResults, setShowResults] = useState(false);
-  const [profile, setProfile] = useState('');
+  const [showPret, setShowPret] = useState(false);
+  const [readyStart, setReadyStart] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [showQuestions, setShowQuestions] = useState(false);
 
   useEffect(() => {
-    loadQuestions();
+    const timer = setTimeout(() => {
+      setReadyStart(true);
+    }, 2000);
   }, []);
-
-  const loadQuestions = async () => {
-    try {
-      setLoading(true);
-      const fetchedQuestions = await fetchQuestions();
-      setQuestions(fetchedQuestions);
-      setLoading(false);
-    } catch (err) {
-      setError('Failed to load questions. Please try again.');
-      setLoading(false);
-    }
-  };
-
-  const handleSwipe = (direction) => {
-    const answer = {
-      question: questions[currentIndex],
-      answer: direction === 'right' ? 'yes' : 'no',
-      timestamp: new Date().toISOString(),
-    };
-
-    setAnswers([...answers, answer]);
-
-    // Move to next question
-    if (currentIndex < questions.length - 1) {
-      setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
-      }, 300);
-    } else {
-      // All questions answered
-      setTimeout(() => {
-        handleComplete([...answers, answer]);
-      }, 300);
-    }
-  };
-
-  const handleComplete = async (finalAnswers) => {
-    try {
-      setLoading(true);
-      const generatedProfile = await generateProfile(finalAnswers);
-      setProfile(generatedProfile);
-      setShowResults(true);
-      setLoading(false);
-    } catch (err) {
-      console.error('Error generating profile:', err);
-      setError('Failed to generate your profile. Please try again.');
-      setLoading(false);
-    }
-  };
-
-  const handleRestart = () => {
-    setCurrentIndex(0);
-    setAnswers([]);
-    setShowResults(false);
-    setProfile('');
-    setError(null);
-  };
-
-  if (loading) {
-    return (
-      <div className="app">
-        <div className="loading">
-          <div className="spinner"></div>
-          <p>Loading questions...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="app">
-        <div className="error">
-          <p>{error}</p>
-          <button onClick={loadQuestions}>Retry</button>
-        </div>
-      </div>
-    );
-  }
-
-  // Show results if profile is generated
-  if (showResults && profile) {
-    return <Results profile={profile} answers={answers} onRestart={handleRestart} />;
-  }
-
-  const isComplete = currentIndex >= questions.length;
-
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>trivial YOU</h1>
-        <div className="progress">
-          Question {Math.min(currentIndex + 1, questions.length)} of {questions.length}
-        </div>
-      </header>
-
-      <div className="card-container">
-        {!isComplete && (
-          <QuestionCard
-            key={currentIndex}
-            question={questions[currentIndex]}
-            onSwipe={handleSwipe}
-          />
-        )}
-        
-        {isComplete && (
-          <div className="complete-message">
-            <h2>🎉 Generating Your Profile...</h2>
-            <div className="spinner"></div>
-            <p>Analyzing your answers with AI magic ✨</p>
+    <>
+      {!showQuestions ? (
+        <div className="inscriptionsPage">
+          <div className={`appSlideUp${readyStart ? " slideUp" : ""}`}>
+            <img src={logoGame} alt="Logo" className="logoGame" />
           </div>
-        )}
-      </div>
-
-      <div className="instructions">
-        <p className="mobile-only">← Swipe left for NO | Swipe right for YES →</p>
-        <p className="desktop-only">Use the buttons below or drag the card</p>
-      </div>
-    </div>
+          <div className="introduction">
+            <h2 className="introductionHeader">HELLO!</h2>
+            <p className="introductionText">Notre métier? Apprendre à vous connaître pour imaginer des projets créatifs qui vous ressemblent vraiment.</p>
+            <p className="introductionText">Avec le quiz Trivial YOU, nous vous proposons une première rencontre ludique, rapide et inspirante pour mieux vous connaître.</p>
+            <p className="introductionText">Quelques questions, un moment amusant… et peut-être le début d’une belle collaboration.</p>
+            <p className="introductionText">Bonne partie ! 🎉</p>
+            <button className="introductionButton" onClick={() => setShowPopup(true)}>Suivant</button>
+          </div>
+          {showPopup && <PopupInscription setShowPopup={setShowPopup} setUserData={setUserData} setShowPret={setShowPret} />}
+          <div className={`appSlideDown${showPret ? " slideDown" : ""}${!showPret ? " slideUp" : ""}`}>
+            <div className="startGameContent">
+              <h1 className="startGameHeader">PRÊT·E·S?</h1>
+              <button
+                onClick={() => {
+                  setShowPret(false);
+                  setShowQuestions(true);
+                }}
+                className="startGameButton"
+              >
+                C'est partit !
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <Questions />
+      )}
+    </>
   );
 }
 
