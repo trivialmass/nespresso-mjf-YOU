@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  padding-top: 30px;
   height: 100vh;
   flex-direction: column;
 }
@@ -32,7 +33,7 @@
   gap: 10px;
 }
 
-.results-subtext p {
+.results-subtext p, a {
   color: white;
   font-family: Helvetica;
   font-weight: 700;

@@ -47,7 +47,7 @@ const Results = ({ profile, answers, onRestart }) => {
           </div>
 
           <div className="stats-box">
-            <h3>Your Stats</h3>
+            <h3>VOS STATISTIQUES</h3>
             <div className="stats-grid">
               <div className="stat-item">
                 <div className="stat-value">{answers.length}</div>
@@ -55,11 +55,11 @@ const Results = ({ profile, answers, onRestart }) => {
               </div>
               <div className="stat-item">
                 <div className="stat-value">{yesCount}</div>
-                <div className="stat-label">Yes</div>
+                <div className="stat-label">OUI</div>
               </div>
               <div className="stat-item">
                 <div className="stat-value">{noCount}</div>
-                <div className="stat-label">No</div>
+                <div className="stat-label">NON</div>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@ const Results = ({ profile, answers, onRestart }) => {
 
         <div className="results-actions">
           <button className="restart-button" onClick={onRestart}>
-            Take Quiz Again
+            Refaites le quiz
           </button>
           <button className="share-button" onClick={() => {
             if (navigator.share) {
@@ -79,14 +79,14 @@ const Results = ({ profile, answers, onRestart }) => {
               alert('Sharing not supported on this browser');
             }
           }}>
-            Share Results
+            Partager les résultats
           </button>
         </div>
       </div>
       <div className='results-subtext'>
           <p>Votre profile trivial YOU vous a été envoyé par email.</p>
           <p>Merci pour votre participation!</p>
-          <p>trivialmass.com</p>
+          <a href='https://trivialmass.ch/' target="_blank">trivialmass.com</a>
       </div>
     </div>
   );

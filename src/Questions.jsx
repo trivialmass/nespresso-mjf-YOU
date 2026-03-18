@@ -1,10 +1,13 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Congradulation from './components/Congradulation';
 import { fetchQuestions } from './services/googleSheets';
 import { generateProfile } from './services/llmProfile';
 import './Questions.css';
-import outIn from './logo/outIn.svg';
+import headerBanier from './logo/headerBanier.svg';
+import logoIN from './logo/logoIN.svg';
+import logoOUT from './logo/logoOUT.svg';
+import logoSwipe from './logo/logoSwipe.svg';
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -16,6 +19,7 @@ function Questions() {
   const [profile, setProfile] = useState('');
   const [showCongradulation, setShowCongradulation] = useState(false);
   const [resetPosition, setResetPosition] = useState({ trueFalse: false, answer: null });
+  const [swipeTilt, setSwipeTilt] = useState(0);
 
   useEffect(() => {
     loadQuestions();
@@ -24,6 +28,16 @@ function Questions() {
   useEffect(() => {
     setVisibleIndexes([currentIndex, currentIndex + 1, currentIndex + 2]);
   }, [currentIndex, questions.length]);
+
+  useEffect(() => {
+    setSwipeTilt(20);
+    setTimeout(() => {
+      setSwipeTilt(-20);
+      setTimeout(() => {
+        setSwipeTilt(0);
+      }, 300);
+    }, 300);
+  }, [currentIndex]);
 
   const loadQuestions = async () => {
     try {
@@ -155,7 +169,20 @@ function Questions() {
   return (
     <div className="questions">
       <header className="questions-header">
-        <img src={outIn} alt="Out In Logo" className="outInLogo" />
+        <img src={headerBanier} alt="Out In Logo" className="outInLogo" />
+        <div className='logosContainer'>
+          <img src={logoOUT} alt="Logo OUT" className="logoInOut" />
+          <img src={logoIN} alt="Logo IN" className="logoInOut" />
+        </div>
+        <img
+          src={logoSwipe}
+          alt="Logo Swipe"
+          className="logoSwipe"
+          style={{
+            transform: `translate(-50%, -50%) rotate(${swipeTilt}deg)`,
+            transition: 'transform 0.3s cubic-bezier(.68,-0.55,.27,1.55)'
+          }}
+        />
       </header>
 
       <div className="card-container">

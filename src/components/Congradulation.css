@@ -44,6 +44,7 @@
     line-height: 120%;
     letter-spacing: 0%;
     cursor: pointer;
+    color: black;
 }
 
 .spinnerCharging {
@@ -78,4 +79,5 @@
     background: none;
     border: none;
     cursor: pointer;
+    color: black;
 }

@@ -4,11 +4,12 @@
   flex-direction: column;
   position: relative;
   padding: 20px;
+  padding-top: 30px;
+  justify-content: center;  
 }
 
 .questions-header {
   text-align: center;
-  color: white;
   z-index: 10;
   position: relative;
 }
@@ -16,6 +17,27 @@
 .outInLogo {
   width: 100%;
   max-width: 400px;
+}
+
+.logosContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 300px;
+}
+
+.logoSwipe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.logoInOut {
+  display: block;
 }
 
 .progress {
@@ -30,7 +52,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 120px;
+  margin-bottom: 60px;
+  max-height: 650px;
+  padding-bottom: 70px;
 }
 
 .instructions {
@@ -52,12 +76,6 @@
   display: none;
 }
 
-@media (max-width: 768px) {
-  .questions-header {
-    padding-bottom: 50px;
-  }
-}
-
 @media (min-width: 769px) {
   .mobile-only {
     display: none;
@@ -69,6 +87,10 @@
 
   .questions-header {
     padding-bottom: 0px;
+  }
+
+  .logoInOut {
+    display: none;
   }
 }
 

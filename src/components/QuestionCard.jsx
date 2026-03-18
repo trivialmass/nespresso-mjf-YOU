@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, use } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './QuestionCard.css';
 
 
@@ -165,17 +165,17 @@ const QuestionCard = ({ question, bgImage, onSwipe, stackIndex = 0, pointEvents,
           aria-label="No"
           {...(!disabledButton ? {} : { disabled: true })}
         >
-        ✗ No
-      </button>
-      <button
-        className="control-button yes-button"
-        onClick={() => handleButtonClick('right')}
-        aria-label="Yes"
-        {...(!disabledButton ? {} : { disabled: true })}
-      >
-        ✓ Yes
-      </button>
-    </div >
+          OUT
+        </button>
+        <button
+          className="control-button yes-button"
+          onClick={() => handleButtonClick('right')}
+          aria-label="Yes"
+          {...(!disabledButton ? {} : { disabled: true })}
+        >
+          IN
+        </button>
+      </div >
     </>
   );
 };
