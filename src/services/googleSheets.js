@@ -33,7 +33,6 @@ export const fetchQuestions = async () => {
     }
 
     const data = await response.json();
-    console.table(data.values);
 
     if (!data.values || data.values.length === 0) {
       console.warn("No questions found in Google Sheet. Using mock data.");

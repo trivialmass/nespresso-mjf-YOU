@@ -48,7 +48,7 @@ function App() {
           </div>
         </div>
       ) : (
-        <Questions />
+        <Questions userData={userData}/>
       )}
     </>
   );

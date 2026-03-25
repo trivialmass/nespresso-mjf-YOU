@@ -9,7 +9,7 @@ import logoIN from './logo/logoIN.svg';
 import logoOUT from './logo/logoOUT.svg';
 import logoSwipe from './logo/logoSwipe.svg';
 
-function Questions() {
+function Questions(userData) {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleIndexes, setVisibleIndexes] = useState([0, 1]);
@@ -157,6 +157,7 @@ function Questions() {
         answers={answers}
         onRestart={handleRestart}
         onReturnToLastQuestion={handleReturnToLastQuestion}
+        userData={userData}
       />
     );
   }

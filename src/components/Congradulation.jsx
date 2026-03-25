@@ -2,8 +2,9 @@ import './Congradulation.css';
 import React, { useState, useEffect } from 'react';
 import Results from './Results';
 import logoCharging from '../logo/chargingLogo.svg';
+import { saveQuizResult } from '../services/googleSheetsSave';
 
-const Congradulation = ({ profile, answers, onRestart, onReturnToLastQuestion }) => {
+const Congradulation = ({ profile, answers, userData, onRestart, onReturnToLastQuestion }) => {
     const [showResultsCharging, setShowResultsCharging] = useState(false);
     const [showResults, setShowResults] = useState(false);
 
@@ -15,6 +16,11 @@ const Congradulation = ({ profile, answers, onRestart, onReturnToLastQuestion })
             return () => clearTimeout(timer);
         }
     }, [showResultsCharging, showResults]);
+
+    const handleShowResults = async () => {
+        setShowResultsCharging(true);
+        await saveQuizResult(userData, answers, profile);
+    };
 
     return (
         <>
@@ -28,7 +34,7 @@ const Congradulation = ({ profile, answers, onRestart, onReturnToLastQuestion })
 
                                 <button
                                     className='buttonShowResults'
-                                    onClick={() => { setShowResultsCharging(true); }}
+                                    onClick={handleShowResults}
                                 >
                                     Voir mon profil
                                 </button>
