@@ -26,7 +26,7 @@ function App() {
           <div className="introduction">
             <h2 className="introductionHeader">HELLO!</h2>
             <p className="introductionText">Notre métier? Apprendre à vous connaître pour imaginer des projets créatifs qui vous ressemblent vraiment.</p>
-            <p className="introductionText">Avec le quiz Trivial YOU, nous vous proposons une première rencontre ludique, rapide et inspirante pour mieux vous connaître.</p>
+            <p className="introductionText">Avec le quiz <i>Trivial YOU</i>, nous vous proposons une première rencontre ludique, rapide et inspirante pour mieux vous connaître.</p>
             <p className="introductionText">Quelques questions, un moment amusant… et peut-être le début d’une belle collaboration.</p>
             <p className="introductionText">Bonne partie ! 🎉</p>
             <button className="introductionButton" onClick={() => setShowPopup(true)}>Suivant</button>

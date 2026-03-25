@@ -30,7 +30,7 @@ const Congradulation = ({ profile, answers, userData, onRestart, onReturnToLastQ
                         <>
                             <div className='congradulation-card'>
                                 <h2 className="congradulationText">🎉</h2>
-                                <h2 className="congradulationText">Félicitations</h2>
+                                <h2 className="congradulationText">FÉLICITATIONS</h2>
 
                                 <button
                                     className='buttonShowResults'

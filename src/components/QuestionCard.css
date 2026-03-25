@@ -66,13 +66,28 @@
 }
 
 .swipe-indicator.left {
-  color: #ff6b6b;
-  font-size: 200px;
+  color: #ff000099;
+  font-family: Helvetica Neue;
+  font-weight: 900;
+  font-style: Condensed Black;
+  font-size: 274px;
+  leading-trim: NONE;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .swipe-indicator.right {
-  color: #51cf66;
-  font-size: 450px;
+  color: #A5FF0099;
+  font-family: Helvetica Neue;
+  font-weight: 900;
+  font-style: Condensed Black;
+  font-size: 588px;
+  line-height: 120%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .button-controls {
@@ -125,13 +140,18 @@
   .button-controls {
     display: none;
   }
-  
+
   .question-card {
     height: 400px;
   }
-  
+
   .card-content h2 {
-    font-size: 24px;
+    font-family: Helvetica Neue;
+    font-weight: 700;
+    font-style: Bold;
+    text-align: center;
+    vertical-align: middle;
+
   }
 }
 

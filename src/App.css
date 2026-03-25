@@ -46,22 +46,24 @@
 }
 
 .introductionHeader {
-    width: 100%;
-    font-family: Helvetica;
+    font-family: Helvetica Neue;
     font-weight: 900;
+    font-style: Condensed Black;
     font-size: 60px;
     line-height: 88%;
     letter-spacing: 0%;
+    vertical-align: bottom;
+    width: 100%;
 }
 
 .introductionText {
-    width: 100%;
-    font-family: Helvetica;
+    font-family: Helvetica Neue;
     font-weight: 700;
+    font-style: Bold;
     font-size: 20px;
     line-height: 130%;
     letter-spacing: 0%;
-
+    width: 100%;
 }
 
 .introductionButton {
@@ -100,7 +102,6 @@
 .startGameContent {
     display: flex;
     flex-direction: column;
-    padding: 20px;
     gap: 40px;
     width: 100%;
     max-width: 500px;
@@ -112,12 +113,14 @@
 
 .startGameHeader {
     width: 100%;
-    font-family: Helvetica;
-    font-weight: 900;
-    font-size: 60px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
+
+    font-family: Helvetica Neue;
+font-weight: 900;
+font-size: 82px;
+line-height: 100%;
+letter-spacing: 0%;
+text-align: center;
+vertical-align: middle;
 
 }
 

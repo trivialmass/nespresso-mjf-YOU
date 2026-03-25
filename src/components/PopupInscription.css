@@ -8,13 +8,16 @@
     font-size: 35px;
     line-height: 15px;
     cursor: pointer;
-    color: black;
+    color: #00000099;
     height: 20px;
     width: 20px;
     overflow: hidden;
     letter-spacing: 0;
-    font-weight: 300;
+    font-weight: 400;
+}
 
+.closeButton:hover {
+    color: #000000;
 }
 
 .popupInscription {
@@ -58,13 +61,12 @@
 
 .popupHeader {
     width: 100%;
-    font-family: Helvetica;
+    font-family: Helvetica Neue;
     font-weight: 900;
     font-size: 40px;
     line-height: 88%;
     letter-spacing: 0%;
     vertical-align: middle;
-
 }
 
 .inputFields {
@@ -80,7 +82,6 @@
     text-align: center;
     border: 1px solid #00000099;
     border-radius: 50px;
-
     font-family: Helvetica;
     font-weight: 400;
     font-size: 18px;
@@ -88,21 +89,14 @@
     letter-spacing: 0%;
     text-align: center;
     vertical-align: middle;
-
-}
-
-.popupInput:focus {
-    border: 1.5px solid #6c63ff;
 }
 
 .popupInformation {
-    width: 100%;
     font-family: Helvetica;
     font-weight: 400;
     font-size: 13px;
     line-height: 120%;
     letter-spacing: 0%;
-
 }
 
 .consentContainer {

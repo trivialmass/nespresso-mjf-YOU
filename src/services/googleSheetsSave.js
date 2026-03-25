@@ -2,7 +2,7 @@
  * Service to save quiz results to Google Sheets via Apps Script Web App
  */
 
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyqMqYH2VqKwy68sVwbNsRsrRogNxaSMg31adgtkP0OrEFnMsxph_5NEQL_VyTd_mFm4A/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwScLi91ukZimALDfes10x-BUmWlE1AtABzPV6H-RbjHhQx-7NR_dxmHgkBYukqSCbx_g/exec";
 
 /**
  * Saves the quiz result to Google Sheets via Apps Script Web App
