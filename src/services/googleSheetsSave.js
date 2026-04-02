@@ -16,7 +16,7 @@ export const saveQuizResult = async (userData, answers, profile) => {
   formData.append('Name', userData?.userData[0]?.name || "");
   formData.append('Company', userData?.userData[0]?.company || "");
   formData.append('Email', userData?.userData[0]?.email || "");
-  formData.append('Answers', answers.map(item => `${item.question.question} - ${item.answer}`).join('\n'));
+  formData.append('Answers', answers.map(item => `${item.question.question1} || ${item.question.question2} => ${item.answer}`).join('\n'));
   formData.append('Profile', profile);
 
   try {

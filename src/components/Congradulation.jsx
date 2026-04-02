@@ -50,7 +50,7 @@ const Congradulation = ({ profile, answers, userData, onRestart, onReturnToLastQ
                     )}
                 </div>
             )}
-            {showResults && <Results profile={profile} answers={answers} onRestart={onRestart} />}
+            {showResults && <Results profile={profile} answers={answers} onRestart={onRestart} userData={userData} />}
         </>
     );
 }

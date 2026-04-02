@@ -1,7 +1,7 @@
 import React from 'react';
 import './Results.css';
 
-const Results = ({ profile, answers, onRestart }) => {
+const Results = ({ profile, answers, onRestart, userData }) => {
   const yesCount = answers.filter(a => a.answer === 'yes').length;
   const noCount = answers.filter(a => a.answer === 'no').length;
 
@@ -10,10 +10,88 @@ const Results = ({ profile, answers, onRestart }) => {
   let title = 'Your Personality Profile';
   let content = profile;
   
-  if (lines[0].startsWith('##')) {
+  // Extract emoji and title from first line
+  if  (lines[0].startsWith('##')) {
     title = lines[0].replace(/^##\s*/, '');
     content = lines.slice(1).join('\n');
   }
+
+  const renderContent = (text) => {
+    return text.split('\n\n').map((paragraph, index) => {
+      const trimmed = paragraph.trim();
+      
+      // Skip empty paragraphs
+      if (!trimmed) return null;
+      
+      // Horizontal rule
+      if (trimmed === '---') {
+        return <hr key={index} className="profile-divider" />;
+      }
+      
+      // Section headers with emoji
+      if (trimmed.match(/##/)) {
+        const headerText = trimmed.replace(/^##\s*/, '');
+        return <h2 key={index} className="profile-section-header">{headerText}</h2>;
+      }
+      
+      // Vibe section
+      if (trimmed.startsWith('Votre vibe :')) {
+        const vibes = trimmed.replace('Votre vibe :', '').split('•').filter(v => v.trim());
+        return (
+          <div key={index} className="vibe-tags">
+            {vibes.map((vibe, i) => (
+              <span key={i} className="vibe-tag">{vibe.trim()}</span>
+            ))}
+          </div>
+        );
+      }
+      
+      // Blockquote
+      if (trimmed.startsWith('>')) {
+        return (
+          <blockquote key={index} className="profile-quote">
+            {trimmed.replace(/^>\s*/, '')}
+          </blockquote>
+        );
+      }
+      
+      // Strategic positioning (metrics)
+      if (trimmed.includes(':') && trimmed.match(/(élevé|moyen|faible)/)) {
+        const [label, value] = trimmed.split(':').map(s => s.trim());
+        return (
+          <div key={index} className="metric-item">
+            <span className="metric-label">{label}</span>
+            <span className={`metric-value metric-${value.toLowerCase()}`}>{value}</span>
+          </div>
+        );
+      }
+      
+      // Bold text with prediction
+      if (trimmed.startsWith('**')) {
+        const match = trimmed.match(/\*\*(.*?)\*\*\s*(.*)/);
+        if (match) {
+          return (
+            <div key={index} className="profile-highlight">
+              <strong>{match[1]}</strong>
+              <p>{match[2]}</p>
+            </div>
+          );
+        }
+      }
+      
+      // Symbol line
+      if (trimmed.startsWith('Symbole :')) {
+        return (
+          <div key={index} className="profile-symbol">
+            {trimmed}
+          </div>
+        );
+      }
+      
+      // Regular paragraph
+      return <p key={index}>{trimmed}</p>;
+    });
+  };
 
   return (
     <div className="results-container">
@@ -24,44 +102,7 @@ const Results = ({ profile, answers, onRestart }) => {
 
         <div className="results-content">
           <div className="profile-text">
-            {content.split('\n\n').map((paragraph, index) => {
-              // Check if it's a bold section (starts with **)
-              if (paragraph.trim().startsWith('**')) {
-                const boldText = paragraph.match(/\*\*(.*?)\*\*/);
-                if (boldText) {
-                  return (
-                    <p key={index} className="profile-highlight">
-                      <strong>{boldText[1]}</strong>
-                      {paragraph.replace(/\*\*.*?\*\*/, '')}
-                    </p>
-                  );
-                }
-              }
-              
-              // Regular paragraph
-              if (paragraph.trim()) {
-                return <p key={index}>{paragraph}</p>;
-              }
-              return null;
-            })}
-          </div>
-
-          <div className="stats-box">
-            <h3>VOS STATISTIQUES</h3>
-            <div className="stats-grid">
-              <div className="stat-item">
-                <div className="stat-value">{answers.length}</div>
-                <div className="stat-label">Questions</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">{yesCount}</div>
-                <div className="stat-label">OUI</div>
-              </div>
-              <div className="stat-item">
-                <div className="stat-value">{noCount}</div>
-                <div className="stat-label">NON</div>
-              </div>
-            </div>
+            {renderContent(content)}
           </div>
         </div>
 
@@ -69,24 +110,18 @@ const Results = ({ profile, answers, onRestart }) => {
           <button className="restart-button" onClick={onRestart}>
             Refaites le quiz
           </button>
-          <button className="share-button" onClick={() => {
-            if (navigator.share) {
-              navigator.share({
-                title: title,
-                text: `I just took the trivial YOU! Check out my profile: ${content}`,
-              });
-            } else {
-              alert('Sharing not supported on this browser');
-            }
+          <button className='share-button' onClick={() => {
+            const mailtoLink = `mailto:${encodeURIComponent(userData.userData[0].email)}?subject=Je viens de répondre au quiz « trivial YOU ! ». Va jeter un œil à mon profil :&body=${encodeURIComponent(title)}, ${encodeURIComponent(content)}`;
+            window.location.href = mailtoLink;
           }}>
             Partager les résultats
           </button>
         </div>
       </div>
       <div className='results-subtext'>
-          <p>Votre profile trivial YOU vous a été envoyé par email.</p>
-          <p>Merci pour votre participation!</p>
-          <a href='https://trivialmass.ch/' target="_blank">trivialmass.com</a>
+        <p>Votre profile trivial YOU vous a été envoyé par email.</p>
+        <p>Merci pour votre participation!</p>
+        <a href='https://trivialmass.ch/' target="_blank" rel="noopener noreferrer">trivialmass.com</a>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@
 
 const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY;
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEET_ID;
-const RANGE = "A:B"; // Adjust based on your sheet structure
+const RANGE = "A2:F"; // Adjust based on your sheet structure
 
 export const fetchQuestions = async () => {
   // If no API key or Sheet ID is configured, return mock data
@@ -42,10 +42,18 @@ export const fetchQuestions = async () => {
     // Extract questions from the first column
     const questions = data.values
       .map((row) => ({
-        question: row[0],
-        bgImage: row[1],
+        question1: row[0],
+        descriptionQ1: row[1],
+        question2: row[2],
+        descriptionQ2: row[3],
+        strategicValue: row[4],
+        bgImage: row[5],
       }))
-      .filter((item) => item.question && item.question.trim());
+      .filter((item) => item.question1 && item.question1.trim())
+      .filter((item) => item.question2 && item.question2.trim())
+      .filter((item) => item.strategicValue && item.strategicValue.trim())
+      .filter((item) => item.descriptionQ1 && item.descriptionQ1.trim())
+      .filter((item) => item.descriptionQ2 && item.descriptionQ2.trim());
     return questions;
   } catch (error) {
     console.error("Error fetching questions from Google Sheets:", error);

@@ -45,34 +45,4 @@ export const generateProfile = async (answers) => {
   } else {
     return getMockProfile(answers);
   }
-
-  const createPrompt = (answers) => {
-    const answerText = answers
-      .map((a, i) => `${i + 1}. ${a.question} → ${a.answer.toUpperCase()}`)
-      .join("\n");
-
-    return `You are a witty, insightful personality analyst who creates fun, engaging personality profiles.
-
-Based on these quiz answers, create a unique and personalized personality profile (2-3 paragraphs):
-
-Quiz Answers:
-${answerText}
-
-Create an engaging profile that:
-- Starts with a catchy title/archetype with an emoji (like "🌟 The Adventurous Dreamer" or "🎯 The Methodical Visionary")
-- Describes their personality traits based on the specific answers
-- Includes a "Your Vibe" section with 3 emojis and traits
-- Ends with a fun prediction or advice
-- Be creative, humorous, and positive
-- Make it UNIQUE every time
-
-Format exactly like this:
-## [Emoji] [Archetype Title]
-
-[Personality description - 2-3 sentences about who they are based on answers]
-
-Your vibe: [emoji] [trait] • [emoji] [trait] • [emoji] [trait]
-
-**Prediction:** [One fun, specific prediction or advice]`;
-  };
 };

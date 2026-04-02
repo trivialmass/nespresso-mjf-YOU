@@ -166,27 +166,6 @@
   margin-bottom: 30px;
 }
 
-.restart-button {
-  padding: 15px 40px;
-  font-size: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.restart-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-.restart-button:active {
-  transform: scale(0.95);
-}
-
 .buttonReturnQuestions {
   font-family: Helvetica;
   font-weight: 700;

@@ -66,7 +66,7 @@
 }
 
 .swipe-indicator.left {
-  color: #ff000099;
+  color: #ff6a7b99;
   font-family: Helvetica Neue;
   font-weight: 900;
   font-style: Condensed Black;
@@ -101,8 +101,8 @@
 }
 
 .control-button {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   border: none;
   font-size: 18px;
@@ -126,13 +126,28 @@
 }
 
 .no-button {
-  background: #ff6b6b;
-  color: white;
+  background: #FF6A7B;
+  font-family: Helvetica Neue;
+  font-weight: 900;
+  font-style: Condensed Black;
+  font-size: 60px;
+  line-height: 88%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
+
 }
 
 .yes-button {
-  background: #51cf66;
-  color: white;
+  background: #A5FF00;
+  font-family: Helvetica Neue;
+  font-weight: 900;
+  font-style: Condensed Black;
+  font-size: 60px;
+  line-height: 88%;
+  letter-spacing: 0%;
+  text-align: center;
+  vertical-align: middle;
 }
 
 /* Hide buttons on small screens - swipe only */

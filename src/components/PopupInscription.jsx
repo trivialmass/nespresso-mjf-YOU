@@ -31,7 +31,7 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
         <div className="popupInscription">
             <div className='popupContent'>
                 <div className='closeButtonContainer'>
-                    <div onClick={() => setShowPopup(false)} className="closeButton" tabindex="0" role="button" aria-label="Close">×</div>
+                    <div onClick={() => setShowPopup(false)} className="closeButton" tabIndex="0" role="button" aria-label="Close">×</div>
                 </div>
                 <h2 className='popupHeader'>S’INSCRIRE</h2>
                 <div className="inputFields">
