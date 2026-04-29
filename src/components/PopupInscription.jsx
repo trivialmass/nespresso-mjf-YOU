@@ -17,6 +17,10 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
             setError('Veuillez accepter les conditions générales.');
             return;
         }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setError('Veuillez entrer une adresse email valide.');
+            return;
+        }
         setUserData(prevData => [
             ...prevData,
             { name, company, email }
@@ -24,7 +28,6 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
         setError('');
         setShowPret(true);
         setShowPopup(false);
-        
     };
 
     return (
