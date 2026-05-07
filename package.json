@@ -9,7 +9,8 @@
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
     "build": "vite build",
     "preview": "vite preview",
-    "production": "npm run build && npm run preview"
+    "production": "npm run build && npm run preview",
+    "start": "npm run build && node server.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
