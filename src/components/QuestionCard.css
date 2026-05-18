@@ -31,6 +31,10 @@
   pointer-events: none;
 }
 
+.question-card.has-bg {
+  background: #222;
+}
+
 .question-card.has-bg::before {
   background-image: var(--bg-image);
   filter: brightness(0.5);
@@ -52,6 +56,11 @@
   color: #333;
   font-weight: 600;
   line-height: 1.4;
+}
+
+.has-bg .card-content h2 {
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 
 .swipe-indicator {

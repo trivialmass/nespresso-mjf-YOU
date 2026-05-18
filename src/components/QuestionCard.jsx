@@ -140,7 +140,7 @@ const QuestionCard = ({ question, bgImage, onSwipe, stackIndex = 0, pointEvents,
         onTouchEnd={handleTouchEnd}
       >
         <div className="card-content">
-          <h2 style={{ color: bgImage ? '#fff' : '#333' }}>{question}</h2>
+          <h2>{question}</h2>
         </div>
       </div>
       {/* Swipe indicators */}
