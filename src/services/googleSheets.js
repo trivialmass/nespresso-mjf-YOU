@@ -18,7 +18,7 @@ export const fetchQuestions = async () => {
   // If no API key or Sheet ID is configured, return mock data
   if (!API_KEY || !SHEET_ID || API_KEY === "your_api_key_here") {
     console.warn(
-      "Using mock data. Configure Google Sheets API to use real data.",
+      "⚠️ Google Sheets not configured (missing API key or sheet ID). Using mock data.",
     );
     return getMockQuestions();
   }
@@ -56,18 +56,37 @@ export const fetchQuestions = async () => {
       .filter((item) => item.descriptionQ2 && item.descriptionQ2.trim());
     return questions;
   } catch (error) {
-    console.error("Error fetching questions from Google Sheets:", error);
-    console.warn("Falling back to mock data.");
+    console.error("❌ Error fetching questions from Google Sheets:", error);
+    console.warn("⚠️ Falling back to mock data.");
     return getMockQuestions();
   }
 };
 
 const getMockQuestions = () => {
   return [
-    "Do you believe in astrology?",
-    "Are you a morning person?",
-    "Do you prefer coffee over tea?",
-    "Do you like spicy food?",
-    "Are you an introvert?",
+    {
+      question1: "Classique ?",
+      descriptionQ1: "Classique : rassurante, intemporelle, ancrée dans la tradition.",
+      question2: "Innovante ?",
+      descriptionQ2: "Innovante : moderne, audacieuse, tournée vers le futur.",
+      strategicValue: "Permet de situer la marque sur l'axe tradition ↔ modernité.",
+      bgImage: "",
+    },
+    {
+      question1: "Accessible ?",
+      descriptionQ1: "Accessible : simple, abordable, proche du grand public.",
+      question2: "Premium ?",
+      descriptionQ2: "Premium : haut de gamme, exigeante, exclusive.",
+      strategicValue: "Définit le positionnement prix, la cible et le niveau d'exigence perçu.",
+      bgImage: "",
+    },
+    {
+      question1: "Sérieuse ?",
+      descriptionQ1: "Sérieuse : professionnelle, structurée, rigoureuse.",
+      question2: "Ludique ?",
+      descriptionQ2: "Ludique : légère, créative, conviviale.",
+      strategicValue: "Impacte directement le ton éditorial, la direction artistique et l'expérience client.",
+      bgImage: "",
+    },
   ];
 };

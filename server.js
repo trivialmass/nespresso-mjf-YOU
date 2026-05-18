@@ -9,7 +9,7 @@ dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -181,7 +181,7 @@ Symbole : [emoji]
 });
 
 // Fallback: serve React app for all non-API routes
-app.get("*", (req, res) => {
+app.get("/{*path}", (req, res) => {
   res.sendFile(join(__dirname, "dist", "index.html"));
 });
 

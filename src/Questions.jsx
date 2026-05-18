@@ -42,11 +42,17 @@ function Questions(userData) {
   const loadQuestions = async () => {
     try {
       setLoading(true);
+      setError(null);
       const fetchedQuestions = await fetchQuestions();
-      setQuestions(fetchedQuestions);
+      if (!fetchedQuestions || fetchedQuestions.length === 0) {
+        setError('No questions found. Check your Google Sheet configuration.');
+      } else {
+        setQuestions(fetchedQuestions);
+      }
       setLoading(false);
     } catch (err) {
-      setError('Failed to load questions. Please try again.');
+      console.error('Failed to load questions:', err);
+      setError(`Failed to load questions: ${err.message || 'Unknown error'}`);
       setLoading(false);
     }
   };

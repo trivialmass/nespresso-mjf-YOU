@@ -5,7 +5,7 @@
  */
 import getMockProfile from "../utils/getMockProfiles.js";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3001";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
 export const generateProfile = async (answers) => {
   //Check if env is dev or prod
