@@ -23,160 +23,125 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Backend server is running" });
 });
 
-// Proxy endpoint for Infomaniak AI API
-app.post("/api/generate-profile", async (req, res) => {
+// Profile definitions — each trait list matches quiz answers (descriptionQ1 or descriptionQ2)
+const PROFILES = [
+  {
+    traits: new Set(['Classique', 'Accessible', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
+    text: `## 🏡 L'artisan local
+
+**L'APÉRITIF DE LANCEMENT**
+
+Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son prénom. Pas besoin de gros buzz : les bonnes personnes sont là, et elles reviendront.
+
+## 🚀 NOTRE PROJET POUR VOUS
+
+›  Une identité visuelle qui sent la bonne hospitalité (logo, charte, supports imprimés)
+›  Un site vitrine accueillant comme une porte qu'on laisse ouverte
+›  Un apéritif annuel pour réunir vos habitués et leur permettre d'amener leurs amis`,
+  },
+  {
+    traits: new Set(['Innovante', 'Premium', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
+    text: `## 🎬 La marque créative et premium
+
+**LA SOIRÉE D'ENTREPRISE**
+
+Votre marque, c'est cette soirée d'entreprise dont tout le monde veut une invitation : liste fermée, scénographie soignée, et on en parle encore six mois après.
+
+## 🚀 NOTRE PROJET POUR VOUS
+
+›  Une direction artistique signature, comme une scénographie qu'on prépare des mois à l'avance
+›  Une campagne qui crée l'événement avant même qu'il commence
+›  Une soirée privée millimétrée pour vos clients qui comptent`,
+  },
+  {
+    traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Institutionnelle', 'Internationale', 'Traditionnelle', 'Stable', 'Rationnelle', 'Sécurisante']),
+    text: `## 🏛️ La maison institutionnelle
+
+**LA CONFÉRENCE**
+
+Votre marque a la tenue d'une conférence d'experts : on s'attend au sérieux, on reste pour écouter, et on prend des notes pour la suite.
+
+## 🚀 NOTRE PROJET POUR VOUS
+
+›  Une charte corporate qui aligne toutes vos prises de parole, comme un programme bien minuté
+›  Un site institutionnel à la hauteur de votre stature
+›  Une conférence annuelle qui rassemble vos parties prenantes autour d'un sujet d'autorité`,
+  },
+  {
+    traits: new Set(['Innovante', 'Accessible', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
+    text: `## 🎪 La startup fun et accessible
+
+**LE FESTIVAL**
+
+Votre marque, c'est un festival : plusieurs scènes, une tribu qui se reconnaît, et personne ne sait à quelle heure ça finit.
+
+## 🚀 NOTRE PROJET POUR VOUS
+
+›  Une identité fun et colorée qui se reconnaît à un kilomètre
+›  Une stratégie réseaux taillée pour votre tribu (vidéos courtes, lives, ton direct)
+›  Un festival ou pop-up éphémère pour activer votre communauté sur plusieurs jours`,
+  },
+  {
+    traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Agile', 'Rationnelle', 'Sécurisante']),
+    text: `## 🏠 La maison familiale qui se modernise
+
+**LES WORKSHOPS**
+
+Votre marque, c'est une série de workshops bien rodés : on transmet, on actualise, et chaque génération repart avec un outil de plus.
+
+## 🚀 NOTRE PROJET POUR VOUS
+
+›  Un refresh d'identité qui rajeunit sans renier votre histoire
+›  Un site qui montre vos racines ET votre modernité, comme un atelier ouvert au public
+›  Une série de workshops pour transmettre votre savoir-faire à vos clients et à leurs équipes`,
+  },
+];
+
+// Extract the trait label from a description (everything before the first colon, trimmed)
+function extractTrait(description) {
+  return (description || '').split(':')[0].trim();
+}
+
+// Determine the chosen trait for each answer
+function getChosenTraits(answers) {
+  return answers.map(({ question: q, answer }) => {
+    const isQ1 = answer === q.question1;
+    return extractTrait(isQ1 ? q.descriptionQ1 : q.descriptionQ2);
+  });
+}
+
+// Find the best matching profile by counting overlapping traits
+function findBestProfile(answers) {
+  const chosenTraits = getChosenTraits(answers);
+  console.log('Chosen traits:', chosenTraits);
+
+  let best = PROFILES[0];
+  let bestScore = -1;
+  for (const profile of PROFILES) {
+    const score = chosenTraits.filter(t => profile.traits.has(t)).length;
+    if (score > bestScore) {
+      bestScore = score;
+      best = profile;
+    }
+  }
+  console.log(`Best profile score: ${bestScore}/10 →`, best.text.split('\n')[0]);
+  return best;
+}
+
+// Profile matching endpoint
+app.post("/api/generate-profile", (req, res) => {
   try {
     const { answers } = req.body;
 
     if (!answers || !Array.isArray(answers)) {
-      return res
-        .status(400)
-        .json({ error: "Invalid request: answers array required" });
+      return res.status(400).json({ error: "Invalid request: answers array required" });
     }
 
-    const INFOMANIAK_API_TOKEN = process.env.VITE_INFOMANIAK_API_TOKEN;
-    const INFOMANIAK_PRODUCT_ID = process.env.VITE_INFOMANIAK_PRODUCT_ID;
-
-    if (!INFOMANIAK_API_TOKEN || !INFOMANIAK_PRODUCT_ID) {
-      return res.status(500).json({
-        error: "Server configuration error: Missing Infomaniak credentials",
-      });
-    }
-
-    const INFOMANIAK_API_URL = `https://api.infomaniak.com/2/ai/${INFOMANIAK_PRODUCT_ID}/openai/v1/chat/completions`;
-
-    // Create prompt from answers
-    const answerText = answers
-      .map((a, i) => `${i + 1}. ${a.question} → ${a.answer.toUpperCase()}`)
-      .join("\n");
-
-    const systemPrompt =
-      "You are a witty, insightful personality analyst who creates fun, engaging personality profiles. Be creative, humorous, and positive.";
-
-    const userPrompt = `Tu es un stratège de marque créatif et un analyste de personnalité perspicace.
-
-Ta mission est d’interpréter les réponses à un quiz et de générer QUATRE éléments :
-
-1. un profil de la personne
-2. un profil de son entreprise
-3. un résumé stratégique de positionnement
-4. le super-pouvoir de la marque
-
-Les réponses proviennent d’un quiz basé sur des traits opposés
-(par exemple : Classique vs Innovante, Accessible vs Premium, Sérieuse vs Ludique, etc.).
-
-RÉSULTATS DU QUIZ :
-${answerText}
-
-Ton objectif :
-Analyser les traits sélectionnés et en déduire :
-
-* la personnalité de la personne
-* la personnalité et l’énergie de son entreprise
-* les grandes tendances de son positionnement stratégique
-* le super-pouvoir principal de la marque
-
-Style d’écriture :
-
-* ludique mais pertinent
-* imaginatif et métaphorique
-* clair et concis
-* positif et engageant
-* éviter les descriptions génériques
-
-Utilise des métaphores inspirées de situations de la vie réelle
-(par exemple : un dîner entre amis, un atelier créatif, un café animé, un road trip, une équipe qui construit quelque chose ensemble).
-
-Règles :
-
-* NE PAS répéter directement les réponses
-* NE PAS expliquer le quiz
-* Faire des descriptions vivantes et spécifiques
-* Chaque résultat doit sembler unique
-* Répondre en français
-
-Retourne EXACTEMENT ce format :
-
-## 👤 [Emoji] [Titre du profil personne]
-
-[2 phrases décrivant la personnalité de la personne de manière imagée.]
-
-Votre vibe : [emoji] [trait] • [emoji] [trait] • [emoji] [trait]
-
----
-
-## 🏢 [Emoji] [Titre du profil entreprise]
-
-[3–4 phrases décrivant l’entreprise avec une scène ou une métaphore concrète.]
-
-Votre vibe : [emoji] [trait] • [emoji] [trait] • [emoji] [trait]
-
-**Prédiction :** [Une prédiction ou conseil stratégique fun.]
-
----
-
-## 🧭 Positionnement stratégique
-
-Innovation : [faible / moyen / élevé]
-Accessibilité : [faible / moyen / élevé]
-Émotion : [faible / moyen / élevé]
-Disruption : [faible / moyen / élevé]
-Relation humaine : [faible / moyen / élevé]
-
-[1 phrase expliquant l’énergie globale du positionnement.]
-
----
-
-## ✨ Super-pouvoir de marque
-
-[Titre court du super-pouvoir]
-
-[2 phrases expliquant ce qui rend cette marque naturellement forte ou différente.]
-
-Symbole : [emoji]
-`;
-
-    // Call Infomaniak API
-    const response = await fetch(INFOMANIAK_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${INFOMANIAK_API_TOKEN}`,
-      },
-      body: JSON.stringify({
-        model: "qwen3",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
-        temperature: 0.9,
-        max_completion_tokens: 500,
-        stream: false,
-      }),
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.error?.message ||
-        `Infomaniak API error: ${response.statusText}`,
-      );
-    }
-
-    const data = await response.json();
-    const generatedText = data.choices[0]?.message?.content;
-
-    if (!generatedText) {
-      throw new Error("No content generated");
-    }
-
-    res.json({ profile: generatedText });
+    const profile = findBestProfile(answers);
+    res.json({ profile: profile.text });
   } catch (error) {
     console.error("Error in generate-profile endpoint:", error);
-    res.status(500).json({
-      error: "Failed to generate profile",
-      message: error.message,
-    });
+    res.status(500).json({ error: "Failed to generate profile", message: error.message });
   }
 });
 
