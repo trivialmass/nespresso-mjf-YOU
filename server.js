@@ -97,17 +97,9 @@ Votre marque, c'est une série de workshops bien rodés : on transmet, on actual
   },
 ];
 
-// Extract the trait label from a description (everything before the first colon, trimmed)
-function extractTrait(description) {
-  return (description || '').split(':')[0].trim();
-}
-
-// Determine the chosen trait for each answer
+// Extract chosen traits — answer now directly contains the trait (traitRight or traitLeft)
 function getChosenTraits(answers) {
-  return answers.map(({ question: q, answer }) => {
-    const isQ1 = answer === q.question1;
-    return extractTrait(isQ1 ? q.descriptionQ1 : q.descriptionQ2);
-  });
+  return answers.map(({ answer }) => answer);
 }
 
 // Find the best matching profile by counting overlapping traits

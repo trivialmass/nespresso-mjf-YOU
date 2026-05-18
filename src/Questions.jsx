@@ -60,7 +60,7 @@ function Questions(userData) {
   const handleSwipe = (direction) => {
     const answer = {
       question: questions[currentIndex],
-      answer: direction === 'right' ? questions[currentIndex]['question1'] : questions[currentIndex]['question2'],
+      answer: direction === 'right' ? questions[currentIndex].traitRight : questions[currentIndex].traitLeft,
       timestamp: new Date().toISOString(),
     };
 
@@ -202,8 +202,8 @@ function Questions(userData) {
                 .map((idx, stackIdx, arr) => (
                   <QuestionCard
                     key={idx}
-                    question={questions[idx]['question1']}
-                    bgImage={questions[idx]['bgImage']}
+                    question={questions[idx].question}
+                    bgImage={questions[idx].bgImage}
                     onSwipe={handleSwipe}
                     stackIndex={arr.length - 1 - stackIdx}
                     pointEvents={idx === currentIndex ? eventAuto : eventNone}

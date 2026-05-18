@@ -12,7 +12,7 @@
 
 const API_KEY = import.meta.env.VITE_GOOGLE_SHEETS_API_KEY;
 const SHEET_ID = import.meta.env.VITE_GOOGLE_SHEET_ID;
-const RANGE = "A2:F"; // Adjust based on your sheet structure
+const RANGE = "A2:D"; // question | traitRight | traitLeft | bgImage
 
 export const fetchQuestions = async () => {
   // If no API key or Sheet ID is configured, return mock data
@@ -39,21 +39,17 @@ export const fetchQuestions = async () => {
       return getMockQuestions();
     }
 
-    // Extract questions from the first column
     const questions = data.values
       .map((row) => ({
-        question1: row[0],
-        descriptionQ1: row[1],
-        question2: row[2],
-        descriptionQ2: row[3],
-        strategicValue: row[4],
-        bgImage: row[5],
+        question:   row[0],
+        traitRight: row[1],
+        traitLeft:  row[2],
+        bgImage:    row[3] || "",
       }))
-      .filter((item) => item.question1 && item.question1.trim())
-      .filter((item) => item.question2 && item.question2.trim())
-      .filter((item) => item.strategicValue && item.strategicValue.trim())
-      .filter((item) => item.descriptionQ1 && item.descriptionQ1.trim())
-      .filter((item) => item.descriptionQ2 && item.descriptionQ2.trim());
+      .filter((item) => item.question && item.question.trim())
+      .filter((item) => item.traitRight && item.traitRight.trim())
+      .filter((item) => item.traitLeft && item.traitLeft.trim());
+
     return questions;
   } catch (error) {
     console.error("❌ Error fetching questions from Google Sheets:", error);
@@ -64,29 +60,15 @@ export const fetchQuestions = async () => {
 
 const getMockQuestions = () => {
   return [
-    {
-      question1: "Classique ?",
-      descriptionQ1: "Classique : rassurante, intemporelle, ancrée dans la tradition.",
-      question2: "Innovante ?",
-      descriptionQ2: "Innovante : moderne, audacieuse, tournée vers le futur.",
-      strategicValue: "Permet de situer la marque sur l'axe tradition ↔ modernité.",
-      bgImage: "",
-    },
-    {
-      question1: "Accessible ?",
-      descriptionQ1: "Accessible : simple, abordable, proche du grand public.",
-      question2: "Premium ?",
-      descriptionQ2: "Premium : haut de gamme, exigeante, exclusive.",
-      strategicValue: "Définit le positionnement prix, la cible et le niveau d'exigence perçu.",
-      bgImage: "",
-    },
-    {
-      question1: "Sérieuse ?",
-      descriptionQ1: "Sérieuse : professionnelle, structurée, rigoureuse.",
-      question2: "Ludique ?",
-      descriptionQ2: "Ludique : légère, créative, conviviale.",
-      strategicValue: "Impacte directement le ton éditorial, la direction artistique et l'expérience client.",
-      bgImage: "",
-    },
+    { question: "Vinyle ?",           traitRight: "Classique",      traitLeft: "Innovante",      bgImage: "" },
+    { question: "Table étoilée ?",    traitRight: "Premium",        traitLeft: "Accessible",     bgImage: "" },
+    { question: "Afterwork ?",        traitRight: "Ludique",        traitLeft: "Sérieuse",       bgImage: "" },
+    { question: "Chemise hawaïenne ?",traitRight: "Expressive",     traitLeft: "Minimaliste",    bgImage: "" },
+    { question: "On se dit tu ?",     traitRight: "Humaine",        traitLeft: "Institutionnelle",bgImage: "" },
+    { question: "Jet-lag ?",          traitRight: "Internationale", traitLeft: "Locale",         bgImage: "" },
+    { question: "Hors-piste ?",       traitRight: "Disruptive",     traitLeft: "Traditionnelle", bgImage: "" },
+    { question: "Plan B ?",           traitRight: "Agile",          traitLeft: "Stable",         bgImage: "" },
+    { question: "Tableau Excel ?",    traitRight: "Rationnelle",    traitLeft: "Émotionnelle",   bgImage: "" },
+    { question: "Quitte ou double ?", traitRight: "Audacieuse",     traitLeft: "Sécurisante",    bgImage: "" },
   ];
 };
