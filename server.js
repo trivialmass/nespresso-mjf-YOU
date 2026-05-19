@@ -26,7 +26,7 @@ app.get("/api/health", (req, res) => {
 // Profile definitions — each trait list matches quiz answers (descriptionQ1 or descriptionQ2)
 const PROFILES = [
   {
-    traits: new Set(['Classique', 'Accessible', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
+    traits: new Set(['Classique', 'Accessible', 'Ludique', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
     text: `## 🥂 L'APÉRITIF DE LANCEMENT
 
 Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son prénom. Pas besoin de gros buzz : les bonnes personnes sont là, et elles reviendront.
@@ -38,7 +38,7 @@ Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son pr�
 ›  Un apéritif annuel pour réunir vos habitués et leur permettre d'amener leurs amis`,
   },
   {
-    traits: new Set(['Innovante', 'Premium', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
+    traits: new Set(['Innovante', 'Premium', 'Sérieuse', 'Expressive', 'Institutionnelle', 'Internationale', 'Disruptive', 'Agile', 'Rationnelle', 'Audacieuse']),
     text: `## 🎬 LA SOIRÉE D'ENTREPRISE
 
 Votre marque, c'est cette soirée d'entreprise dont tout le monde veut une invitation : liste fermée, scénographie soignée, et on en parle encore six mois après.
@@ -74,7 +74,7 @@ Votre marque, c'est un festival : plusieurs scènes, une tribu qui se reconnaît
 ›  Un festival ou pop-up éphémère pour activer votre communauté sur plusieurs jours`,
   },
   {
-    traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Agile', 'Rationnelle', 'Sécurisante']),
+    traits: new Set(['Innovante', 'Premium', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Agile', 'Rationnelle', 'Sécurisante']),
     text: `## 🏠 LES WORKSHOPS
 
 Votre marque, c'est une série de workshops bien rodés : on transmet, on actualise, et chaque génération repart avec un outil de plus.
