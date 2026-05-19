@@ -47,6 +47,16 @@ function Questions(userData) {
       if (!fetchedQuestions || fetchedQuestions.length === 0) {
         setError('No questions found. Check your Google Sheet configuration.');
       } else {
+        // Preload all background images before showing the quiz
+        const imageUrls = fetchedQuestions.map(q => q.bgImage).filter(Boolean);
+        await Promise.all(
+          imageUrls.map(url => new Promise(resolve => {
+            const img = new Image();
+            img.onload = resolve;
+            img.onerror = resolve; // don't block if an image fails
+            img.src = url;
+          }))
+        );
         setQuestions(fetchedQuestions);
       }
       setLoading(false);
