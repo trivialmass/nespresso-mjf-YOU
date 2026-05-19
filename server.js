@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import Database from "better-sqlite3";
 
 // Load environment variables
 dotenv.config();
@@ -10,6 +11,20 @@ dotenv.config();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// SQLite setup
+const db = new Database(join(__dirname, "results.db"));
+db.exec(`
+  CREATE TABLE IF NOT EXISTS results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    created_at TEXT DEFAULT (datetime('now')),
+    name TEXT,
+    company TEXT,
+    email TEXT,
+    profile TEXT,
+    answers TEXT
+  )
+`);
 
 // Middleware
 app.use(cors());
@@ -21,6 +36,31 @@ app.use(express.static(join(__dirname, "dist")));
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Backend server is running" });
+});
+
+// Save quiz result to SQLite
+app.post("/api/save-result", (req, res) => {
+  try {
+    const { name, company, email, profile, answers } = req.body;
+    const stmt = db.prepare(
+      "INSERT INTO results (name, company, email, profile, answers) VALUES (?, ?, ?, ?, ?)"
+    );
+    stmt.run(name || "", company || "", email || "", profile || "", JSON.stringify(answers || []));
+    res.json({ success: true });
+  } catch (error) {
+    console.error("Error saving result:", error);
+    res.status(500).json({ error: "Failed to save result" });
+  }
+});
+
+// List results (basic admin endpoint)
+app.get("/api/results", (req, res) => {
+  try {
+    const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch results" });
+  }
 });
 
 // Profile definitions — each trait list matches quiz answers (descriptionQ1 or descriptionQ2)

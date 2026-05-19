@@ -1,32 +1,21 @@
 /**
- * Service to save quiz results to Google Sheets via Apps Script Web App
+ * Service to save quiz results to the backend (SQLite)
  */
 
-// test
-// const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwScLi91ukZimALDfes10x-BUmWlE1AtABzPV6H-RbjHhQx-7NR_dxmHgkBYukqSCbx_g/exec";
-// trivial
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrFFjmgiBbSmEMT83C6ev0WwhzZKccLsu3fX1nT_DHffwkasB8tCGU2JyztiYK1UcjwA/exec";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
-/**
- * Saves the quiz result to Google Sheets via Apps Script Web App
- * @param {Object} userData - { name, company, email }
- * @param {Array} answers - array of answers
- * @param {string} profile - generated profile
- * @returns {Promise<boolean>} - always returns true (cannot check result in no-cors mode)
- */
 export const saveQuizResult = async (userData, answers, profile) => {
-  const formData = new FormData();
-  formData.append('Name', userData?.userData[0]?.name || "");
-  formData.append('Company', userData?.userData[0]?.company || "");
-  formData.append('Email', userData?.userData[0]?.email || "");
-  formData.append('Answers', answers.map(item => `${item.question.question} => ${item.answer}`).join('\n'));
-  formData.append('Profile', profile);
-
   try {
-    await fetch(APPS_SCRIPT_URL, {
+    await fetch(`${BACKEND_URL}/api/save-result`, {
       method: "POST",
-      mode: "no-cors",
-      body: formData
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: userData?.userData[0]?.name || "",
+        company: userData?.userData[0]?.company || "",
+        email: userData?.userData[0]?.email || "",
+        profile,
+        answers: answers.map(a => ({ question: a.question.question, answer: a.answer })),
+      }),
     });
     return true;
   } catch (error) {
