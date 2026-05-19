@@ -45,7 +45,7 @@ const Congradulation = ({ profile, answers, userData, onRestart, onReturnToLastQ
                     {showResultsCharging && (
                         <div className="congradulation-card">
                             <img src={logoCharging} alt="Loading..." className="spinnerCharging" />
-                            <h3 className="chargingText">Votre profile est en cours de création.</h3>
+                            <h3 className="chargingText">Votre profil est en cours de création.</h3>
                         </div>
                     )}
                 </div>

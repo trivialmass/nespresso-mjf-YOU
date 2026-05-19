@@ -46,6 +46,17 @@ const Results = ({ profile, answers, onRestart, userData }) => {
         );
       }
       
+      // › list items
+      if (trimmed.includes('\n›') || trimmed.startsWith('›')) {
+        return (
+          <ul key={index} className="profile-list">
+            {trimmed.split('\n').filter(l => l.trim()).map((line, i) => (
+              <li key={i}>{line.replace(/^›\s*/, '')}</li>
+            ))}
+          </ul>
+        );
+      }
+      
       // Blockquote
       if (trimmed.startsWith('>')) {
         return (
@@ -119,7 +130,7 @@ const Results = ({ profile, answers, onRestart, userData }) => {
         </div>
       </div>
       <div className='results-subtext'>
-        <p>Votre profile trivial YOU vous a été envoyé par email.</p>
+        <p>Votre profil trivial YOU vous a été envoyé par email.</p>
         <p>Merci pour votre participation!</p>
         <a href='https://trivialmass.ch/' target="_blank" rel="noopener noreferrer">trivialmass.com</a>
       </div>

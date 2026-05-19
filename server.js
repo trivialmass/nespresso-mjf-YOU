@@ -27,9 +27,7 @@ app.get("/api/health", (req, res) => {
 const PROFILES = [
   {
     traits: new Set(['Classique', 'Accessible', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
-    text: `## 🏡 L'artisan local
-
-**L'APÉRITIF DE LANCEMENT**
+    text: `## 🥂 L'APÉRITIF DE LANCEMENT
 
 Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son prénom. Pas besoin de gros buzz : les bonnes personnes sont là, et elles reviendront.
 
@@ -41,9 +39,7 @@ Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son pr�
   },
   {
     traits: new Set(['Innovante', 'Premium', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
-    text: `## 🎬 La marque créative et premium
-
-**LA SOIRÉE D'ENTREPRISE**
+    text: `## 🎬 LA SOIRÉE D'ENTREPRISE
 
 Votre marque, c'est cette soirée d'entreprise dont tout le monde veut une invitation : liste fermée, scénographie soignée, et on en parle encore six mois après.
 
@@ -55,9 +51,7 @@ Votre marque, c'est cette soirée d'entreprise dont tout le monde veut une invit
   },
   {
     traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Institutionnelle', 'Internationale', 'Traditionnelle', 'Stable', 'Rationnelle', 'Sécurisante']),
-    text: `## 🏛️ La maison institutionnelle
-
-**LA CONFÉRENCE**
+    text: `## 🏛️ LA CONFÉRENCE
 
 Votre marque a la tenue d'une conférence d'experts : on s'attend au sérieux, on reste pour écouter, et on prend des notes pour la suite.
 
@@ -69,9 +63,7 @@ Votre marque a la tenue d'une conférence d'experts : on s'attend au sérieux, o
   },
   {
     traits: new Set(['Innovante', 'Accessible', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
-    text: `## 🎪 La startup fun et accessible
-
-**LE FESTIVAL**
+    text: `## 🎪 LE FESTIVAL
 
 Votre marque, c'est un festival : plusieurs scènes, une tribu qui se reconnaît, et personne ne sait à quelle heure ça finit.
 
@@ -83,9 +75,7 @@ Votre marque, c'est un festival : plusieurs scènes, une tribu qui se reconnaît
   },
   {
     traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Agile', 'Rationnelle', 'Sécurisante']),
-    text: `## 🏠 La maison familiale qui se modernise
-
-**LES WORKSHOPS**
+    text: `## 🏠 LES WORKSHOPS
 
 Votre marque, c'est une série de workshops bien rodés : on transmet, on actualise, et chaque génération repart avec un outil de plus.
 

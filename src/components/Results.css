@@ -184,6 +184,26 @@
   border-radius: 15px;
 }
 
+.profile-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.profile-list li {
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-size: 16px;
+  line-height: 1.6;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-list li::before {
+  content: '› ';
+  color: #a5ff02;
+  font-weight: 900;
+  margin-left: -1.5rem;
+}
+
 .results-actions {
   display: flex;
   gap: 15px;
