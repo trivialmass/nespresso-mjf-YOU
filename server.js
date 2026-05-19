@@ -26,64 +26,74 @@ app.get("/api/health", (req, res) => {
 // Profile definitions — each trait list matches quiz answers (descriptionQ1 or descriptionQ2)
 const PROFILES = [
   {
-    traits: new Set(['Classique', 'Accessible', 'Ludique', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
-    text: `## 🥂 L'APÉRITIF DE LANCEMENT
+    traits: new Set(['Classique', 'Accessible', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
+    text: `## L'artisan local
+
+### VOTRE TYPE D'ÉVÉNEMENT : L'APÉRITIF DE LANCEMENT
 
 Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son prénom. Pas besoin de gros buzz : les bonnes personnes sont là, et elles reviendront.
 
-## 🚀 NOTRE PROJET POUR VOUS
+### NOTRE PROJET POUR VOUS
 
-›  Une identité visuelle qui sent la bonne hospitalité (logo, charte, supports imprimés)
-›  Un site vitrine accueillant comme une porte qu'on laisse ouverte
-›  Un apéritif annuel pour réunir vos habitués et leur permettre d'amener leurs amis`,
+› Une identité visuelle qui sent la bonne hospitalité (logo, charte, supports imprimés)
+› Un site vitrine accueillant comme une porte qu'on laisse ouverte
+› Un apéritif annuel pour réunir vos habitués et leur permettre d'amener leurs amis`,
   },
   {
-    traits: new Set(['Innovante', 'Premium', 'Sérieuse', 'Expressive', 'Institutionnelle', 'Internationale', 'Disruptive', 'Agile', 'Rationnelle', 'Audacieuse']),
-    text: `## 🎬 LA SOIRÉE D'ENTREPRISE
+    traits: new Set(['Innovante', 'Premium', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
+    text: `## La marque créative et premium
+
+### VOTRE TYPE D'ÉVÉNEMENT : LA SOIRÉE D'ENTREPRISE
 
 Votre marque, c'est cette soirée d'entreprise dont tout le monde veut une invitation : liste fermée, scénographie soignée, et on en parle encore six mois après.
 
-## 🚀 NOTRE PROJET POUR VOUS
+### NOTRE PROJET POUR VOUS
 
-›  Une direction artistique signature, comme une scénographie qu'on prépare des mois à l'avance
-›  Une campagne qui crée l'événement avant même qu'il commence
-›  Une soirée privée millimétrée pour vos clients qui comptent`,
+› Une direction artistique signature, comme une scénographie qu'on prépare des mois à l'avance
+› Une campagne qui crée l'événement avant même qu'il commence
+› Une soirée privée millimétrée pour vos clients qui comptent`,
   },
   {
     traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Institutionnelle', 'Internationale', 'Traditionnelle', 'Stable', 'Rationnelle', 'Sécurisante']),
-    text: `## 🏛️ LA CONFÉRENCE
+    text: `## La maison institutionnelle
+
+### VOTRE TYPE D'ÉVÉNEMENT : LA CONFÉRENCE
 
 Votre marque a la tenue d'une conférence d'experts : on s'attend au sérieux, on reste pour écouter, et on prend des notes pour la suite.
 
-## 🚀 NOTRE PROJET POUR VOUS
+### NOTRE PROJET POUR VOUS
 
-›  Une charte corporate qui aligne toutes vos prises de parole, comme un programme bien minuté
-›  Un site institutionnel à la hauteur de votre stature
-›  Une conférence annuelle qui rassemble vos parties prenantes autour d'un sujet d'autorité`,
+› Une charte corporate qui aligne toutes vos prises de parole, comme un programme bien minuté
+› Un site institutionnel à la hauteur de votre stature
+› Une conférence annuelle qui rassemble vos parties prenantes autour d'un sujet d'autorité`,
   },
   {
     traits: new Set(['Innovante', 'Accessible', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
-    text: `## 🎪 LE FESTIVAL
+    text: `## La startup fun et accessible
+
+### VOTRE TYPE D'ÉVÉNEMENT : LE FESTIVAL
 
 Votre marque, c'est un festival : plusieurs scènes, une tribu qui se reconnaît, et personne ne sait à quelle heure ça finit.
 
-## 🚀 NOTRE PROJET POUR VOUS
+### NOTRE PROJET POUR VOUS
 
-›  Une identité fun et colorée qui se reconnaît à un kilomètre
-›  Une stratégie réseaux taillée pour votre tribu (vidéos courtes, lives, ton direct)
-›  Un festival ou pop-up éphémère pour activer votre communauté sur plusieurs jours`,
+› Une identité fun et colorée qui se reconnaît à un kilomètre
+› Une stratégie réseaux taillée pour votre tribu (vidéos courtes, lives, ton direct)
+› Un festival ou pop-up éphémère pour activer votre communauté sur plusieurs jours`,
   },
   {
     traits: new Set(['Innovante', 'Premium', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Agile', 'Rationnelle', 'Sécurisante']),
-    text: `## 🏠 LES WORKSHOPS
+    text: `## La maison familiale qui se modernise
+
+### VOTRE TYPE D'ÉVÉNEMENT : LES WORKSHOPS
 
 Votre marque, c'est une série de workshops bien rodés : on transmet, on actualise, et chaque génération repart avec un outil de plus.
 
-## 🚀 NOTRE PROJET POUR VOUS
+### NOTRE PROJET POUR VOUS
 
-›  Un refresh d'identité qui rajeunit sans renier votre histoire
-›  Un site qui montre vos racines ET votre modernité, comme un atelier ouvert au public
-›  Une série de workshops pour transmettre votre savoir-faire à vos clients et à leurs équipes`,
+› Un refresh d'identité qui rajeunit sans renier votre histoire
+› Un site qui montre vos racines ET votre modernité, comme un atelier ouvert au public
+› Une série de workshops pour transmettre votre savoir-faire à vos clients et à leurs équipes`,
   },
 ];
 

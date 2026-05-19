@@ -5,13 +5,12 @@ const Results = ({ profile, answers, onRestart, userData }) => {
   const yesCount = answers.filter(a => a.answer === 'yes').length;
   const noCount = answers.filter(a => a.answer === 'no').length;
 
-  // Parse the profile to extract title if it has markdown heading
+  // Parse the profile: ## = profile title, rest = content
   const lines = profile.split('\n');
-  let title = 'Your Personality Profile';
+  let title = 'Votre profil';
   let content = profile;
   
-  // Extract emoji and title from first line
-  if  (lines[0].startsWith('##')) {
+  if (lines[0].startsWith('##')) {
     title = lines[0].replace(/^##\s*/, '');
     content = lines.slice(1).join('\n');
   }
@@ -20,32 +19,14 @@ const Results = ({ profile, answers, onRestart, userData }) => {
     return text.split('\n\n').map((paragraph, index) => {
       const trimmed = paragraph.trim();
       
-      // Skip empty paragraphs
       if (!trimmed) return null;
-      
-      // Horizontal rule
-      if (trimmed === '---') {
-        return <hr key={index} className="profile-divider" />;
+
+      // ### sub-section headers (Votre type d'événement, Notre projet)
+      if (trimmed.startsWith('###')) {
+        const headerText = trimmed.replace(/^###\s*/, '');
+        return <h3 key={index} className="profile-sub-header">{headerText}</h3>;
       }
-      
-      // Section headers with emoji
-      if (trimmed.match(/##/)) {
-        const headerText = trimmed.replace(/^##\s*/, '');
-        return <h2 key={index} className="profile-section-header">{headerText}</h2>;
-      }
-      
-      // Vibe section
-      if (trimmed.startsWith('Votre vibe :')) {
-        const vibes = trimmed.replace('Votre vibe :', '').split('•').filter(v => v.trim());
-        return (
-          <div key={index} className="vibe-tags">
-            {vibes.map((vibe, i) => (
-              <span key={i} className="vibe-tag">{vibe.trim()}</span>
-            ))}
-          </div>
-        );
-      }
-      
+
       // › list items
       if (trimmed.includes('\n›') || trimmed.startsWith('›')) {
         return (
@@ -54,48 +35,6 @@ const Results = ({ profile, answers, onRestart, userData }) => {
               <li key={i}>{line.replace(/^›\s*/, '')}</li>
             ))}
           </ul>
-        );
-      }
-      
-      // Blockquote
-      if (trimmed.startsWith('>')) {
-        return (
-          <blockquote key={index} className="profile-quote">
-            {trimmed.replace(/^>\s*/, '')}
-          </blockquote>
-        );
-      }
-      
-      // Strategic positioning (metrics)
-      if (trimmed.includes(':') && trimmed.match(/(élevé|moyen|faible)/)) {
-        const [label, value] = trimmed.split(':').map(s => s.trim());
-        return (
-          <div key={index} className="metric-item">
-            <span className="metric-label">{label}</span>
-            <span className={`metric-value metric-${value.toLowerCase()}`}>{value}</span>
-          </div>
-        );
-      }
-      
-      // Bold text with prediction
-      if (trimmed.startsWith('**')) {
-        const match = trimmed.match(/\*\*(.*?)\*\*\s*(.*)/);
-        if (match) {
-          return (
-            <div key={index} className="profile-highlight">
-              <strong>{match[1]}</strong>
-              <p>{match[2]}</p>
-            </div>
-          );
-        }
-      }
-      
-      // Symbol line
-      if (trimmed.startsWith('Symbole :')) {
-        return (
-          <div key={index} className="profile-symbol">
-            {trimmed}
-          </div>
         );
       }
       
