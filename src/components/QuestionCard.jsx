@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import './QuestionCard.css';
 
 
 
-const QuestionCard = ({ question, bgImage, onSwipe, stackIndex = 0, pointEvents, resetPosition
-}) => {
+const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, pointEvents, resetPosition
+}, ref) => {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -83,9 +83,14 @@ const QuestionCard = ({ question, bgImage, onSwipe, stackIndex = 0, pointEvents,
     setTimeout(() => onSwipe(direction), 300);
   };
 
+  // Expose handleButtonClick to parent via ref
+  useImperativeHandle(ref, () => ({
+    triggerSwipe: handleButtonClick
+  }));
+
   useEffect(() => {
     if (disabledButton) {
-      setTimeout(() => setDisabledButton(false), 2000); // 2 секунды
+      setTimeout(() => setDisabledButton(false), 2000);
     }
   }, [disabledButton]);
 
@@ -118,7 +123,7 @@ const QuestionCard = ({ question, bgImage, onSwipe, stackIndex = 0, pointEvents,
       setPosition({ x: exitX, y: 0 });
       setTimeout(() => {
         setPosition({ x: 0, y: 0 });
-      }, 300);
+      }, 700);
     }
   }, [resetPosition]);
 
@@ -178,6 +183,8 @@ const QuestionCard = ({ question, bgImage, onSwipe, stackIndex = 0, pointEvents,
       </div >
     </>
   );
-};
+});
+
+QuestionCard.displayName = 'QuestionCard';
 
 export default QuestionCard;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Congradulation from './components/Congradulation';
 import { fetchQuestions } from './services/googleSheets';
@@ -20,6 +20,7 @@ function Questions(userData) {
   const [showCongradulation, setShowCongradulation] = useState(false);
   const [resetPosition, setResetPosition] = useState({ trueFalse: false, answer: null });
   const [swipeTilt, setSwipeTilt] = useState(0);
+  const currentCardRef = useRef(null);
 
   useEffect(() => {
     loadQuestions();
@@ -188,8 +189,20 @@ function Questions(userData) {
       <header className="questions-header">
         <img src={headerBanier} alt="Out In Logo" className="outInLogo" />
         <div className='logosContainer'>
-          <img src={logoOUT} alt="Logo OUT" className="logoInOut" />
-          <img src={logoIN} alt="Logo IN" className="logoInOut" />
+          <img 
+            src={logoOUT} 
+            alt="Logo OUT" 
+            className="logoInOut" 
+            onClick={() => currentCardRef.current?.triggerSwipe('left')}
+            style={{ cursor: 'pointer' }}
+          />
+          <img 
+            src={logoIN} 
+            alt="Logo IN" 
+            className="logoInOut" 
+            onClick={() => currentCardRef.current?.triggerSwipe('right')}
+            style={{ cursor: 'pointer' }}
+          />
         </div>
         <img
           src={logoSwipe}
@@ -212,6 +225,7 @@ function Questions(userData) {
                 .map((idx, stackIdx, arr) => (
                   <QuestionCard
                     key={idx}
+                    ref={idx === currentIndex ? currentCardRef : null}
                     question={questions[idx].question}
                     bgImage={questions[idx].bgImage}
                     onSwipe={handleSwipe}
