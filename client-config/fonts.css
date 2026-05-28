@@ -1,8 +1,4 @@
-/* Add your @font-face declarations here.
-   Example:
-   @font-face {
-     font-family: 'Your Font';
-     src: url('../src/fonts/your-font.woff2') format('woff2');
-     font-weight: normal;
-   }
-*/
+/* Nespresso brand fonts — to be provided by client.
+   Add @font-face declarations here once font files are received.
+   Place font files in src/fonts/ and reference them as:
+   url('../src/fonts/your-font.woff2') format('woff2') */

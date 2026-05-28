@@ -4,8 +4,9 @@ export const sheetConfig = {
   range: 'A2:D',
 };
 
+// Starter mock questions — replace with final Nespresso quiz content
 export const mockQuestions = [
-  { question: 'Question 1?', traitRight: 'Trait A', traitLeft: 'Trait B', bgImage: '' },
-  { question: 'Question 2?', traitRight: 'Trait C', traitLeft: 'Trait D', bgImage: '' },
-  { question: 'Question 3?', traitRight: 'Trait E', traitLeft: 'Trait F', bgImage: '' },
+  { question: 'Lungo ou Espresso\u00a0?', traitRight: 'Doux',      traitLeft: 'Intense',   bgImage: '' },
+  { question: 'Milk or black\u00a0?',      traitRight: 'Crémeux',   traitLeft: 'Pur',       bgImage: '' },
+  { question: 'Sunrise or sunset\u00a0?',  traitRight: 'Classique', traitLeft: 'Original',  bgImage: '' },
 ];
