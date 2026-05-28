@@ -199,6 +199,59 @@ Note: bg images imported in `questions.js` from `./assets/` — Vite-safe (clien
 
 ---
 
+## Quiz Questions & Profile Matching
+
+### Questions (`client-config/questions.js`)
+
+Each question uses named traits (not generic IN/OUT) so the profile matching algorithm can distinguish combinations. The UI still shows "IN"/"OUT" as swipe labels (from QuestionCard).
+
+| # | Question | traitRight | traitLeft |
+|---|----------|-----------|----------|
+| 1 | GROOVE?    | `groove`   | `chill`   |
+| 2 | VINYL?     | `vinyl`    | `digital` |
+| 3 | BACKSTAGE? | `backstage`| `frontrow`|
+
+Background images: `groove.png`, `vinyl.jpg`, `backstage.png` from `client-config/assets/`.
+
+### Profiles (`client-config/profiles.js`)
+
+5 profiles. The server.js trait-matching algorithm counts overlapping traits; highest score wins (first in array breaks ties).
+
+| Profile | Trait Set | Wins on |
+|---------|-----------|---------|
+| Ice Yuzu Tonic — **Bold** | `{groove, vinyl, backstage}` | 3× IN |
+| Ice Yuzu Tonic — **Electric** | `{groove, vinyl, frontrow}` | 2× IN (groove+vinyl) |
+| Ice Piña Colada | `{chill, vinyl, frontrow}` | OUT-IN-OUT, OUT-IN-IN |
+| Nespresso Martini — **Classic** | `{groove, digital, frontrow}` | IN-OUT-OUT |
+| Nespresso Martini — **Pure** | `{chill, digital, frontrow}` | 3× OUT |
+
+### Profile Text Content
+
+```
+Ice Yuzu Tonic — Bold, fearless, all-in.
+Espresso meets yuzu over iced tonic, with a twist of gin — bold, unapologetic, one of a kind.
+You don't test the water. You dive in. And the pool is always warm.
+
+Ice Yuzu Tonic — Electric, exclusive, unexpected.
+Espresso meets yuzu over iced tonic, with a twist of gin.
+You're the one who finds the hidden door at the Nespresso Terrasse — and orders something that sparks.
+
+Ice Piña Colada — Smooth, exotic, effortless.
+Espresso, coconut, pineapple — three islands, one cup.
+You drift into the Pool Universe like you own it.
+
+Nespresso Martini — Classic, refined, timeless.
+Under warm lights and deep basslines, you choose the essence.
+Espresso shaken with vodka and coffee liqueur — pure, iconic, no compromise.
+You don't chase trends, you set the tone.
+
+Nespresso Martini — Pure, Open, Undefined.
+Espresso, vodka, coffee liqueur — shaken, not overthought.
+No label needed. The best nights are the ones you didn't plan.
+```
+
+---
+
 ## Out of Scope
 
 - Backend RSVP storage (userData already passed to `saveQuizResult` — extend there when needed)
