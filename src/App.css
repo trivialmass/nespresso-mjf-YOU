@@ -1,88 +1,87 @@
-/* Quiz intro screen */
+/* Quiz intro screen — Figma frame 4 (390×844, cream bg, absolute layout) */
 .quiz-intro-page {
-  width: 100%;
-  min-height: 100vh;
+  position: relative;
+  width: 390px;
+  height: 844px;
   background: var(--bg-cream);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  overflow: hidden;
+  /* Center in viewport */
+  margin: 0 auto;
 }
 
-.quiz-intro-band {
-  width: 100%;
-  background: var(--blue-band);
-  padding: 20px 24px;
-  text-align: center;
-}
-
-.quiz-intro-eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--navy);
-}
-
-.quiz-intro-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 32px 32px;
-  gap: 24px;
-  text-align: center;
-}
-
+/* Heading — Figma: left:29 top:196 w:331 h:75, fs:42 fw:700 uppercase lh:44 */
 .quiz-intro-heading {
+  position: absolute;
+  left: 29px;
+  top: 196px;
+  width: 331px;
   font-family: Georgia, serif;
   /* TODO: replace with Gustavo_Display_Nespresso_Test */
-  font-size: 48px;
+  font-size: 42px;
   font-weight: 700;
   color: var(--navy);
-  line-height: 1.1;
+  text-transform: uppercase;
+  line-height: 44px;
+  text-align: center;
+  word-wrap: break-word;
+}
+
+/* Body text — Figma: left:31 top:295 w:327, fs:22 fw:700 uppercase lh:30 */
+.quiz-intro-body-text {
+  position: absolute;
+  left: 31px;
+  top: 295px;
+  width: 327px;
+  font-family: Georgia, serif;
+  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  text-transform: uppercase;
+  line-height: 30px;
+  text-align: center;
   white-space: pre-line;
+  word-wrap: break-word;
 }
 
-.quiz-intro-text {
-  font-size: 15px;
-  color: var(--navy);
-  line-height: 1.6;
-  max-width: 320px;
-  opacity: 0.8;
-}
-
+/* CTA — Figma: left:29 top:587 w:331 h:60, br:50, shadow, fs:24 */
 .quiz-intro-cta {
-  margin-top: 16px;
-  padding: 16px 56px;
+  position: absolute;
+  left: 29px;
+  top: 587px;
+  width: 331px;
+  height: 60px;
   background: var(--pink-cta);
-  color: #fff;
+  box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  color: #fff;
+  font-size: 24px;
+  font-family: Georgia, serif;
+  /* TODO: replace with Gustavo */
+  font-weight: 400;
+  line-height: 60px;
+  text-align: center;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
+  transition: opacity 0.15s;
 }
 
 .quiz-intro-cta:hover {
   opacity: 0.88;
-  transform: scale(1.02);
 }
 
 .quiz-intro-cta:focus {
-  outline: 2px solid var(--navy);
+  outline: 2px solid #fff;
   outline-offset: 2px;
 }
 
 .quiz-intro-cta:active {
-  transform: scale(0.97);
+  opacity: 0.75;
 }
 
+/* Nespresso × MJF logo mark — Figma: left:168 top:748 */
 .quiz-intro-logo {
-  width: 120px;
-  height: auto;
-  margin: 24px auto 40px;
-  opacity: 0.6;
+  position: absolute;
+  left: 168px;
+  top: 748px;
 }

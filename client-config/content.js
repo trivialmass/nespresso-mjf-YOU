@@ -13,10 +13,9 @@ export const rsvp = {
 };
 
 export const quizIntro = {
-  eyebrow: 'NESPRESSO × MONTREUX JAZZ FESTIVAL',
-  heading: 'QUEL EST\nVOTRE PROFIL\nCAFÉ ?',
-  body: 'Trois questions. Swipez à droite pour IN, à gauche pour OUT. Découvrez votre cocktail café signature.',
-  ctaLabel: 'C\'est parti',
+  heading: "What's your summer blend?",
+  body: "Three questions.\u00A0\u00A0\u00A0\u00A0One signature recipe.\nAttending or not?\u00A0\u00A0\u00A0your summer blend\u00A0\u00A0\u00A0\u00A0is yours to keep.",
+  ctaLabel: 'DISCOVER YOUR PROFILE',
 };
 
 export const congratsLoading = 'YOUR RESULT IS LOADING';
