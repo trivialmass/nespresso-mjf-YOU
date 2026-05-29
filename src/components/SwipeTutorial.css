@@ -85,4 +85,19 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.tutorial-cta:hover {
+  opacity: 0.88;
+  transform: scale(1.02);
+}
+
+.tutorial-cta:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.tutorial-cta:active {
+  transform: scale(0.97);
 }
