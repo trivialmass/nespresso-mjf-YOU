@@ -6,7 +6,8 @@ import { saveQuizResult } from '../services/googleSheetsSave.js';
 const Congradulation = ({ profile, answers, userData, onShowResults }) => {
   useEffect(() => {
     const run = async () => {
-      await saveQuizResult(userData, answers, profile);
+      const saved = await saveQuizResult(userData, answers, profile);
+      if (!saved) console.warn('Quiz result save failed, proceeding to show results');
       // Minimum 2s display so the loader feels intentional
       await new Promise(resolve => setTimeout(resolve, 2000));
       onShowResults();
