@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Congradulation from './components/Congradulation';
+import Results from './components/Results.jsx';
 import { fetchQuestions } from './services/googleSheets';
 import { generateProfile } from './services/llmProfile';
 import './Questions.css';
@@ -15,6 +16,7 @@ function Questions(userData) {
   const [error, setError] = useState(null);
   const [profile, setProfile] = useState('');
   const [showCongradulation, setShowCongradulation] = useState(false);
+  const [showResults, setShowResults] = useState(false);
   const [resetPosition, setResetPosition] = useState({ trueFalse: false, answer: null });
   const [swipeTilt, setSwipeTilt] = useState(0);
   const currentCardRef = useRef(null);
@@ -163,15 +165,24 @@ function Questions(userData) {
     );
   }
 
+  // Show results screen
+  if (showResults) {
+    return (
+      <Results
+        profile={profile}
+        onRestart={handleRestart}
+      />
+    );
+  }
+
   // Show congratulation screen
   if (showCongradulation && profile) {
     return (
       <Congradulation
         profile={profile}
         answers={answers}
-        onRestart={handleRestart}
-        onReturnToLastQuestion={handleReturnToLastQuestion}
         userData={userData}
+        onShowResults={() => setShowResults(true)}
       />
     );
   }
