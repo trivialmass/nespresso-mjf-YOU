@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Congradulation from './components/Congradulation';
 import Results from './components/Results.jsx';
-import { fetchQuestions } from './services/googleSheets';
+import { mockQuestions } from '../client-config/questions.js';
 import { generateProfile } from './services/llmProfile';
 import './Questions.css';
 import { headerBanier, logoIN, logoOUT, logoSwipe } from '../client-config/brand.js';
@@ -43,9 +43,9 @@ function Questions(userData) {
     try {
       setLoading(true);
       setError(null);
-      const fetchedQuestions = await fetchQuestions();
+      const fetchedQuestions = mockQuestions;
       if (!fetchedQuestions || fetchedQuestions.length === 0) {
-        setError('No questions found. Check your Google Sheet configuration.');
+        setError('No questions found. Check client-config/questions.js.');
       } else {
         // Preload all background images before showing the quiz
         const imageUrls = fetchedQuestions.map(q => q.bgImage).filter(Boolean);
