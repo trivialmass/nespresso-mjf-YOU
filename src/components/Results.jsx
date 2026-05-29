@@ -47,6 +47,3 @@ const Results = ({ profile }) => (
 );
 
 export default Results;
-
-
-export default Results;
