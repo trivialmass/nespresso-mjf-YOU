@@ -1,58 +1,26 @@
+import React, { useEffect } from 'react';
 import './Congradulation.css';
-import React, { useState, useEffect } from 'react';
-import Results from './Results';
-import logoCharging from '../logo/chargingLogo.svg';
-import { saveQuizResult } from '../services/googleSheetsSave';
+import { congratsLoading } from '../../client-config/content.js';
+import { saveQuizResult } from '../services/googleSheetsSave.js';
 
-const Congradulation = ({ profile, answers, userData, onRestart, onReturnToLastQuestion }) => {
-    const [showResultsCharging, setShowResultsCharging] = useState(false);
-    const [showResults, setShowResults] = useState(false);
-
-    useEffect(() => {
-        if (showResultsCharging && !showResults) {
-            const timer = setTimeout(() => {
-                setShowResults(true);
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [showResultsCharging, showResults]);
-
-    const handleShowResults = async () => {
-        setShowResultsCharging(true);
-        await saveQuizResult(userData, answers, profile);
+const Congradulation = ({ profile, answers, userData, onShowResults }) => {
+  useEffect(() => {
+    const run = async () => {
+      await saveQuizResult(userData, answers, profile);
+      // Minimum 2s display so the loader feels intentional
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      onShowResults();
     };
+    run();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return (
-        <>
-            {!showResults && (
-                <div className="congradulation-container">
-                    {!showResultsCharging && (
-                        <>
-                            <div className='congradulation-card'>
-                                <h2 className="congradulationText">🎉</h2>
-                                <h2 className="congradulationText">FÉLICITATIONS</h2>
-
-                                <button
-                                    className='buttonShowResults'
-                                    onClick={handleShowResults}
-                                >
-                                    Voir mon profil
-                                </button>
-                            </div>
-                            <button className='buttonReturn' onClick={onReturnToLastQuestion}>Retour</button>
-                        </>
-                    )}
-                    {showResultsCharging && (
-                        <div className="congradulation-card">
-                            <img src={logoCharging} alt="Loading..." className="spinnerCharging" />
-                            <h3 className="chargingText">Votre profil est en cours de création.</h3>
-                        </div>
-                    )}
-                </div>
-            )}
-            {showResults && <Results profile={profile} answers={answers} onRestart={onRestart} userData={userData} />}
-        </>
-    );
-}
+  return (
+    <div className="loading-page">
+      <div className="loading-spinner" aria-label="Loading" />
+      <p className="loading-text">{congratsLoading}</p>
+    </div>
+  );
+};
 
 export default Congradulation;

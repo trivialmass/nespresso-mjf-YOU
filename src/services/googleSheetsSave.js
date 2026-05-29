@@ -10,11 +10,11 @@ export const saveQuizResult = async (userData, answers, profile) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name: userData?.userData[0]?.name || "",
-        company: userData?.userData[0]?.company || "",
-        email: userData?.userData[0]?.email || "",
-        profile,
-        answers: answers.map(a => ({ question: a.question.question, answer: a.answer })),
+        name: `${userData?.firstName || ''} ${userData?.lastName || ''}`.trim(),
+        company: '',
+        email: userData?.email || '',
+        profile: profile ? JSON.stringify({ id: profile.id, drink: profile.drink, tagline: profile.tagline }) : '',
+        answers: answers.map(a => ({ question: a.question?.question || a.question, answer: a.answer })),
       }),
     });
     return true;
