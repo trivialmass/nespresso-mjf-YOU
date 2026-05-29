@@ -2,15 +2,14 @@
 // against the mailing list server-side. Only invited guests see the RSVP; quiz can be open to all.
 
 export const rsvp = {
-  eyebrow: 'NESPRESSO × MONTREUX JAZZ FESTIVAL',
-  heading: 'VOUS ÊTES INVITÉ·E',
-  subheading: 'Confirmez votre présence pour accéder à l\'expérience.',
-  firstNameLabel: 'Prénom',
-  lastNameLabel: 'Nom',
-  emailLabel: 'Email',
-  attendYes: 'Je serai présent·e',
-  attendNo: 'Je ne pourrai pas venir',
-  ctaLabel: 'Découvrir mon profil café',
+  heading: "you're invited",
+  firstNameLabel: 'First name*',
+  lastNameLabel: 'Last name*',
+  emailLabel: 'Email address*',
+  phoneLabel: 'Phone number',
+  attendYes: "I'd be delighted to attend",
+  attendNo: "I won't be able to make it this time",
+  ctaLabel: 'CONFIRM',
 };
 
 export const quizIntro = {

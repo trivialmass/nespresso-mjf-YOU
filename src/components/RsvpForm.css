@@ -1,114 +1,93 @@
-.rsvp-page {
-  width: 100%;
-  min-height: 100vh;
-  background: var(--bg-cream);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Card — floats on pool bg, top:158 equivalent via margin-top */
+.rsvp-card {
+  margin: 158px 33px 40px;
+  width: 327px;
+  background: #fff;
+  border-radius: 25px;
+  padding: 20px 21px 30px;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
-.rsvp-band {
-  width: 100%;
-  background: var(--blue-band);
-  padding: 32px 24px 28px;
-  text-align: center;
-}
-
-.rsvp-eyebrow {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--navy);
-  margin-bottom: 10px;
-}
-
-.rsvp-heading {
+.rsvp-title {
   font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test once provided */
-  font-size: 36px;
+  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-size: 34px;
   font-weight: 700;
   color: var(--navy);
+  margin: 0 0 20px;
   line-height: 1.1;
 }
 
-.rsvp-form {
-  width: 100%;
-  max-width: 440px;
-  padding: 32px 24px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.rsvp-subheading {
-  font-size: 14px;
-  color: var(--navy);
-  line-height: 1.5;
-  margin-bottom: 4px;
-}
-
-.rsvp-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
+/* Pill inputs — Figma: w:285 h:50 br:50 */
 .rsvp-input {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid var(--navy);
-  border-radius: 8px;
+  display: block;
+  width: 285px;
+  height: 50px;
+  padding: 0 20px;
+  margin-bottom: 12px;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
   background: transparent;
-  font-size: 15px;
-  color: var(--navy);
+  font-size: 18px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.85);
   outline: none;
+  box-sizing: border-box;
 }
 
 .rsvp-input::placeholder {
-  color: rgba(28, 40, 105, 0.45);
+  color: #C0BFBF;
 }
 
 .rsvp-input:focus {
-  border-color: var(--pink-cta);
+  border-color: var(--navy);
 }
 
-.rsvp-attend-buttons {
+/* Radio-style attending buttons */
+.rsvp-radio {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 10px;
-}
-
-.rsvp-attend {
-  width: 100%;
-  padding: 14px 16px;
-  border: 1.5px solid var(--navy);
-  border-radius: 8px;
+  width: 285px;
+  padding: 12px 0;
   background: transparent;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--navy);
+  border: none;
   cursor: pointer;
+  font-size: 16px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: #000;
   text-align: left;
-  transition: background 0.15s, color 0.15s;
 }
 
-.rsvp-attend.selected {
+.rsvp-radio__dot {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--navy);
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.15s;
+}
+
+.rsvp-radio--selected .rsvp-radio__dot {
   background: var(--navy);
-  color: #fff;
 }
 
+/* CONFIRM button — Figma: w:285 h:60 br:50 bg:#C93772 */
 .rsvp-cta {
-  margin-top: 8px;
-  width: 100%;
-  padding: 16px;
+  display: block;
+  width: 285px;
+  height: 60px;
+  margin-top: 16px;
   background: var(--pink-cta);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  border-radius: 50px;
+  font-size: 26px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
   cursor: pointer;
   transition: opacity 0.15s;
 }
@@ -116,4 +95,8 @@
 .rsvp-cta:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.rsvp-cta:not(:disabled):hover {
+  opacity: 0.88;
 }

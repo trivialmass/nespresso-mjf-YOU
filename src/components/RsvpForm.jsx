@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './RsvpForm.css';
+import PoolBg from './PoolBg.jsx';
 import { rsvp } from '../../client-config/content.js';
 
 const RsvpForm = ({ onSubmit }) => {
@@ -7,17 +8,12 @@ const RsvpForm = ({ onSubmit }) => {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
     attending: null,
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleAttend = (value) => {
-    setForm({ ...form, attending: value });
-  };
-
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleAttend = (value) => setForm({ ...form, attending: value });
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.firstName || !form.email || form.attending === null) return;
@@ -27,14 +23,10 @@ const RsvpForm = ({ onSubmit }) => {
   const isValid = form.firstName && form.email && form.attending !== null;
 
   return (
-    <div className="rsvp-page">
-      <div className="rsvp-band">
-        <p className="rsvp-eyebrow">{rsvp.eyebrow}</p>
-        <h1 className="rsvp-heading">{rsvp.heading}</h1>
-      </div>
-      <form className="rsvp-form" onSubmit={handleSubmit}>
-        <p className="rsvp-subheading">{rsvp.subheading}</p>
-        <div className="rsvp-fields">
+    <PoolBg overlay={false}>
+      <div className="rsvp-card">
+        <h1 className="rsvp-title">{rsvp.heading}</h1>
+        <form onSubmit={handleSubmit}>
           <input
             className="rsvp-input"
             type="text"
@@ -61,28 +53,36 @@ const RsvpForm = ({ onSubmit }) => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="rsvp-attend-buttons">
+          <input
+            className="rsvp-input"
+            type="tel"
+            name="phone"
+            placeholder={rsvp.phoneLabel}
+            value={form.phone}
+            onChange={handleChange}
+          />
           <button
             type="button"
-            className={`rsvp-attend ${form.attending === true ? 'selected' : ''}`}
+            className={`rsvp-radio${form.attending === true ? ' rsvp-radio--selected' : ''}`}
             onClick={() => handleAttend(true)}
           >
+            <span className="rsvp-radio__dot" />
             {rsvp.attendYes}
           </button>
           <button
             type="button"
-            className={`rsvp-attend ${form.attending === false ? 'selected' : ''}`}
+            className={`rsvp-radio${form.attending === false ? ' rsvp-radio--selected' : ''}`}
             onClick={() => handleAttend(false)}
           >
+            <span className="rsvp-radio__dot" />
             {rsvp.attendNo}
           </button>
-        </div>
-        <button className="rsvp-cta" type="submit" disabled={!isValid}>
-          {rsvp.ctaLabel}
-        </button>
-      </form>
-    </div>
+          <button className="rsvp-cta" type="submit" disabled={!isValid}>
+            {rsvp.ctaLabel}
+          </button>
+        </form>
+      </div>
+    </PoolBg>
   );
 };
 
