@@ -4,10 +4,7 @@ import Congradulation from './components/Congradulation';
 import { fetchQuestions } from './services/googleSheets';
 import { generateProfile } from './services/llmProfile';
 import './Questions.css';
-import headerBanier from './logo/headerBanier.svg';
-import logoIN from './logo/logoIN.svg';
-import logoOUT from './logo/logoOUT.svg';
-import logoSwipe from './logo/logoSwipe.svg';
+import { headerBanier, logoIN, logoOUT, logoSwipe } from '../client-config/brand.js';
 
 function Questions(userData) {
   const [questions, setQuestions] = useState([]);
@@ -228,6 +225,7 @@ function Questions(userData) {
                     ref={idx === currentIndex ? currentCardRef : null}
                     question={questions[idx].question}
                     bgImage={questions[idx].bgImage}
+                    progressLabel={idx === currentIndex ? `${currentIndex + 1}/3` : undefined}
                     onSwipe={handleSwipe}
                     stackIndex={arr.length - 1 - stackIdx}
                     pointEvents={idx === currentIndex ? eventAuto : eventNone}
