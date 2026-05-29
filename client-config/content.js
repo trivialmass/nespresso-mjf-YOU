@@ -3,22 +3,22 @@
 
 export const rsvp = {
   heading: "you're invited",
-  firstNameLabel: 'First name*',
-  lastNameLabel: 'Last name*',
-  emailLabel: 'Email address*',
-  phoneLabel: 'Phone number',
+  firstNameLabel: "First name*",
+  lastNameLabel: "Last name*",
+  emailLabel: "Email address*",
+  phoneLabel: "Phone number",
   attendYes: "I'd be delighted to attend",
   attendNo: "I won't be able to make it this time",
-  ctaLabel: 'CONFIRM',
+  ctaLabel: "CONFIRM",
 };
 
 export const quizIntro = {
   heading: "What's your summer blend?",
-  body: "Three questions.\u00A0\u00A0\u00A0\u00A0One signature recipe.\nAttending or not?\u00A0\u00A0\u00A0your summer blend\u00A0\u00A0\u00A0\u00A0is yours to keep.",
-  ctaLabel: 'DISCOVER YOUR PROFILE',
+  body: "Three questions.\nOne signature recipe.\nAttending or not?\nYour summer blend\nis yours to keep.",
+  ctaLabel: "DISCOVER YOUR PROFILE",
 };
 
-export const congratsLoading = 'YOUR RESULT IS LOADING';
+export const congratsLoading = "YOUR RESULT IS LOADING";
 
 export const privacy =
-  'Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.';
+  "Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.";
