@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Congradulation.css';
+import PoolBg from './PoolBg.jsx';
 import { congratsLoading } from '../../client-config/content.js';
 import { saveResult } from '../services/saveResult.js';
 
@@ -17,10 +18,12 @@ const Congradulation = ({ profile, answers, userData, onShowResults }) => {
   }, []);
 
   return (
-    <div className="loading-page">
-      <div className="loading-spinner" aria-label="Loading" />
-      <p className="loading-text">{congratsLoading}</p>
-    </div>
+    <PoolBg overlay>
+      <div className="loading-body">
+        <div className="loading-spinner" aria-label="Loading" />
+        <p className="loading-text">{congratsLoading}</p>
+      </div>
+    </PoolBg>
   );
 };
 

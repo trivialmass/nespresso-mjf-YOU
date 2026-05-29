@@ -1,11 +1,10 @@
-.loading-page {
-  position: fixed;
-  inset: 0;
-  background: var(--blue-band);
+/* PoolBg handles the fixed full-screen bg — these styles handle the content inside */
+.loading-body {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex: 1;
   gap: 32px;
 }
 
