@@ -6,6 +6,8 @@
 
 .question-card {
   position: absolute;
+  top: 50%;
+  left: 50%;
   /* Portrait: Figma visual 313.54 × 471.06 ≈ 2:3 */
   width: min(313px, 80vw);
   aspect-ratio: 313 / 471;

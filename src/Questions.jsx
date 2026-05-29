@@ -126,7 +126,7 @@ function Questions(userData) {
 
   if (loading) {
     return (
-      <PoolBg overlay>
+      <PoolBg>
         <div className="questions-loading">
           <div className="spinner" />
           <p>Loading…</p>
@@ -137,7 +137,7 @@ function Questions(userData) {
 
   if (error) {
     return (
-      <PoolBg overlay>
+      <PoolBg>
         <div className="questions-error">
           <p>{error}</p>
           <button onClick={loadQuestions}>Retry</button>
@@ -149,7 +149,7 @@ function Questions(userData) {
   const isComplete = currentIndex >= questions.length;
 
   return (
-    <PoolBg overlay>
+    <PoolBg>
       <div className="questions-frame">
 
         {/* ── Top arrow banner — Figma: left:23 top:49 w:347 h:106 ── */}
