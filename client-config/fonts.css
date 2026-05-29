@@ -1,2 +1,3 @@
-/* TODO: replace Georgia fallback with Gustavo_Display_Nespresso_Test once font files are provided by client
-   Add @font-face declarations here when the .woff2 files arrive. */
+/* TODO: replace Georgia fallback with Gustavo_Display_Nespresso_Test once font files are provided by client.
+   Add @font-face declarations here AND copy them to src/fonts/fonts.css (which is the file actually imported by main.jsx).
+   Place .woff2 files in src/fonts/ and reference them as: url('../fonts/your-font.woff2') format('woff2') */
