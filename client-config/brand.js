@@ -5,9 +5,11 @@ import logoIN from './assets/logoIN.svg';
 import logoOUT from './assets/logoOUT.svg';
 import logoSwipe from './assets/logoSwipe.svg';
 import chargingLogo from './assets/chargingLogo.svg';
+// Animated pool background (Montreux Jazz Festival pool scene)
+import poolBg from './assets/POOL - BG.gif';
 
 export const clientName = 'Nespresso × MJF';
 export const eventName = 'Montreux Jazz Festival 2026';
-export const primaryColor = '#8B0000'; // Nespresso deep red — confirm exact hex with client
+export const primaryColor = '#C93772';
 
-export { logoGame, headerBanier, logoIN, logoOUT, logoSwipe, chargingLogo };
+export { logoGame, headerBanier, logoIN, logoOUT, logoSwipe, chargingLogo, poolBg };
