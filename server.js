@@ -156,7 +156,7 @@ app.post("/api/save-result", (req, res) => {
     const stmt = db.prepare(
       "INSERT INTO results (name, company, email, profile, answers) VALUES (?, ?, ?, ?, ?)"
     );
-    stmt.run(name || "", company || "", email || "", JSON.stringify(profile) || "", JSON.stringify(answers || []));
+    stmt.run(name || "", company || "", email || "", profile ? JSON.stringify(profile) : "", JSON.stringify(answers || []));
     res.json({ success: true });
   } catch (error) {
     console.error("Error saving result:", error);
@@ -263,8 +263,9 @@ async function requestLink() {
   const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
   const tableRows = rows.map(r => {
     const answers = JSON.parse(r.answers || "[]").map(a => `${a.question}: ${a.answer}`).join("<br>");
-    const profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile;
-    const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile || '');
+    let profileData;
+    try { profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile; } catch { profileData = null; }
+    const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile?.split('\n')[0]?.replace(/^##\s*/, '') || '');
     return `<tr>
       <td>${r.created_at?.slice(0,16).replace("T"," ")}</td>
       <td>${r.name}</td>
