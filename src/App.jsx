@@ -1,57 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from 'react';
 import './App.css';
-import logoGame from './logo/logoGame.svg';
-import PopupInscription from "./components/PopupInscription";
-import Questions from './Questions';
+import { logoGame } from '../client-config/brand.js';
+import { quizIntro } from '../client-config/content.js';
+import RsvpForm from './components/RsvpForm.jsx';
+import SwipeTutorial from './components/SwipeTutorial.jsx';
+import Questions from './Questions.jsx';
+
+// TODO: URL-key invitation gating — read ?key=<token> from URL, validate against mailing list
+// before rendering RsvpForm. Users without a valid key see only the quiz (no form).
 
 function App() {
-  const [showPret, setShowPret] = useState(false);
-  const [readyStart, setReadyStart] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [userData, setUserData] = useState([]);
-  const [showQuestions, setShowQuestions] = useState(false);
+  const [step, setStep] = useState('rsvp'); // rsvp | quiz-intro | tutorial | quiz | result
+  const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setReadyStart(true);
-    }, 2000);
-  }, []);
-  return (
-    <>
-      {!showQuestions ? (
-        <div className="inscriptionsPage">
-          <div className={`appSlideUp${readyStart ? " slideUp" : ""}`}>
-            <img src={logoGame} alt="Logo" className="logoGame" />
-          </div>
-          <div className="introduction">
-            <h2 className="introductionHeader">HELLO!</h2>
-            <p className="introductionText">Notre métier? Apprendre à vous connaître pour imaginer des projets créatifs qui vous ressemblent vraiment.</p>
-            <p className="introductionText">Avec le quiz <i>Trivial YOU</i>, nous vous proposons une première rencontre ludique, rapide et inspirante pour mieux vous connaître.</p>
-            <p className="introductionText">Quelques questions, un moment amusant… et peut-être le début d’une belle collaboration.</p>
-            <p className="introductionText">Bonne partie ! 🎉</p>
-            <button className="introductionButton" onClick={() => setShowPopup(true)}>Suivant</button>
-          </div>
-          {showPopup && <PopupInscription setShowPopup={setShowPopup} setUserData={setUserData} setShowPret={setShowPret} />}
-          <div className={`appSlideDown${showPret ? " slideDown" : ""}${!showPret ? " slideUp" : ""}`}>
-            <div className="startGameContent">
-              <h1 className="startGameHeader">PRÊT·E·S?</h1>
-              <button
-                onClick={() => {
-                  setShowPret(false);
-                  setShowQuestions(true);
-                }}
-                className="startGameButton"
-              >
-                C'est partit !
-              </button>
-            </div>
-          </div>
+  const handleRsvpSubmit = (formData) => {
+    setUserData(formData);
+    setStep('quiz-intro');
+  };
+
+  const handleStartQuiz = () => setStep('tutorial');
+  const handleTutorialReady = () => setStep('quiz');
+  const handleRestart = () => {
+    setUserData(null);
+    setStep('rsvp');
+  };
+
+  if (step === 'rsvp') {
+    return <RsvpForm onSubmit={handleRsvpSubmit} />;
+  }
+
+  if (step === 'quiz-intro') {
+    return (
+      <div className="quiz-intro-page">
+        <div className="quiz-intro-band">
+          <p className="quiz-intro-eyebrow">{quizIntro.eyebrow}</p>
         </div>
-      ) : (
-        <Questions userData={userData}/>
-      )}
-    </>
-  );
+        <div className="quiz-intro-body">
+          <h1 className="quiz-intro-heading">{quizIntro.heading}</h1>
+          <p className="quiz-intro-text">{quizIntro.body}</p>
+          <button className="quiz-intro-cta" onClick={handleStartQuiz}>
+            {quizIntro.ctaLabel}
+          </button>
+        </div>
+        <img src={logoGame} alt="Nespresso × MJF" className="quiz-intro-logo" />
+      </div>
+    );
+  }
+
+  if (step === 'tutorial') {
+    return <SwipeTutorial onReady={handleTutorialReady} />;
+  }
+
+  if (step === 'quiz' || step === 'result') {
+    return (
+      <Questions
+        userData={userData}
+        onRestart={handleRestart}
+      />
+    );
+  }
+
+  return null;
 }
 
 export default App;
