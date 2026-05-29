@@ -1,16 +1,22 @@
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --bg-cream:   #F1F0E3;
+  --navy:       #1C2869;
+  --blue-band:  #749BD1;
+  --pink-cta:   #C93772;
+  --overlay:    rgba(28, 40, 105, 0.7);
+  --primary-color: var(--pink-cta);
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: black;
+  background: var(--bg-cream);
   min-height: 100vh;
   display: flex;
   justify-content: center;
