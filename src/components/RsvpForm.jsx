@@ -20,7 +20,7 @@ const RsvpForm = ({ onSubmit }) => {
     onSubmit(form);
   };
 
-  const isValid = form.firstName && form.email && form.attending !== null;
+  const isValid = form.firstName && form.lastName && form.email && form.attending !== null;
 
   return (
     <PoolBg overlay={false}>
