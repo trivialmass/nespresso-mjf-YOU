@@ -7,6 +7,7 @@ import Database from "better-sqlite3";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import cookieParser from "cookie-parser";
+import { PROFILES } from './client-config/profiles.js';
 
 // Load environment variables
 dotenv.config();
@@ -155,7 +156,7 @@ app.post("/api/save-result", (req, res) => {
     const stmt = db.prepare(
       "INSERT INTO results (name, company, email, profile, answers) VALUES (?, ?, ?, ?, ?)"
     );
-    stmt.run(name || "", company || "", email || "", profile || "", JSON.stringify(answers || []));
+    stmt.run(name || "", company || "", email || "", JSON.stringify(profile) || "", JSON.stringify(answers || []));
     res.json({ success: true });
   } catch (error) {
     console.error("Error saving result:", error);
@@ -173,101 +174,26 @@ app.get("/api/results", requireSession, (req, res) => {
   }
 });
 
-// Profile definitions — each trait list matches quiz answers (descriptionQ1 or descriptionQ2)
-const PROFILES = [
-  {
-    traits: new Set(['Classique', 'Accessible', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Stable', 'Émotionnelle', 'Sécurisante']),
-    text: `## L'artisan local
-
-### VOTRE TYPE D'ÉVÉNEMENT : L'APÉRITIF DE LANCEMENT
-
-Votre marque, c'est cet apéritif où l'hôte connaît tout le monde par son prénom. Pas besoin de gros buzz : les bonnes personnes sont là, et elles reviendront.
-
-### NOTRE PROJET POUR VOUS
-
-› Une identité visuelle qui sent la bonne hospitalité (logo, charte, supports imprimés)
-› Un site vitrine accueillant comme une porte qu'on laisse ouverte
-› Un apéritif annuel pour réunir vos habitués et leur permettre d'amener leurs amis`,
-  },
-  {
-    traits: new Set(['Innovante', 'Premium', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
-    text: `## La marque créative et premium
-
-### VOTRE TYPE D'ÉVÉNEMENT : LA SOIRÉE D'ENTREPRISE
-
-Votre marque, c'est cette soirée d'entreprise dont tout le monde veut une invitation : liste fermée, scénographie soignée, et on en parle encore six mois après.
-
-### NOTRE PROJET POUR VOUS
-
-› Une direction artistique signature, comme une scénographie qu'on prépare des mois à l'avance
-› Une campagne qui crée l'événement avant même qu'il commence
-› Une soirée privée millimétrée pour vos clients qui comptent`,
-  },
-  {
-    traits: new Set(['Classique', 'Premium', 'Sérieuse', 'Minimaliste', 'Institutionnelle', 'Internationale', 'Traditionnelle', 'Stable', 'Rationnelle', 'Sécurisante']),
-    text: `## La maison institutionnelle
-
-### VOTRE TYPE D'ÉVÉNEMENT : LA CONFÉRENCE
-
-Votre marque a la tenue d'une conférence d'experts : on s'attend au sérieux, on reste pour écouter, et on prend des notes pour la suite.
-
-### NOTRE PROJET POUR VOUS
-
-› Une charte corporate qui aligne toutes vos prises de parole, comme un programme bien minuté
-› Un site institutionnel à la hauteur de votre stature
-› Une conférence annuelle qui rassemble vos parties prenantes autour d'un sujet d'autorité`,
-  },
-  {
-    traits: new Set(['Innovante', 'Accessible', 'Ludique', 'Expressive', 'Humaine', 'Internationale', 'Disruptive', 'Agile', 'Émotionnelle', 'Audacieuse']),
-    text: `## La startup fun et accessible
-
-### VOTRE TYPE D'ÉVÉNEMENT : LE FESTIVAL
-
-Votre marque, c'est un festival : plusieurs scènes, une tribu qui se reconnaît, et personne ne sait à quelle heure ça finit.
-
-### NOTRE PROJET POUR VOUS
-
-› Une identité fun et colorée qui se reconnaît à un kilomètre
-› Une stratégie réseaux taillée pour votre tribu (vidéos courtes, lives, ton direct)
-› Un festival ou pop-up éphémère pour activer votre communauté sur plusieurs jours`,
-  },
-  {
-    traits: new Set(['Innovante', 'Premium', 'Sérieuse', 'Minimaliste', 'Humaine', 'Locale', 'Traditionnelle', 'Agile', 'Rationnelle', 'Sécurisante']),
-    text: `## La maison familiale qui se modernise
-
-### VOTRE TYPE D'ÉVÉNEMENT : LES WORKSHOPS
-
-Votre marque, c'est une série de workshops bien rodés : on transmet, on actualise, et chaque génération repart avec un outil de plus.
-
-### NOTRE PROJET POUR VOUS
-
-› Un refresh d'identité qui rajeunit sans renier votre histoire
-› Un site qui montre vos racines ET votre modernité, comme un atelier ouvert au public
-› Une série de workshops pour transmettre votre savoir-faire à vos clients et à leurs équipes`,
-  },
-];
-
-// Extract chosen traits — answer now directly contains the trait (traitRight or traitLeft)
-function getChosenTraits(answers) {
-  return answers.map(({ answer }) => answer);
-}
-
-// Find the best matching profile by counting overlapping traits
+/**
+ * Exact-key profile matching.
+ * Sorts the 3 answer traits alphabetically, joins them, then looks up the key
+ * against each profile's traitCombinations. Falls back to the last profile.
+ */
 function findBestProfile(answers) {
-  const chosenTraits = getChosenTraits(answers);
-  console.log('Chosen traits:', chosenTraits);
+  const traitKey = answers.map(({ answer }) => answer).sort().join(',');
+  console.log('Trait key:', traitKey);
 
-  let best = PROFILES[0];
-  let bestScore = -1;
   for (const profile of PROFILES) {
-    const score = chosenTraits.filter(t => profile.traits.has(t)).length;
-    if (score > bestScore) {
-      bestScore = score;
-      best = profile;
+    for (const combo of profile.traitCombinations) {
+      if ([...combo].sort().join(',') === traitKey) {
+        console.log(`Matched profile: ${profile.id} — ${profile.drink}`);
+        return profile;
+      }
     }
   }
-  console.log(`Best profile score: ${bestScore}/10 →`, best.text.split('\n')[0]);
-  return best;
+
+  console.warn('No exact match for key:', traitKey, '— falling back to:', PROFILES[PROFILES.length - 1].id);
+  return PROFILES[PROFILES.length - 1];
 }
 
 // Profile matching endpoint
@@ -280,7 +206,14 @@ app.post("/api/generate-profile", (req, res) => {
     }
 
     const profile = findBestProfile(answers);
-    res.json({ profile: profile.text });
+    res.json({
+      profile: {
+        id: profile.id,
+        drink: profile.drink,
+        tagline: profile.tagline,
+        description: profile.description,
+      },
+    });
   } catch (error) {
     console.error("Error in generate-profile endpoint:", error);
     res.status(500).json({ error: "Failed to generate profile", message: error.message });
@@ -330,7 +263,8 @@ async function requestLink() {
   const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
   const tableRows = rows.map(r => {
     const answers = JSON.parse(r.answers || "[]").map(a => `${a.question}: ${a.answer}`).join("<br>");
-    const profile = r.profile?.split("\n")[0]?.replace(/^##\s*/, "") || "";
+    const profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile;
+    const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile || '');
     return `<tr>
       <td>${r.created_at?.slice(0,16).replace("T"," ")}</td>
       <td>${r.name}</td>
