@@ -27,6 +27,7 @@ db.exec(`
     name TEXT,
     company TEXT,
     email TEXT,
+    phone TEXT,
     profile TEXT,
     answers TEXT
   );
@@ -42,6 +43,9 @@ db.exec(`
     expires_at TEXT NOT NULL
   );
 `);
+
+// Migrate: add phone column if not present (safe to run on every startup)
+try { db.prepare("ALTER TABLE results ADD COLUMN phone TEXT").run(); } catch (_) {}
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -152,11 +156,11 @@ function requireSession(req, res, next) {
 // Save quiz result to SQLite
 app.post("/api/save-result", (req, res) => {
   try {
-    const { name, company, email, profile, answers } = req.body;
+    const { name, company, email, phone, profile, answers } = req.body;
     const stmt = db.prepare(
-      "INSERT INTO results (name, company, email, profile, answers) VALUES (?, ?, ?, ?, ?)"
+      "INSERT INTO results (name, company, email, phone, profile, answers) VALUES (?, ?, ?, ?, ?, ?)"
     );
-    stmt.run(name || "", company || "", email || "", profile ? JSON.stringify(profile) : "", JSON.stringify(answers || []));
+    stmt.run(name || "", company || "", email || "", phone || "", profile ? JSON.stringify(profile) : "", JSON.stringify(answers || []));
     res.json({ success: true });
   } catch (error) {
     console.error("Error saving result:", error);
