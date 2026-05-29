@@ -168,10 +168,7 @@ function Questions(userData) {
   // Show results screen
   if (showResults) {
     return (
-      <Results
-        profile={profile}
-        onRestart={handleRestart}
-      />
+      <Results profile={profile} />
     );
   }
 

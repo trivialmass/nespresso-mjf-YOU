@@ -23,10 +23,3 @@ export const congratsLoading = 'YOUR RESULT IS LOADING';
 
 export const privacy =
   'Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.';
-
-export const resultsEmailSent = 'Votre profil café vous a été envoyé par email.';
-
-export const resultsFooterLink = {
-  label: 'nespresso.com',
-  href: 'https://www.nespresso.com',
-};
