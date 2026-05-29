@@ -1,0 +1,88 @@
+.tutorial-page {
+  position: fixed;
+  inset: 0;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial-overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
+  z-index: 0;
+}
+
+.tutorial-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.tutorial-arrows {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.tutorial-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.tutorial-arrow-img {
+  width: 56px;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.tutorial-label {
+  font-family: Georgia, serif;
+  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.tutorial-label.out {
+  color: #fff;
+}
+
+.tutorial-label.in {
+  color: #a5ff02;
+}
+
+.tutorial-swipe-icon {
+  width: 72px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+}
+
+.tutorial-hint {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.06em;
+}
+
+.tutorial-cta {
+  margin-top: 8px;
+  padding: 16px 48px;
+  background: var(--pink-cta);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
