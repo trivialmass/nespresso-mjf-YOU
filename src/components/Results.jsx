@@ -23,10 +23,10 @@ const Results = ({ profile, onRestart }) => {
         <p className="results-email-notice">{resultsEmailSent}</p>
         <a
           className="results-footer-link"
-          href="https://www.nespresso.com"
+          href={resultsFooterLink.href}
           target="_blank"
           rel="noopener noreferrer"
-        >{resultsFooterLink}</a>
+        >{resultsFooterLink.label}</a>
         <button className="results-restart" onClick={onRestart}>
           Recommencer
         </button>
