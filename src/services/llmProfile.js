@@ -28,8 +28,8 @@ export const generateProfile = async (answers) => {
 
       const data = await response.json();
 
-      if (!data.profile || data.profile.length < 50) {
-        console.warn("Backend response too short, using mock profile");
+      if (!data.profile || !data.profile.drink) {
+        console.warn("Backend response missing profile data, using mock");
         return getMockProfile(answers);
       }
 
