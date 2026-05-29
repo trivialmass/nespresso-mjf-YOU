@@ -12,12 +12,20 @@
  *   vertical   %  = px / 844 * 100
  */
 
-/* Heading — Figma: left:29 top:196 w:331, fs:42 fw:700 uppercase lh:44 */
-.quiz-intro-heading {
+/* Text block — heading + body flow together from Figma top:196 */
+.quiz-intro-text-block {
   position: absolute;
   left: 7.44%;    /* 29/390 */
   top: 23.22%;   /* 196/844 */
   width: 84.87%; /* 331/390 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 6.15vw, 24px); /* Figma gap between heading and body: 24px */
+}
+
+/* Heading — Figma: fs:42 fw:700 uppercase lh:44 */
+.quiz-intro-heading {
   font-family: Georgia, serif;
   /* TODO: replace with Gustavo_Display_Nespresso_Test */
   font-size: clamp(28px, 10.8vw, 42px);
@@ -29,12 +37,8 @@
   word-wrap: break-word;
 }
 
-/* Body text — Figma: left:31 top:295 w:327, fs:22 fw:700 uppercase lh:30 */
+/* Body text — Figma: fs:22 fw:700 uppercase lh:30 */
 .quiz-intro-body-text {
-  position: absolute;
-  left: 7.95%;    /* 31/390 */
-  top: 34.95%;   /* 295/844 */
-  width: 83.85%; /* 327/390 */
   font-family: Georgia, serif;
   /* TODO: replace with Gustavo_Display_Nespresso_Test */
   font-size: clamp(16px, 5.6vw, 22px);

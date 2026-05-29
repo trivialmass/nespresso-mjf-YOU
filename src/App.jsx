@@ -32,8 +32,10 @@ function App() {
   if (step === 'quiz-intro') {
     return (
       <div className="quiz-intro-page">
-        <h1 className="quiz-intro-heading">{quizIntro.heading}</h1>
-        <p className="quiz-intro-body-text">{quizIntro.body}</p>
+        <div className="quiz-intro-text-block">
+          <h1 className="quiz-intro-heading">{quizIntro.heading}</h1>
+          <p className="quiz-intro-body-text">{quizIntro.body}</p>
+        </div>
         <button className="quiz-intro-cta" onClick={handleStartQuiz}>
           {quizIntro.ctaLabel}
         </button>
