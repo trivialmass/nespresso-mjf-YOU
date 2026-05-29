@@ -63,6 +63,21 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.quiz-intro-cta:hover {
+  opacity: 0.88;
+  transform: scale(1.02);
+}
+
+.quiz-intro-cta:focus {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+}
+
+.quiz-intro-cta:active {
+  transform: scale(0.97);
 }
 
 .quiz-intro-logo {
