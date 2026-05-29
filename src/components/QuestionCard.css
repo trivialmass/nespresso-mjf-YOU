@@ -1,17 +1,16 @@
 .question-card {
   position: absolute;
-  width: 90%;
-  max-width: 400px;
-  height: 500px;
-  background: white;
+  width: 90vw;
+  max-width: 420px;
+  height: 520px;
   border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   cursor: grab;
   touch-action: none;
   user-select: none;
   transition: transform 0.8s ease, opacity 0.8s ease;
   transform: translate(-50%, -50%);
   overflow: hidden;
+  background: var(--navy);
 }
 
 .question-card.dragging {
@@ -19,169 +18,114 @@
   transition: none;
 }
 
+/* Full-screen background image */
 .question-card::before {
   content: "";
   position: absolute;
   inset: 0;
+  background-image: var(--bg-image);
   background-size: cover;
   background-position: center;
   z-index: 0;
-  opacity: 1;
-  transition: filter 0.3s;
-  pointer-events: none;
 }
 
-.question-card.has-bg {
-  background: #222;
-}
-
-.question-card.has-bg::before {
-  background-image: var(--bg-image);
-  filter: brightness(0.5);
-}
-
-.card-content {
-  position: relative;
+/* Navy overlay */
+.question-card.has-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--overlay);
   z-index: 1;
+}
+
+/* Progress label — top right */
+.card-progress {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* IN / OUT drag indicators */
+.swipe-indicator {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  font-family: Georgia, serif;
+  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  transition: opacity 0.1s;
+}
+
+.swipe-indicator.right {
+  right: 24px;
+  color: #a5ff02;
+}
+
+.swipe-indicator.left {
+  left: 24px;
+  color: #ff6a7b;
+}
+
+/* Question text */
+.card-content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
   padding: 40px;
   text-align: center;
 }
 
 .card-content h2 {
-  font-size: 28px;
-  color: #333;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.has-bg .card-content h2 {
+  font-family: Georgia, serif;
+  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-size: 40px;
+  font-weight: 700;
   color: #fff;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
-.swipe-indicator {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: bold;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  left: 50%;
-  z-index: 1000;
-}
-
-.swipe-indicator.left {
-  color: #ff6a7b99;
-  font-family: Helvetica Neue;
-  font-weight: 900;
-  font-style: Condensed Black;
-  font-size: 274px;
-  leading-trim: NONE;
-  line-height: 120%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-}
-
-.swipe-indicator.right {
-  color: #A5FF0099;
-  font-family: Helvetica Neue;
-  font-weight: 900;
-  font-style: Condensed Black;
-  font-size: 588px;
-  line-height: 120%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-}
-
+/* IN/OUT buttons (desktop) */
 .button-controls {
   position: absolute;
+  bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  bottom: -60px;
-  justify-content: space-between;
+  display: flex;
+  gap: 20px;
   z-index: 10;
-  width: 400px;
 }
 
 .control-button {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: none;
-  font-size: 18px;
-  font-weight: 600;
+  width: 96px;
+  height: 48px;
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
+  color: #fff;
+  transition: background 0.15s;
 }
 
-.control-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
+.no-button:hover { background: rgba(255, 106, 123, 0.5); }
+.yes-button:hover { background: rgba(165, 255, 2, 0.3); }
 
-.control-button:active {
-  transform: scale(0.95);
-}
-
-.no-button {
-  background: #FF6A7B;
-  font-family: Helvetica Neue;
-  font-weight: 900;
-  font-style: Condensed Black;
-  font-size: 60px;
-  line-height: 88%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-
-}
-
-.yes-button {
-  background: #A5FF00;
-  font-family: Helvetica Neue;
-  font-weight: 900;
-  font-style: Condensed Black;
-  font-size: 60px;
-  line-height: 88%;
-  letter-spacing: 0%;
-  text-align: center;
-  vertical-align: middle;
-}
-
-/* Hide buttons on small screens - swipe only */
 @media (max-width: 768px) {
-  .button-controls {
-    display: none;
-  }
-
-  .question-card {
-    height: 400px;
-  }
-
-  .card-content h2 {
-    font-family: Helvetica Neue;
-    font-weight: 700;
-    font-style: Bold;
-    text-align: center;
-    vertical-align: middle;
-
-  }
-}
-
-/* Make buttons visible on larger screens */
-@media (min-width: 769px) {
-  .button-controls {
-    display: flex;
-  }
+  .button-controls { display: none; }
+  .question-card { height: 440px; }
 }

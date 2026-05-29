@@ -3,8 +3,7 @@ import './QuestionCard.css';
 
 
 
-const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, pointEvents, resetPosition
-}, ref) => {
+const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, pointEvents, resetPosition, progressLabel = '' }, ref) => {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -128,60 +127,64 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
   }, [resetPosition]);
 
   return (
-    <>
-      <div
-        ref={cardRef}
-        className={`question-card${bgImage ? ' has-bg' : ''} ${isDragging ? 'dragging' : ''}`}
-        style={{
-          transform: `translate(${position.x}px, ${position.y + stackTranslateY}px) rotate(${rotation}deg) scale(${stackScale})`,
-          opacity: opacity,
-          ...(bgImage && { '--bg-image': `url(${bgImage})` }),
-          zIndex: 100 - stackIndex,
-          pointerEvents: pointEvents || 'auto',
-        }}
-        onMouseDown={handleMouseDown}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        <div className="card-content">
-          <h2>{question}</h2>
-        </div>
-      </div>
-      {/* Swipe indicators */}
-      <div
-        className="swipe-indicator left"
-        style={{ opacity: position.x < -50 ? Math.min(Math.abs(position.x) / 200, 1) : 0 }}
-      >
-        OUT
-      </div>
-      <div
+    <div
+      ref={cardRef}
+      className={`question-card${bgImage ? ' has-bg' : ''}${isDragging ? ' dragging' : ''}`}
+      style={{
+        '--bg-image': bgImage ? `url(${bgImage})` : 'none',
+        transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) rotate(${position.x * 0.03}deg)`,
+        zIndex: 10 - stackIndex,
+        pointerEvents: pointEvents,
+        opacity: stackIndex === 0 ? 1 : 0.85 - stackIndex * 0.1,
+      }}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {progressLabel && (
+        <span className="card-progress">{progressLabel}</span>
+      )}
+
+      {/* IN indicator — shown when dragging right */}
+      <span
         className="swipe-indicator right"
-        style={{ opacity: position.x > 50 ? Math.min(position.x / 200, 1) : 0 }}
+        style={{ opacity: position.x > 20 ? Math.min((position.x - 20) / 80, 1) : 0 }}
       >
         IN
+      </span>
+      {/* OUT indicator — shown when dragging left */}
+      <span
+        className="swipe-indicator left"
+        style={{ opacity: position.x < -20 ? Math.min((-position.x - 20) / 80, 1) : 0 }}
+      >
+        OUT
+      </span>
+
+      <div className="card-content">
+        <h2>{question?.question}</h2>
       </div>
 
-      {/* Desktop buttons */}
       <div className="button-controls">
         <button
           className="control-button no-button"
-          onClick={() => handleButtonClick('left')}
-          aria-label="No"
-          {...(!disabledButton ? {} : { disabled: true })}
+          onClick={() => !disabledButton && handleButtonClick('left')}
+          disabled={disabledButton}
         >
           OUT
         </button>
         <button
           className="control-button yes-button"
-          onClick={() => handleButtonClick('right')}
-          aria-label="Yes"
-          {...(!disabledButton ? {} : { disabled: true })}
+          onClick={() => !disabledButton && handleButtonClick('right')}
+          disabled={disabledButton}
         >
           IN
         </button>
-      </div >
-    </>
+      </div>
+    </div>
   );
 });
 
