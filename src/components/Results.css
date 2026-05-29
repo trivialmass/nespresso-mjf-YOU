@@ -1,62 +1,88 @@
-/* White card — Figma: top:54 left:30 w:327 h:631 br:32 */
+/*
+ * Results screen — Figma frame 14 (390×844)
+ * All % positions: left = px/390*100, top = px/844*100, card-relative = px/327 or px/631
+ */
+
+.results-frame {
+  position: absolute;
+  inset: 0;
+}
+
+/* ── White card — Figma: left:30 top:54 w:327 h:631 br:32 ──────────────── */
 .results-card {
-  margin: 54px 30px 0;
-  width: 327px;
-  min-height: 631px;
+  position: absolute;
+  left: 7.69%;    /* 30/390 */
+  top: 6.40%;     /* 54/844 */
+  width: 83.85%;  /* 327/390 */
+  height: 74.76%; /* 631/844 */
   background: #fff;
   border-radius: 32px;
   overflow: hidden;
-  flex-shrink: 0;
 }
 
-/* Drink image area — Figma: h:298, full width, clipped by card radius */
+/* ── Drink photo — top 298px of card ──────────────────────────────────── */
 .results-card__photo {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 298px;
+  height: 47.23%; /* 298/631 */
+  object-fit: cover;
+}
+
+.results-card__photo--placeholder {
   background: var(--navy);
-  /* TODO: swap for <img> with actual drink photo when assets are added:
-     width: 100%; height: 298px; object-fit: cover; */
 }
 
-.results-card__body {
-  padding: 27px 20px 28px;
+/* ── Title block (drink + tagline) — card-relative top:325 left:20 w:284 ── */
+.results-card__title-block {
+  position: absolute;
+  left: 6.12%;    /* 20/327 */
+  top: 51.50%;    /* 325/631 */
+  width: 86.85%;  /* 284/327 */
+  text-align: center;
 }
 
-.results-card__drink-block {
-  margin-bottom: 18px;
-}
-
+/* Drink name — ts1: fs:32 fw:700 lh:28px navy uppercase */
 .results-card__drink-name {
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: 24px;
+  font-size: clamp(22px, 8.2vw, 32px);
   font-weight: 700;
   color: var(--navy);
   text-transform: uppercase;
-  line-height: 1.15;
-  margin: 0 0 4px;
-}
-
-.results-card__tagline {
-  font-size: 14px;
-  color: var(--navy);
-  opacity: 0.75;
-  letter-spacing: 0.04em;
+  line-height: 28px;
   margin: 0;
 }
 
-.results-card__description {
+/* Tagline — ts2: fs:16 fw:700 lh:28px navy */
+.results-card__tagline {
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: 16px;
+  font-size: clamp(12px, 4.1vw, 16px);
   font-weight: 700;
   color: var(--navy);
-  line-height: 1.6;
+  line-height: 28px;
   margin: 0;
 }
 
-/* MJF logo outside card, bottom of scroll area */
-.results-footer-logo {
-  margin: 24px 0 40px;
-  height: 52px;
-  object-fit: contain;
-  flex-shrink: 0;
+/* ── Description — card-relative top:415 left:20 w:284 h:200 fs:16 ──────── */
+.results-card__description {
+  position: absolute;
+  left: 6.12%;    /* 20/327 */
+  top: 65.77%;    /* 415/631 */
+  width: 86.85%;  /* 284/327 */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-size: clamp(12px, 4.1vw, 16px);
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 28px;
+  text-align: center;
 }
+
+/* ── Logo — Figma: left:168 top:748 (centered) ───────────────────────── */
+.results-logo {
+  position: absolute;
+  left: 50%;
+  top: 88.63%; /* 748/844 */
+  transform: translateX(-50%);
+}
+
