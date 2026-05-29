@@ -1,23 +1,62 @@
 import React from 'react';
 import './SwipeTutorial.css';
 import PoolBg from './PoolBg.jsx';
-import { headerBanier } from '../../client-config/brand.js';
 
 const SwipeTutorial = ({ onReady }) => (
   <PoolBg overlay>
-    <div className="tutorial-content">
-      <p className="tutorial-instructions">
-        Swipe right<br />for In.<br /><br />Swipe left<br />for Out.
+    {/* Absolute-position frame matching Figma 390×844 proportions */}
+    <div className="tutorial-frame">
+
+      {/* Top instruction — Figma: left:74 top:229 w:245 fs:35 fw:700 uppercase lh:37 */}
+      <p className="tutorial-text-top">
+        Swipe right<br />for In.
       </p>
-      <div className="tutorial-inout">
-        <span className="tutorial-out">OUT</span>
-        <span className="tutorial-in">IN</span>
+
+      {/* Double-arrow banner — Figma: left:23 top:343 w:347 h:106 */}
+      <div className="tutorial-arrow-wrap">
+        <svg
+          className="tutorial-arrow-svg"
+          viewBox="0 0 347 106"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          preserveAspectRatio="none"
+        >
+          <path d="M347 53.0067L307.379 0V13.6257H39.6212V0L0 53.0067L39.6212 106V92.3743H307.379V106L347 53.0067Z" fill="#1C2869" />
+        </svg>
+        {/* OUT — Figma: left:59 (36px from arrow left) top:364 (21px below arrow top) */}
+        <span className="tutorial-label tutorial-out">OUT</span>
+        {/* IN — Figma: left:281 (258px from arrow left), right-aligned */}
+        <span className="tutorial-label tutorial-in">IN</span>
       </div>
+
+      {/* Bottom instruction — Figma: same text block, after 6-line gap (top≈525) */}
+      <p className="tutorial-text-bottom">
+        Swipe left<br />for Out.
+      </p>
+
+      {/* CTA — not in Figma, required for flow; positioned between bottom text and logo */}
       <button className="tutorial-cta" onClick={onReady}>
-        C'est parti
+        C&apos;est parti
       </button>
+
+      {/* Nespresso × MJF logo — Figma: left:168 top:748 */}
+      <div className="tutorial-logo" aria-label="Nespresso × MJF">
+        <svg width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clipPath="url(#clip0_tutorial)">
+            <path d="M0 0V54H53V0H0Z" fill="#1C2869" />
+            <path d="M7.8348 12.505V12.3059C13.4886 10.2961 20.2657 11.9362 23.9538 15.605C24.5248 16.098 26.5374 18.3164 27.3237 19.2645C29.0928 21.3786 31.4611 24.7346 33.4736 27.3607V16.6574H36.3473V37.8649C33.1366 35.1914 29.8885 29.8919 27.4547 26.697C27.4547 26.697 22.737 20.2315 20.7619 17.9277C19.2361 16.0222 16.5964 13.927 14.743 13.235C12.2717 12.23 9.76309 12.0784 7.82544 12.505H7.8348Z" fill="white" />
+            <path d="M45.1651 41.6947C39.5113 43.7046 32.7342 42.0645 29.0367 38.3956C28.4657 37.9026 26.4532 35.6842 25.6763 34.7362C23.9071 32.622 21.5388 29.266 19.5263 26.64V37.3433H16.6526V16.1357C19.8633 18.8092 23.1114 24.1087 25.5358 27.3036C25.5358 27.3036 30.2536 33.7692 32.2287 36.0729C33.7545 37.9784 36.3942 40.0736 38.2382 40.7657C40.7095 41.7706 43.2181 41.9223 45.1558 41.4956V41.6947H45.1651Z" fill="white" />
+          </g>
+          <defs>
+            <clipPath id="clip0_tutorial">
+              <rect width="53" height="54" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+
     </div>
-    <img src={headerBanier} alt="Nespresso × MJF" className="tutorial-footer-logo" />
   </PoolBg>
 );
 

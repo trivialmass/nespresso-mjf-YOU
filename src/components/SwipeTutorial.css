@@ -1,73 +1,130 @@
-.tutorial-content {
-  margin-top: 229px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  text-align: center;
-  padding: 0 24px;
+/*
+ * SwipeTutorial — Figma frame 10 (390×844)
+ * All positions: left% = px/390*100, top% = px/844*100
+ */
+
+/* Fill the PoolBg content area so children can use absolute positioning */
+.tutorial-frame {
+  position: absolute;
+  inset: 0;
 }
 
-.tutorial-instructions {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
-  font-size: 35px;
+/* ── Top instruction text ───────────────────────────────────────────────────
+ * Figma: left:74 top:229 w:245 fs:35 fw:700 uppercase lh:37 center white
+ */
+.tutorial-text-top {
+  position: absolute;
+  left: 19%;       /* 74/390 */
+  top: 27.1%;      /* 229/844 */
+  width: 62.8%;    /* 245/390 */
+  margin: 0;
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(24px, 9vw, 35px);
   font-weight: 700;
   color: #fff;
-  line-height: 1.25;
-  margin: 0 0 40px;
   text-transform: uppercase;
-  letter-spacing: 0.02em;
+  line-height: 1.06; /* 37/35 */
+  text-align: center;
 }
 
-.tutorial-inout {
-  display: flex;
-  justify-content: space-between;
+/* ── Double-arrow banner ────────────────────────────────────────────────────
+ * Figma: left:23 top:343 w:347 h:106 → aspect ratio 347:106
+ */
+.tutorial-arrow-wrap {
+  position: absolute;
+  left: 5.9%;      /* 23/390 */
+  top: 40.6%;      /* 343/844 */
+  width: 89%;      /* 347/390 */
+  /* intrinsic height via padding-bottom trick */
+  height: 0;
+  padding-bottom: calc(89vw * 106 / 347);
+}
+
+.tutorial-arrow-svg {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 320px;
-  margin-bottom: 48px;
+  height: 100%;
 }
 
-.tutorial-out,
+/* ── OUT / IN labels inside banner ─────────────────────────────────────────
+ * Figma: both at top:364 (21px below arrow top=343), lh:57.6 → centered ~396
+ * OUT at left:59 (36px from arrow left:23)
+ * IN  at left:281 (258px from arrow left), right-aligned
+ * Labels are positioned relative to .tutorial-frame (not the arrow wrapper)
+ */
+.tutorial-label {
+  position: absolute;
+  top: 43.1%;      /* 364/844 */
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(32px, 12.3vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+}
+
+.tutorial-out {
+  left: 15.1%;     /* 59/390 */
+}
+
 .tutorial-in {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
-  font-size: 48px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.03em;
+  left: 72.1%;     /* 281/390 */
+  text-align: right;
 }
 
+/* ── Bottom instruction text ────────────────────────────────────────────────
+ * Figma: same text block, the 6-line gap (6×37=222px) places "Swipe left"
+ * at top = 229 + (2+6)×37 = 229+296 = 525 → 525/844 = 62.2%
+ */
+.tutorial-text-bottom {
+  position: absolute;
+  left: 19%;       /* 74/390 */
+  top: 62.2%;      /* 525/844 */
+  width: 62.8%;    /* 245/390 */
+  margin: 0;
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(24px, 9vw, 35px);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  line-height: 1.06;
+  text-align: center;
+}
+
+/* ── CTA (not in Figma, required for flow) ──────────────────────────────────
+ * Placed at ~73% — between bottom text (~627) and logo (748)
+ */
 .tutorial-cta {
-  padding: 16px 48px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 73%;
+  padding: 14px 40px;
   background: var(--pink-cta);
-  color: #fff;
+  box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 50px;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  color: #fff;
+  font-size: clamp(16px, 4.1vw, 18px);
   font-weight: 700;
-  letter-spacing: 0.05em;
+  white-space: nowrap;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.15s;
+  transition: opacity 0.15s;
 }
 
-.tutorial-cta:hover {
-  opacity: 0.88;
-  transform: scale(1.02);
+.tutorial-cta:hover  { opacity: 0.88; }
+.tutorial-cta:focus  { outline: 2px solid #fff; outline-offset: 2px; }
+.tutorial-cta:active { opacity: 0.75; }
+
+/* ── Nespresso × MJF logo ───────────────────────────────────────────────────
+ * Figma: left:168 top:748 → centered horizontally, top:88.6%
+ */
+.tutorial-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 88.6%;      /* 748/844 */
 }
 
-.tutorial-cta:focus {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
-
-.tutorial-cta:active {
-  transform: scale(0.97);
-}
-
-.tutorial-footer-logo {
-  margin: auto 0 40px;
-  height: 52px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
