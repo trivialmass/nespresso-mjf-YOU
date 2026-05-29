@@ -104,12 +104,6 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
     }
   }, [isDragging, position]);
 
-  const stackScale = 1 - stackIndex * 0.1;
-  const stackTranslateY = stackIndex * 40;
-
-  const rotation = position.x / 20;
-  const opacity = 1 - Math.abs(position.x) / (window.innerWidth * 0.5);
-
   // Reset position for last card with question from right side if user says yes and from left side if user says no
   useEffect(() => {
     if (
