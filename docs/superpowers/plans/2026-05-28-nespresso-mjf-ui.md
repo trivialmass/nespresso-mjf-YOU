@@ -29,35 +29,36 @@ Add `@font-face` to `client-config/fonts.css` when fonts arrive. Until then all 
 
 ## File Map
 
-| File | Action | Responsibility |
-|------|--------|---------------|
-| `src/index.css` | Modify | Add CSS color tokens, set body bg to cream |
-| `client-config/fonts.css` | Modify | Add font TODO comment (no functional change yet) |
-| `client-config/profiles.js` | Rewrite | 5 profiles with `traitCombinations` arrays for exact-key matching |
-| `client-config/questions.js` | Rewrite | 3 questions with named traits (groove/chill, vinyl/digital, backstage/frontrow) + bg image imports |
-| `client-config/content.js` | Modify | Add `rsvp` object, `quizIntro` object, update `congratsLoading` |
-| `server.js` | Modify | Import PROFILES from client-config; replace score-based matching with exact-key lookup; return `{ profile: { id, drink, tagline, description } }` |
-| `src/services/llmProfile.js` | Modify | Accept profile object response instead of string; update validation check |
-| `src/utils/getMockProfiles.js` | Modify | Return a profile object (same shape as server response) instead of string |
-| `src/components/RsvpForm.jsx` | Create | RSVP invitation form (Figma 3005-450) |
-| `src/components/RsvpForm.css` | Create | RSVP form styles |
-| `src/components/SwipeTutorial.jsx` | Create | Swipe left/right tutorial screen (Figma 3005-935) |
-| `src/components/SwipeTutorial.css` | Create | Tutorial styles |
-| `src/App.jsx` | Rewrite | 6-step state machine: rsvp → quiz-intro → tutorial → quiz → loading → result |
-| `src/App.css` | Modify | Quiz-intro screen styles; remove old Trivial-YOU styles |
-| `src/Questions.jsx` | Modify | Fix `./logo/` imports → `client-config/brand.js`; pass `progressLabel` prop |
-| `src/components/QuestionCard.jsx` | Modify | Add BACK button, progress bar, navy overlay treatment |
-| `src/components/QuestionCard.css` | Rewrite | Nespresso card: full-screen bg, navy overlay, pink IN/OUT indicators |
-| `src/components/Congradulation.jsx` | Rewrite | Blue loading screen, auto-trigger on mount (no button) |
-| `src/components/Congradulation.css` | Rewrite | Blue-band loading styles, CSS spin animation |
-| `src/components/Results.jsx` | Rewrite | White rounded card: drink name, tagline, description, restart button |
-| `src/components/Results.css` | Rewrite | Result card styles |
+| File                                | Action  | Responsibility                                                                                                                                    |
+| ----------------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/index.css`                     | Modify  | Add CSS color tokens, set body bg to cream                                                                                                        |
+| `client-config/fonts.css`           | Modify  | Add font TODO comment (no functional change yet)                                                                                                  |
+| `client-config/profiles.js`         | Rewrite | 5 profiles with `traitCombinations` arrays for exact-key matching                                                                                 |
+| `client-config/questions.js`        | Rewrite | 3 questions with named traits (groove/chill, vinyl/digital, backstage/frontrow) + bg image imports                                                |
+| `client-config/content.js`          | Modify  | Add `rsvp` object, `quizIntro` object, update `congratsLoading`                                                                                   |
+| `server.js`                         | Modify  | Import PROFILES from client-config; replace score-based matching with exact-key lookup; return `{ profile: { id, drink, tagline, description } }` |
+| `src/services/llmProfile.js`        | Modify  | Accept profile object response instead of string; update validation check                                                                         |
+| `src/utils/getMockProfiles.js`      | Modify  | Return a profile object (same shape as server response) instead of string                                                                         |
+| `src/components/RsvpForm.jsx`       | Create  | RSVP invitation form (Figma 3005-450)                                                                                                             |
+| `src/components/RsvpForm.css`       | Create  | RSVP form styles                                                                                                                                  |
+| `src/components/SwipeTutorial.jsx`  | Create  | Swipe left/right tutorial screen (Figma 3005-935)                                                                                                 |
+| `src/components/SwipeTutorial.css`  | Create  | Tutorial styles                                                                                                                                   |
+| `src/App.jsx`                       | Rewrite | 6-step state machine: rsvp → quiz-intro → tutorial → quiz → loading → result                                                                      |
+| `src/App.css`                       | Modify  | Quiz-intro screen styles; remove old Trivial-YOU styles                                                                                           |
+| `src/Questions.jsx`                 | Modify  | Fix `./logo/` imports → `client-config/brand.js`; pass `progressLabel` prop                                                                       |
+| `src/components/QuestionCard.jsx`   | Modify  | Add BACK button, progress bar, navy overlay treatment                                                                                             |
+| `src/components/QuestionCard.css`   | Rewrite | Nespresso card: full-screen bg, navy overlay, pink IN/OUT indicators                                                                              |
+| `src/components/Congradulation.jsx` | Rewrite | Blue loading screen, auto-trigger on mount (no button)                                                                                            |
+| `src/components/Congradulation.css` | Rewrite | Blue-band loading styles, CSS spin animation                                                                                                      |
+| `src/components/Results.jsx`        | Rewrite | White rounded card: drink name, tagline, description, restart button                                                                              |
+| `src/components/Results.css`        | Rewrite | Result card styles                                                                                                                                |
 
 ---
 
 ## Task 1: CSS Tokens
 
 **Files:**
+
 - Modify: `src/index.css`
 - Modify: `client-config/fonts.css`
 
@@ -66,23 +67,26 @@ Add `@font-face` to `client-config/fonts.css` when fonts arrive. Until then all 
 Replace the entire file content:
 
 ```css
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --bg-cream:   #F1F0E3;
-  --navy:       #1C2869;
-  --blue-band:  #749BD1;
-  --pink-cta:   #C93772;
-  --overlay:    rgba(28, 40, 105, 0.7);
+  --bg-cream: #f1f0e3;
+  --navy: #1c2869;
+  --blue-band: #749bd1;
+  --pink-cta: #c93772;
+  --overlay: rgba(28, 40, 105, 0.7);
   --primary-color: var(--pink-cta);
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   background: var(--bg-cream);
   min-height: 100vh;
@@ -127,6 +131,7 @@ git commit -m "feat: add Nespresso CSS color tokens and font TODO"
 ## Task 2: Profiles — exact-key matching format
 
 **Files:**
+
 - Rewrite: `client-config/profiles.js`
 
 - [ ] **Step 1: Replace `client-config/profiles.js` entirely**
@@ -141,51 +146,56 @@ git commit -m "feat: add Nespresso CSS color tokens and font TODO"
 
 export const PROFILES = [
   {
-    id: 'bold',
-    drink: 'Ice Yuzu Tonic',
-    tagline: 'Bold, fearless, all-in.',
-    description: 'Espresso meets yuzu over iced tonic, with a twist of gin — bold, unapologetic, one of a kind. You don\'t test the water. You dive in. And the pool is always warm.',
+    id: "bold",
+    drink: "Ice Yuzu Tonic",
+    tagline: "Bold, fearless, all-in.",
+    description:
+      "Espresso meets yuzu over iced tonic, with a twist of gin — bold, unapologetic, one of a kind. You don't test the water. You dive in. And the pool is always warm.",
     traitCombinations: [
-      ['backstage', 'groove', 'vinyl'],   // IN IN IN
+      ["backstage", "groove", "vinyl"], // IN IN IN
     ],
   },
   {
-    id: 'electric',
-    drink: 'Ice Yuzu Tonic',
-    tagline: 'Electric, exclusive, unexpected.',
-    description: 'Espresso meets yuzu over iced tonic, with a twist of gin. You\'re the one who finds the hidden door at the Nespresso Terrasse — and orders something that sparks.',
+    id: "electric",
+    drink: "Ice Yuzu Tonic",
+    tagline: "Electric, exclusive, unexpected.",
+    description:
+      "Espresso meets yuzu over iced tonic, with a twist of gin. You're the one who finds the hidden door at the Nespresso Terrasse — and orders something that sparks.",
     traitCombinations: [
-      ['backstage', 'groove', 'digital'], // IN IN OUT
-      ['frontrow', 'groove', 'digital'],  // OUT IN OUT
+      ["backstage", "groove", "digital"], // IN IN OUT
+      ["frontrow", "groove", "digital"], // OUT IN OUT
     ],
   },
   {
-    id: 'pincolada',
-    drink: 'Ice Piña Colada',
-    tagline: 'Smooth, exotic, effortless.',
-    description: 'Espresso, coconut, pineapple — three islands, one cup. You drift into the Pool Universe like you own it.',
+    id: "pincolada",
+    drink: "Ice Piña Colada",
+    tagline: "Smooth, exotic, effortless.",
+    description:
+      "Espresso, coconut, pineapple — three islands, one cup. You drift into the Pool Universe like you own it.",
     traitCombinations: [
-      ['backstage', 'chill', 'digital'],  // IN OUT OUT
-      ['frontrow', 'groove', 'vinyl'],    // OUT IN IN
+      ["backstage", "chill", "digital"], // IN OUT OUT
+      ["frontrow", "groove", "vinyl"], // OUT IN IN
     ],
   },
   {
-    id: 'classic',
-    drink: 'Nespresso Martini',
-    tagline: 'Classic, refined, timeless.',
-    description: 'Under warm lights and deep basslines, you choose the essence. Espresso shaken with vodka and coffee liqueur — pure, iconic, no compromise. You don\'t chase trends, you set the tone.',
+    id: "classic",
+    drink: "Nespresso Martini",
+    tagline: "Classic, refined, timeless.",
+    description:
+      "Under warm lights and deep basslines, you choose the essence. Espresso shaken with vodka and coffee liqueur — pure, iconic, no compromise. You don't chase trends, you set the tone.",
     traitCombinations: [
-      ['backstage', 'chill', 'vinyl'],    // IN OUT IN
-      ['frontrow', 'chill', 'vinyl'],     // OUT OUT IN
+      ["backstage", "chill", "vinyl"], // IN OUT IN
+      ["frontrow", "chill", "vinyl"], // OUT OUT IN
     ],
   },
   {
-    id: 'pure',
-    drink: 'Nespresso Martini',
-    tagline: 'Pure, open, undefined.',
-    description: 'Espresso, vodka, coffee liqueur — shaken, not overthought. No label needed. The best nights are the ones you didn\'t plan.',
+    id: "pure",
+    drink: "Nespresso Martini",
+    tagline: "Pure, open, undefined.",
+    description:
+      "Espresso, vodka, coffee liqueur — shaken, not overthought. No label needed. The best nights are the ones you didn't plan.",
     traitCombinations: [
-      ['frontrow', 'chill', 'digital'],   // OUT OUT OUT
+      ["frontrow", "chill", "digital"], // OUT OUT OUT
     ],
   },
 ];
@@ -212,19 +222,20 @@ git commit -m "feat: Nespresso profiles with exact trait-combination matching"
 ## Task 3: Questions with named traits
 
 **Files:**
+
 - Rewrite: `client-config/questions.js`
 
 - [ ] **Step 1: Replace `client-config/questions.js` entirely**
 
 ```js
-import grooveBg from './assets/groove.png';
-import vinylBg from './assets/vinyl.jpg';
-import backstageBg from './assets/backstage.png';
+import grooveBg from "./assets/groove.png";
+import vinylBg from "./assets/vinyl.jpg";
+import backstageBg from "./assets/backstage.png";
 
 export const sheetConfig = {
   apiKey: import.meta.env.VITE_GOOGLE_SHEETS_API_KEY,
   sheetId: import.meta.env.VITE_GOOGLE_SHEET_ID,
-  range: 'A2:D',
+  range: "A2:D",
 };
 
 /**
@@ -238,21 +249,21 @@ export const sheetConfig = {
  */
 export const mockQuestions = [
   {
-    question: 'GROOVE?',
-    traitRight: 'groove',
-    traitLeft: 'chill',
+    question: "GROOVE?",
+    traitRight: "groove",
+    traitLeft: "chill",
     bgImage: grooveBg,
   },
   {
-    question: 'VINYL?',
-    traitRight: 'vinyl',
-    traitLeft: 'digital',
+    question: "VINYL?",
+    traitRight: "vinyl",
+    traitLeft: "digital",
     bgImage: vinylBg,
   },
   {
-    question: 'BACKSTAGE?',
-    traitRight: 'backstage',
-    traitLeft: 'frontrow',
+    question: "BACKSTAGE?",
+    traitRight: "backstage",
+    traitLeft: "frontrow",
     bgImage: backstageBg,
   },
 ];
@@ -276,6 +287,7 @@ git commit -m "feat: Nespresso quiz questions with named traits and bg images"
 ## Task 4: Content strings
 
 **Files:**
+
 - Modify: `client-config/content.js`
 
 - [ ] **Step 1: Replace `client-config/content.js` entirely**
@@ -285,34 +297,35 @@ git commit -m "feat: Nespresso quiz questions with named traits and bg images"
 // against the mailing list server-side. Only invited guests see the RSVP; quiz can be open to all.
 
 export const rsvp = {
-  eyebrow: 'NESPRESSO × MONTREUX JAZZ FESTIVAL',
-  heading: 'VOUS ÊTES INVITÉ·E',
-  subheading: 'Confirmez votre présence pour accéder à l\'expérience.',
-  firstNameLabel: 'Prénom',
-  lastNameLabel: 'Nom',
-  emailLabel: 'Email',
-  attendYes: 'Je serai présent·e',
-  attendNo: 'Je ne pourrai pas venir',
-  ctaLabel: 'Découvrir mon profil café',
+  eyebrow: "NESPRESSO × MONTREUX JAZZ FESTIVAL",
+  heading: "VOUS ÊTES INVITÉ·E",
+  subheading: "Confirmez votre présence pour accéder à l'expérience.",
+  firstNameLabel: "Prénom",
+  lastNameLabel: "Nom",
+  emailLabel: "Email",
+  attendYes: "Je serai présent·e",
+  attendNo: "Je ne pourrai pas venir",
+  ctaLabel: "Découvrir mon profil café",
 };
 
 export const quizIntro = {
-  eyebrow: 'NESPRESSO × MONTREUX JAZZ FESTIVAL',
-  heading: 'QUEL EST\nVOTRE PROFIL\nCAFÉ ?',
-  body: 'Trois questions. Swipez à droite pour IN, à gauche pour OUT. Découvrez votre cocktail café signature.',
-  ctaLabel: 'C\'est parti',
+  eyebrow: "NESPRESSO × MONTREUX JAZZ FESTIVAL",
+  heading: "QUEL EST\nVOTRE PROFIL\nCAFÉ ?",
+  body: "Trois questions. Swipez à droite pour IN, à gauche pour OUT. Découvrez votre cocktail café signature.",
+  ctaLabel: "C'est parti",
 };
 
-export const congratsLoading = 'YOUR RESULT IS LOADING';
+export const congratsLoading = "YOUR RESULT IS LOADING";
 
 export const privacy =
-  'Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.';
+  "Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.";
 
-export const resultsEmailSent = 'Votre profil café vous a été envoyé par email.';
+export const resultsEmailSent =
+  "Votre profil café vous a été envoyé par email.";
 
 export const resultsFooterLink = {
-  label: 'nespresso.com',
-  href: 'https://www.nespresso.com',
+  label: "nespresso.com",
+  href: "https://www.nespresso.com",
 };
 ```
 
@@ -334,6 +347,7 @@ git commit -m "feat: Nespresso content strings — RSVP, quiz-intro, loading"
 ## Task 5: Server — exact profile matching
 
 **Files:**
+
 - Modify: `server.js` (lines ~1-10 for imports, ~177-270 for PROFILES + matching)
 
 The goal: remove the hardcoded PROFILES array and score-based finder from server.js; import from client-config; use exact-key lookup; return a profile object instead of a text string.
@@ -343,7 +357,7 @@ The goal: remove the hardcoded PROFILES array and score-based finder from server
 After the existing imports block (around line 10), add:
 
 ```js
-import { PROFILES } from './client-config/profiles.js';
+import { PROFILES } from "./client-config/profiles.js";
 ```
 
 - [ ] **Step 2: Delete the hardcoded PROFILES const (lines ~177–249)**
@@ -361,19 +375,27 @@ Replace the two functions (lines ~250–271) with:
  * against each profile's traitCombinations. Falls back to the last profile.
  */
 function findBestProfile(answers) {
-  const traitKey = answers.map(({ answer }) => answer).sort().join(',');
-  console.log('Trait key:', traitKey);
+  const traitKey = answers
+    .map(({ answer }) => answer)
+    .sort()
+    .join(",");
+  console.log("Trait key:", traitKey);
 
   for (const profile of PROFILES) {
     for (const combo of profile.traitCombinations) {
-      if ([...combo].sort().join(',') === traitKey) {
+      if ([...combo].sort().join(",") === traitKey) {
         console.log(`Matched profile: ${profile.id} — ${profile.drink}`);
         return profile;
       }
     }
   }
 
-  console.warn('No exact match for key:', traitKey, '— falling back to:', PROFILES[PROFILES.length - 1].id);
+  console.warn(
+    "No exact match for key:",
+    traitKey,
+    "— falling back to:",
+    PROFILES[PROFILES.length - 1].id,
+  );
   return PROFILES[PROFILES.length - 1];
 }
 ```
@@ -398,14 +420,25 @@ res.json({
 Find `const profile = r.profile?.split("\n")[0]?.replace(/^##\s*/, "") || "";` and replace with:
 
 ```js
-const profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile;
-const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile || '');
+const profileData =
+  typeof r.profile === "string" ? JSON.parse(r.profile) : r.profile;
+const profile = profileData?.drink
+  ? `${profileData.drink} — ${profileData.tagline}`
+  : r.profile || "";
 ```
 
 Also update the save-result handler so `profile` is stored as JSON string. Find where it does:
+
 ```js
-stmt.run(name || "", company || "", email || "", profile || "", JSON.stringify(answers || []));
+stmt.run(
+  name || "",
+  company || "",
+  email || "",
+  profile || "",
+  JSON.stringify(answers || []),
+);
 ```
+
 And replace `profile || ""` with `JSON.stringify(profile) || ""`.
 
 - [ ] **Step 6: Verify server starts**
@@ -434,6 +467,7 @@ git commit -m "feat: server exact-key profile matching, return profile object"
 ## Task 6: Frontend profile service — accept profile object
 
 **Files:**
+
 - Modify: `src/services/llmProfile.js`
 - Modify: `src/utils/getMockProfiles.js`
 
@@ -455,7 +489,7 @@ Keep everything else the same. The function now returns `data.profile` which is 
 Replace the entire file:
 
 ```js
-import { mockProfile } from '../../client-config/profiles.js';
+import { mockProfile } from "../../client-config/profiles.js";
 
 // Returns the first profile as mock (same shape as server response)
 const getMockProfile = (_answers) => ({
@@ -486,6 +520,7 @@ git commit -m "feat: frontend profile service accepts {drink, tagline, descripti
 ## Task 7: RsvpForm component
 
 **Files:**
+
 - Create: `src/components/RsvpForm.jsx`
 - Create: `src/components/RsvpForm.css`
 
@@ -494,15 +529,15 @@ Design reference: Figma 3005-450. Cream background, navy text, blue band header 
 - [ ] **Step 1: Create `src/components/RsvpForm.jsx`**
 
 ```jsx
-import React, { useState } from 'react';
-import './RsvpForm.css';
-import { rsvp } from '../../client-config/content.js';
+import React, { useState } from "react";
+import "./RsvpForm.css";
+import { rsvp } from "../../client-config/content.js";
 
 const RsvpForm = ({ onSubmit }) => {
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    firstName: "",
+    lastName: "",
+    email: "",
     attending: null,
   });
 
@@ -561,16 +596,14 @@ const RsvpForm = ({ onSubmit }) => {
         <div className="rsvp-attend-buttons">
           <button
             type="button"
-            className={`rsvp-attend ${form.attending === true ? 'selected' : ''}`}
-            onClick={() => handleAttend(true)}
-          >
+            className={`rsvp-attend ${form.attending === true ? "selected" : ""}`}
+            onClick={() => handleAttend(true)}>
             {rsvp.attendYes}
           </button>
           <button
             type="button"
-            className={`rsvp-attend ${form.attending === false ? 'selected' : ''}`}
-            onClick={() => handleAttend(false)}
-          >
+            className={`rsvp-attend ${form.attending === false ? "selected" : ""}`}
+            onClick={() => handleAttend(false)}>
             {rsvp.attendNo}
           </button>
         </div>
@@ -680,7 +713,9 @@ export default RsvpForm;
   color: var(--navy);
   cursor: pointer;
   text-align: left;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
 
 .rsvp-attend.selected {
@@ -727,6 +762,7 @@ git commit -m "feat: RsvpForm component — invitation form screen"
 ## Task 8: SwipeTutorial component
 
 **Files:**
+
 - Create: `src/components/SwipeTutorial.jsx`
 - Create: `src/components/SwipeTutorial.css`
 
@@ -735,9 +771,9 @@ Design reference: Figma 3005-935. Full-screen dark overlay over a photo backgrou
 - [ ] **Step 1: Create `src/components/SwipeTutorial.jsx`**
 
 ```jsx
-import React from 'react';
-import './SwipeTutorial.css';
-import { logoIN, logoOUT, logoSwipe } from '../../client-config/brand.js';
+import React from "react";
+import "./SwipeTutorial.css";
+import { logoIN, logoOUT, logoSwipe } from "../../client-config/brand.js";
 
 const SwipeTutorial = ({ onReady }) => {
   return (
@@ -819,7 +855,6 @@ export default SwipeTutorial;
 
 .tutorial-label {
   font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
   font-size: 28px;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -878,6 +913,7 @@ git commit -m "feat: SwipeTutorial component — IN/OUT swipe instructions"
 ## Task 9: App.jsx — 6-step state machine
 
 **Files:**
+
 - Rewrite: `src/App.jsx`
 - Modify: `src/App.css` (remove old styles, add quiz-intro styles)
 
@@ -886,38 +922,38 @@ Steps: `rsvp` → `quiz-intro` → `tutorial` → `quiz` → `loading` → `resu
 - [ ] **Step 1: Replace `src/App.jsx` entirely**
 
 ```jsx
-import React, { useState } from 'react';
-import './App.css';
-import { logoGame } from '../client-config/brand.js';
-import { quizIntro } from '../client-config/content.js';
-import RsvpForm from './components/RsvpForm.jsx';
-import SwipeTutorial from './components/SwipeTutorial.jsx';
-import Questions from './Questions.jsx';
+import React, { useState } from "react";
+import "./App.css";
+import { logoGame } from "../client-config/brand.js";
+import { quizIntro } from "../client-config/content.js";
+import RsvpForm from "./components/RsvpForm.jsx";
+import SwipeTutorial from "./components/SwipeTutorial.jsx";
+import Questions from "./Questions.jsx";
 
 // TODO: URL-key invitation gating — read ?key=<token> from URL, validate against mailing list
 // before rendering RsvpForm. Users without a valid key see only the quiz (no form).
 
 function App() {
-  const [step, setStep] = useState('rsvp'); // rsvp | quiz-intro | tutorial | quiz | result
+  const [step, setStep] = useState("rsvp"); // rsvp | quiz-intro | tutorial | quiz | result
   const [userData, setUserData] = useState(null);
 
   const handleRsvpSubmit = (formData) => {
     setUserData(formData);
-    setStep('quiz-intro');
+    setStep("quiz-intro");
   };
 
-  const handleStartQuiz = () => setStep('tutorial');
-  const handleTutorialReady = () => setStep('quiz');
+  const handleStartQuiz = () => setStep("tutorial");
+  const handleTutorialReady = () => setStep("quiz");
   const handleRestart = () => {
     setUserData(null);
-    setStep('rsvp');
+    setStep("rsvp");
   };
 
-  if (step === 'rsvp') {
+  if (step === "rsvp") {
     return <RsvpForm onSubmit={handleRsvpSubmit} />;
   }
 
-  if (step === 'quiz-intro') {
+  if (step === "quiz-intro") {
     return (
       <div className="quiz-intro-page">
         <div className="quiz-intro-band">
@@ -935,17 +971,12 @@ function App() {
     );
   }
 
-  if (step === 'tutorial') {
+  if (step === "tutorial") {
     return <SwipeTutorial onReady={handleTutorialReady} />;
   }
 
-  if (step === 'quiz' || step === 'result') {
-    return (
-      <Questions
-        userData={userData}
-        onRestart={handleRestart}
-      />
-    );
+  if (step === "quiz" || step === "result") {
+    return <Questions userData={userData} onRestart={handleRestart} />;
   }
 
   return null;
@@ -1050,21 +1081,29 @@ git commit -m "feat: App.jsx 6-step state machine — rsvp → quiz-intro → tu
 ## Task 10: Questions.jsx — fix logo imports, pass progressLabel
 
 **Files:**
+
 - Modify: `src/Questions.jsx`
 
 - [ ] **Step 1: Replace the four `./logo/` import lines**
 
 Find:
+
 ```js
-import headerBanier from './logo/headerBanier.svg';
-import logoIN from './logo/logoIN.svg';
-import logoOUT from './logo/logoOUT.svg';
-import logoSwipe from './logo/logoSwipe.svg';
+import headerBanier from "./logo/headerBanier.svg";
+import logoIN from "./logo/logoIN.svg";
+import logoOUT from "./logo/logoOUT.svg";
+import logoSwipe from "./logo/logoSwipe.svg";
 ```
 
 Replace with:
+
 ```js
-import { headerBanier, logoIN, logoOUT, logoSwipe } from '../client-config/brand.js';
+import {
+  headerBanier,
+  logoIN,
+  logoOUT,
+  logoSwipe,
+} from "../client-config/brand.js";
 ```
 
 - [ ] **Step 2: Add progressLabel to QuestionCard**
@@ -1076,6 +1115,7 @@ progressLabel={`${currentIndex + 1}/3`}
 ```
 
 So the QuestionCard line becomes:
+
 ```jsx
 <QuestionCard
   key={index}
@@ -1085,7 +1125,7 @@ So the QuestionCard line becomes:
   progressLabel={`${currentIndex + 1}/3`}
   onSwipe={handleSwipe}
   stackIndex={index - currentIndex}
-  pointEvents={index === currentIndex ? 'auto' : 'none'}
+  pointEvents={index === currentIndex ? "auto" : "none"}
   resetPosition={resetPosition}
 />
 ```
@@ -1108,6 +1148,7 @@ git commit -m "fix: Questions.jsx imports logos from client-config/brand, adds p
 ## Task 11: QuestionCard — Nespresso design
 
 **Files:**
+
 - Modify: `src/components/QuestionCard.jsx`
 - Rewrite: `src/components/QuestionCard.css`
 
@@ -1129,9 +1170,9 @@ Replace the entire `return (` block with:
 return (
   <div
     ref={cardRef}
-    className={`question-card${bgImage ? ' has-bg' : ''}${isDragging ? ' dragging' : ''}`}
+    className={`question-card${bgImage ? " has-bg" : ""}${isDragging ? " dragging" : ""}`}
     style={{
-      '--bg-image': bgImage ? `url(${bgImage})` : 'none',
+      "--bg-image": bgImage ? `url(${bgImage})` : "none",
       transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) rotate(${position.x * 0.03}deg)`,
       zIndex: 10 - stackIndex,
       pointerEvents: pointEvents,
@@ -1143,24 +1184,23 @@ return (
     onMouseLeave={handleMouseUp}
     onTouchStart={handleTouchStart}
     onTouchMove={handleTouchMove}
-    onTouchEnd={handleTouchEnd}
-  >
-    {progressLabel && (
-      <span className="card-progress">{progressLabel}</span>
-    )}
+    onTouchEnd={handleTouchEnd}>
+    {progressLabel && <span className="card-progress">{progressLabel}</span>}
 
     {/* IN indicator — shown when dragging right */}
     <span
       className="swipe-indicator right"
-      style={{ opacity: position.x > 20 ? Math.min((position.x - 20) / 80, 1) : 0 }}
-    >
+      style={{
+        opacity: position.x > 20 ? Math.min((position.x - 20) / 80, 1) : 0,
+      }}>
       IN
     </span>
     {/* OUT indicator — shown when dragging left */}
     <span
       className="swipe-indicator left"
-      style={{ opacity: position.x < -20 ? Math.min((-position.x - 20) / 80, 1) : 0 }}
-    >
+      style={{
+        opacity: position.x < -20 ? Math.min((-position.x - 20) / 80, 1) : 0,
+      }}>
       OUT
     </span>
 
@@ -1171,16 +1211,14 @@ return (
     <div className="button-controls">
       <button
         className="control-button no-button"
-        onClick={() => !disabledButton && handleButtonClick('left')}
-        disabled={disabledButton}
-      >
+        onClick={() => !disabledButton && handleButtonClick("left")}
+        disabled={disabledButton}>
         OUT
       </button>
       <button
         className="control-button yes-button"
-        onClick={() => !disabledButton && handleButtonClick('right')}
-        disabled={disabledButton}
-      >
+        onClick={() => !disabledButton && handleButtonClick("right")}
+        disabled={disabledButton}>
         IN
       </button>
     </div>
@@ -1200,7 +1238,9 @@ return (
   cursor: grab;
   touch-action: none;
   user-select: none;
-  transition: transform 0.8s ease, opacity 0.8s ease;
+  transition:
+    transform 0.8s ease,
+    opacity 0.8s ease;
   transform: translate(-50%, -50%);
   overflow: hidden;
   background: var(--navy);
@@ -1315,12 +1355,20 @@ return (
   transition: background 0.15s;
 }
 
-.no-button:hover { background: rgba(255, 106, 123, 0.5); }
-.yes-button:hover { background: rgba(165, 255, 2, 0.3); }
+.no-button:hover {
+  background: rgba(255, 106, 123, 0.5);
+}
+.yes-button:hover {
+  background: rgba(165, 255, 2, 0.3);
+}
 
 @media (max-width: 768px) {
-  .button-controls { display: none; }
-  .question-card { height: 440px; }
+  .button-controls {
+    display: none;
+  }
+  .question-card {
+    height: 440px;
+  }
 }
 ```
 
@@ -1342,6 +1390,7 @@ git commit -m "feat: QuestionCard Nespresso design — full-screen bg, navy over
 ## Task 12: Congradulation — blue loading screen, auto-trigger
 
 **Files:**
+
 - Rewrite: `src/components/Congradulation.jsx`
 - Rewrite: `src/components/Congradulation.css`
 
@@ -1350,21 +1399,21 @@ Design reference: Figma 3005-1863. Blue-band background, spinning circle animati
 - [ ] **Step 1: Replace `src/components/Congradulation.jsx` entirely**
 
 ```jsx
-import React, { useEffect } from 'react';
-import './Congradulation.css';
-import { congratsLoading } from '../../client-config/content.js';
-import { saveQuizResult } from '../services/googleSheetsSave.js';
+import React, { useEffect } from "react";
+import "./Congradulation.css";
+import { congratsLoading } from "../../client-config/content.js";
+import { saveQuizResult } from "../services/googleSheetsSave.js";
 
 const Congradulation = ({ profile, answers, userData, onShowResults }) => {
   useEffect(() => {
     const run = async () => {
       await saveQuizResult(userData, answers, profile);
       // Minimum 2s display so the loader feels intentional
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       onShowResults();
     };
     run();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -1402,7 +1451,9 @@ export default Congradulation;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading-text {
@@ -1451,6 +1502,7 @@ git commit -m "feat: Congradulation — auto-trigger blue loading screen, fix us
 ## Task 13: Questions.jsx — wire Congradulation with new props
 
 **Files:**
+
 - Modify: `src/Questions.jsx`
 
 The Congradulation component now receives `onShowResults` instead of relying on its own internal `showResults` state (which was triggered by a button). Results.jsx is now rendered from Questions.jsx after the loading screen triggers `onShowResults`.
@@ -1483,19 +1535,22 @@ Find where Results.jsx is rendered in Questions.jsx (it was previously rendered 
 After the `{showCongradulation && !showResults && <Congradulation ... />}` block, add:
 
 ```jsx
-{showResults && (
-  <Results
-    profile={profile}
-    answers={answers}
-    userData={userData}
-    onRestart={onRestart}
-  />
-)}
+{
+  showResults && (
+    <Results
+      profile={profile}
+      answers={answers}
+      userData={userData}
+      onRestart={onRestart}
+    />
+  );
+}
 ```
 
 Make sure `Results` is imported at the top of Questions.jsx:
+
 ```js
-import Results from './components/Results.jsx';
+import Results from "./components/Results.jsx";
 ```
 
 - [ ] **Step 4: Verify build**
@@ -1516,6 +1571,7 @@ git commit -m "fix: Questions.jsx wires Congradulation onShowResults, renders Re
 ## Task 14: Results — white card with drink, tagline, description
 
 **Files:**
+
 - Rewrite: `src/components/Results.jsx`
 - Rewrite: `src/components/Results.css`
 
@@ -1524,9 +1580,12 @@ Design reference: Figma 3005-1958. Cream background, centered white rounded card
 - [ ] **Step 1: Replace `src/components/Results.jsx` entirely**
 
 ```jsx
-import React from 'react';
-import './Results.css';
-import { resultsEmailSent, resultsFooterLink } from '../../client-config/content.js';
+import React from "react";
+import "./Results.css";
+import {
+  resultsEmailSent,
+  resultsFooterLink,
+} from "../../client-config/content.js";
 
 const Results = ({ profile, onRestart }) => {
   return (
@@ -1541,7 +1600,10 @@ const Results = ({ profile, onRestart }) => {
       </div>
       <div className="results-footer">
         <p>{resultsEmailSent}</p>
-        <a href={resultsFooterLink.href} target="_blank" rel="noopener noreferrer">
+        <a
+          href={resultsFooterLink.href}
+          target="_blank"
+          rel="noopener noreferrer">
           {resultsFooterLink.label}
         </a>
       </div>

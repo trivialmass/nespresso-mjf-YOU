@@ -42,6 +42,13 @@ db.exec(`
     email TEXT NOT NULL,
     expires_at TEXT NOT NULL
   );
+  CREATE TABLE IF NOT EXISTS invitation_keys (
+    token      TEXT PRIMARY KEY,
+    plus_one   INTEGER DEFAULT 0,
+    expires_at TEXT NOT NULL,
+    used_at    TEXT,
+    batch      TEXT
+  );
 `);
 
 // Migrate: add phone column if not present (safe to run on every startup)
@@ -69,6 +76,17 @@ app.use(express.static(join(__dirname, "dist")));
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Backend server is running" });
+});
+
+// ── Invitation key validation ─────────────────────────────────────────────────
+
+app.get("/api/key/:token", (req, res) => {
+  const key = db.prepare("SELECT * FROM invitation_keys WHERE token = ?").get(req.params.token);
+  if (!key) return res.json({ valid: false, reason: "invalid" });
+  if (new Date(key.expires_at) < new Date()) {
+    return res.json({ valid: false, reason: "expired", expiresAt: key.expires_at });
+  }
+  return res.json({ valid: true, plusOne: !!key.plus_one });
 });
 
 // ── Magic link auth ──────────────────────────────────────────────────────────

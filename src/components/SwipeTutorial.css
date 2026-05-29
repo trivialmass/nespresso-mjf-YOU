@@ -55,7 +55,7 @@
  */
 .tutorial-label {
   position: absolute;
-  top: 43.1%;      /* 364/844 */
+  top: 33%;      /* 364/844 */
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(32px, 12.3vw, 48px);
   font-weight: 700;
