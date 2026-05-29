@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import QuestionCard from './components/QuestionCard';
 import Congradulation from './components/Congradulation';
 import Results from './components/Results.jsx';
+import PoolBg from './components/PoolBg.jsx';
 import { mockQuestions } from '../client-config/questions.js';
 import { generateProfile } from './services/llmProfile';
 import './Questions.css';
-import { headerBanier, logoIN, logoOUT, logoSwipe } from '../client-config/brand.js';
 
 function Questions(userData) {
   const [questions, setQuestions] = useState([]);
@@ -18,7 +18,6 @@ function Questions(userData) {
   const [showCongradulation, setShowCongradulation] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [resetPosition, setResetPosition] = useState({ trueFalse: false, answer: null });
-  const [swipeTilt, setSwipeTilt] = useState(0);
   const currentCardRef = useRef(null);
 
   useEffect(() => {
@@ -29,16 +28,6 @@ function Questions(userData) {
     setVisibleIndexes([currentIndex, currentIndex + 1, currentIndex + 2]);
   }, [currentIndex, questions.length]);
 
-  useEffect(() => {
-    setSwipeTilt(20);
-    setTimeout(() => {
-      setSwipeTilt(-20);
-      setTimeout(() => {
-        setSwipeTilt(0);
-      }, 300);
-    }, 300);
-  }, [currentIndex]);
-
   const loadQuestions = async () => {
     try {
       setLoading(true);
@@ -47,13 +36,12 @@ function Questions(userData) {
       if (!fetchedQuestions || fetchedQuestions.length === 0) {
         setError('No questions found. Check client-config/questions.js.');
       } else {
-        // Preload all background images before showing the quiz
         const imageUrls = fetchedQuestions.map(q => q.bgImage).filter(Boolean);
         await Promise.all(
           imageUrls.map(url => new Promise(resolve => {
             const img = new Image();
             img.onload = resolve;
-            img.onerror = resolve; // don't block if an image fails
+            img.onerror = resolve;
             img.src = url;
           }))
         );
@@ -73,19 +61,11 @@ function Questions(userData) {
       answer: direction === 'right' ? questions[currentIndex].traitRight : questions[currentIndex].traitLeft,
       timestamp: new Date().toISOString(),
     };
-
     setAnswers([...answers, answer]);
-
-    // Move to next question
     if (currentIndex < questions.length - 1) {
-      setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
-      }, 300);
+      setTimeout(() => setCurrentIndex(currentIndex + 1), 300);
     } else {
-      // All questions answered
-      setTimeout(() => {
-        handleComplete([...answers, answer]);
-      }, 300);
+      setTimeout(() => handleComplete([...answers, answer]), 300);
     }
   };
 
@@ -120,59 +100,19 @@ function Questions(userData) {
           trueFalse: true,
           answer: answers[answers.length - 1]?.answer || null
         });
-        setTimeout(() => {
-          setResetPosition({ trueFalse: false, answer: null });
-        }, 300);
+        setTimeout(() => setResetPosition({ trueFalse: false, answer: null }), 300);
       }, 0);
     }
   };
 
   useEffect(() => {
-    if (resetPosition && resetPosition.trueFalse) {
-      setResetPosition(prev => ({
-        ...prev,
-        trueFalse: false
-      }));
+    if (resetPosition?.trueFalse) {
+      setResetPosition(prev => ({ ...prev, trueFalse: false }));
     }
   }, [resetPosition]);
 
-  const handleReturnToLastQuestion = () => {
-    setShowCongradulation(false);
-    setCurrentIndex(questions.length - 1);
-    setAnswers(answers.slice(0, -1));
-    setProfile('');
-  };
+  if (showResults) return <Results profile={profile} />;
 
-  if (loading) {
-    return (
-      <div className="questions">
-        <div className="loading">
-          <div className="spinner"></div>
-          <p>Loading questions...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="questions">
-        <div className="error">
-          <p>{error}</p>
-          <button onClick={loadQuestions}>Retry</button>
-        </div>
-      </div>
-    );
-  }
-
-  // Show results screen
-  if (showResults) {
-    return (
-      <Results profile={profile} />
-    );
-  }
-
-  // Show congratulation screen
   if (showCongradulation && profile) {
     return (
       <Congradulation
@@ -184,90 +124,119 @@ function Questions(userData) {
     );
   }
 
+  if (loading) {
+    return (
+      <PoolBg overlay>
+        <div className="questions-loading">
+          <div className="spinner" />
+          <p>Loading…</p>
+        </div>
+      </PoolBg>
+    );
+  }
+
+  if (error) {
+    return (
+      <PoolBg overlay>
+        <div className="questions-error">
+          <p>{error}</p>
+          <button onClick={loadQuestions}>Retry</button>
+        </div>
+      </PoolBg>
+    );
+  }
+
   const isComplete = currentIndex >= questions.length;
 
-  const eventNone = "none";
-  const eventAuto = "auto";
-
   return (
-    <div className="questions">
-      <header className="questions-header">
-        <img src={headerBanier} alt="Out In Logo" className="outInLogo" />
-        <div className='logosContainer'>
-          <img 
-            src={logoOUT} 
-            alt="Logo OUT" 
-            className="logoInOut" 
+    <PoolBg overlay>
+      <div className="questions-frame">
+
+        {/* ── Top arrow banner — Figma: left:23 top:49 w:347 h:106 ── */}
+        <div className="questions-arrow-wrap">
+          <svg
+            className="questions-arrow-svg"
+            viewBox="0 0 347 106"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+            preserveAspectRatio="none"
+          >
+            <path d="M347 53.0067L307.379 0V13.6257H39.6212V0L0 53.0067L39.6212 106V92.3743H307.379V106L347 53.0067Z" fill="#1C2869" />
+          </svg>
+          {/* OUT — inside arrow at left:36 top:21 */}
+          <span
+            className="questions-label questions-out"
             onClick={() => currentCardRef.current?.triggerSwipe('left')}
-            style={{ cursor: 'pointer' }}
-          />
-          <img 
-            src={logoIN} 
-            alt="Logo IN" 
-            className="logoInOut" 
+            role="button"
+            aria-label="Swipe OUT"
+          >
+            OUT
+          </span>
+          {/* IN — inside arrow at left:258 top:21, right-aligned */}
+          <span
+            className="questions-label questions-in"
             onClick={() => currentCardRef.current?.triggerSwipe('right')}
-            style={{ cursor: 'pointer' }}
-          />
+            role="button"
+            aria-label="Swipe IN"
+          >
+            IN
+          </span>
         </div>
-        <img
-          src={logoSwipe}
-          alt="Logo Swipe"
-          className="logoSwipe"
-          style={{
-            transform: `translate(-50%, -50%) rotate(${swipeTilt}deg)`,
-            transition: 'transform 0.3s cubic-bezier(.68,-0.55,.27,1.55)'
-          }}
-        />
-      </header>
 
-      <div className="card-container">
-        {!isComplete && (
-          <>
-            {
-              visibleIndexes
-                .filter(idx => idx < questions.length)
-                .reverse()
-                .map((idx, stackIdx, arr) => (
-                  <QuestionCard
-                    key={idx}
-                    ref={idx === currentIndex ? currentCardRef : null}
-                    question={questions[idx].question}
-                    bgImage={questions[idx].bgImage}
-                    progressLabel={idx === currentIndex ? `${currentIndex + 1}/3` : undefined}
-                    onSwipe={handleSwipe}
-                    stackIndex={arr.length - 1 - stackIdx}
-                    pointEvents={idx === currentIndex ? eventAuto : eventNone}
-                    resetPosition={resetPosition && idx === currentIndex ? resetPosition : null} />
-                ))
-            }
-          </>
-        )}
+        {/* ── Card stack ── */}
+        <div className="card-container">
+          {!isComplete && (
+            visibleIndexes
+              .filter(idx => idx < questions.length)
+              .reverse()
+              .map((idx, stackIdx, arr) => (
+                <QuestionCard
+                  key={idx}
+                  ref={idx === currentIndex ? currentCardRef : null}
+                  question={questions[idx]}
+                  bgImage={questions[idx].bgImage}
+                  onSwipe={handleSwipe}
+                  stackIndex={arr.length - 1 - stackIdx}
+                  pointEvents={idx === currentIndex ? 'auto' : 'none'}
+                  resetPosition={resetPosition && idx === currentIndex ? resetPosition : null}
+                />
+              ))
+          )}
+        </div>
 
-        {isComplete && (
-          <div className="complete-message">
-            <h2>🎉 Generating Your Profile...</h2>
-            <div className="spinner"></div>
-            <p>Analyzing your answers with AI magic ✨</p>
+        {/* ── Bottom bar — Figma: BACK left:30 | logo center | n/total right:255 @ top:740 ── */}
+        <div className="questions-bottom">
+          {currentIndex > 0 && answers.length > 0 ? (
+            <button className="questions-back" onClick={handleReturn}>BACK</button>
+          ) : (
+            <span className="questions-back" />
+          )}
+
+          <div className="questions-bottom-logo" aria-label="Nespresso × MJF">
+            <svg width="53" height="54" viewBox="0 0 53 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clipPath="url(#clip0_qcard)">
+                <path d="M0 0V54H53V0H0Z" fill="#1C2869" />
+                <path d="M7.8348 12.505V12.3059C13.4886 10.2961 20.2657 11.9362 23.9538 15.605C24.5248 16.098 26.5374 18.3164 27.3237 19.2645C29.0928 21.3786 31.4611 24.7346 33.4736 27.3607V16.6574H36.3473V37.8649C33.1366 35.1914 29.8885 29.8919 27.4547 26.697C27.4547 26.697 22.737 20.2315 20.7619 17.9277C19.2361 16.0222 16.5964 13.927 14.743 13.235C12.2717 12.23 9.76309 12.0784 7.82544 12.505H7.8348Z" fill="white" />
+                <path d="M45.1651 41.6947C39.5113 43.7046 32.7342 42.0645 29.0367 38.3956C28.4657 37.9026 26.4532 35.6842 25.6763 34.7362C23.9071 32.622 21.5388 29.266 19.5263 26.64V37.3433H16.6526V16.1357C19.8633 18.8092 23.1114 24.1087 25.5358 27.3036C25.5358 27.3036 30.2536 33.7692 32.2287 36.0729C33.7545 37.9784 36.3942 40.0736 38.2382 40.7657C40.7095 41.7706 43.2181 41.9223 45.1558 41.4956V41.6947H45.1651Z" fill="white" />
+              </g>
+              <defs>
+                <clipPath id="clip0_qcard">
+                  <rect width="53" height="54" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
           </div>
-        )}
+
+          <span className="questions-pagination">
+            {currentIndex + 1}/{questions.length}
+          </span>
+        </div>
+
       </div>
-
-      {/* if it is first question, hide the return button */}
-      {currentIndex > 0 && answers.length > 0 && (
-        <button
-          className='buttonReturnQuestions'
-          onClick={handleReturn}
-          disabled={loading}
-        >
-          Retour
-        </button>
-      )}
-
-      <p className='paginationQuestions'>
-        {currentIndex + 1} / {questions.length}
-      </p>
-    </div>
+    </PoolBg>
   );
 }
 
 export default Questions;
+

@@ -3,7 +3,7 @@ import './QuestionCard.css';
 
 
 
-const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, pointEvents, resetPosition, progressLabel = '' }, ref) => {
+const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, pointEvents, resetPosition }, ref) => {
 
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -139,10 +139,6 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      {progressLabel && (
-        <span className="card-progress">{progressLabel}</span>
-      )}
-
       {/* IN indicator — shown when dragging right */}
       <span
         className="swipe-indicator right"
@@ -160,23 +156,6 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
 
       <div className="card-content">
         <h2>{question?.question}</h2>
-      </div>
-
-      <div className="button-controls">
-        <button
-          className="control-button no-button"
-          onClick={() => !disabledButton && handleButtonClick('left')}
-          disabled={disabledButton}
-        >
-          OUT
-        </button>
-        <button
-          className="control-button yes-button"
-          onClick={() => !disabledButton && handleButtonClick('right')}
-          disabled={disabledButton}
-        >
-          IN
-        </button>
       </div>
     </div>
   );

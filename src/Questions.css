@@ -1,108 +1,130 @@
-.questions {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding: 20px;
-  padding-top: 30px;
-  justify-content: center;  
-}
+/*
+ * Questions screen — Figma frame 16 (390×844)
+ * PoolBg overlay provides the background; this file handles layout only.
+ * All % positions: left = px/390*100, top = px/844*100
+ */
 
-.questions-header {
-  text-align: center;
-  z-index: 10;
-  position: relative;
-}
-
-.outInLogo {
-  width: 100%;
-  max-width: 400px;
-}
-
-.logosContainer {
+/* Fill the PoolBg content area */
+.questions-frame {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 300px;
+  inset: 0;
 }
 
-.logoSwipe {
+/* ── Top arrow banner — Figma: left:23 top:49 w:347 h:106 ────────────────── */
+.questions-arrow-wrap {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  left: 5.9%;    /* 23/390 */
+  top: 5.8%;     /* 49/844 */
+  width: 89%;    /* 347/390 */
+  height: 0;
+  padding-bottom: calc(89vw * 106 / 347); /* preserve 347:106 ratio */
 }
 
-.logoInOut {
-  display: block;
+.questions-arrow-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.progress {
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
+/* OUT / IN labels — Figma: both at top:21 inside arrow (21/106 = 19.8% of arrow h) */
+.questions-label {
+  position: absolute;
+  top: 19.8%;
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(30px, 12.3vw, 48px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
 }
 
+/* OUT at left:36 relative to arrow → 36/347 = 10.4% */
+.questions-out { left: 10.4%; }
+
+/* IN at left:258 relative to arrow → 258/347 = 74.4%, right-aligned */
+.questions-in  { left: 74.4%; text-align: right; }
+
+/* ── Card container — centered between banner bottom and bottom bar ───────── */
 .card-container {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 50px;
-  max-height: 650px;
-  padding-bottom: 70px;
-}
-
-.instructions {
-  position: fixed;
-  bottom: 150px;
+  position: absolute;
   left: 0;
   right: 0;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
-  z-index: 5;
+  top: 18.4%;  /* banner bottom: (49+106)/844 */
+  bottom: 12.3%; /* bottom bar starts: 1 - 740/844 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.mobile-only {
-  display: block;
+/* ── Bottom bar — Figma: all elements at top:740 (87.7%) ─────────────────── */
+.questions-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 87.7%;  /* 740/844 */
+  height: 8.2%; /* 740→844 = 104px = 12.3% but bar is ~69px = 8.2% */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7.7%; /* 30/390 */
 }
 
-.desktop-only {
-  display: none;
+/* BACK — Figma: fs:30 fw:700 navy */
+.questions-back {
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(20px, 7.7vw, 30px);
+  font-weight: 700;
+  color: var(--navy);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 80px;
 }
 
-@media (min-width: 769px) {
-  .mobile-only {
-    display: none;
-  }
-
-  .desktop-only {
-    display: block;
-  }
-
-  .questions-header {
-    padding-bottom: 0px;
-  }
-
-  .logoInOut {
-    display: none;
-  }
+/* Pagination — Figma: fs:30 fw:700 navy, right side */
+.questions-pagination {
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(20px, 7.7vw, 30px);
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+  min-width: 80px;
+  text-align: right;
 }
 
-.loading,
-.error {
+/* Center logo in bottom bar */
+.questions-bottom-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Loading / Error states ───────────────────────────────────────────────── */
+.questions-loading,
+.questions-error {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
-  color: white;
+  width: 100%;
+  height: 100%;
+  color: #fff;
   text-align: center;
+  gap: 16px;
+}
+
+.questions-error button {
+  padding: 12px 30px;
+  background: #fff;
+  color: var(--navy);
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .spinner {
@@ -112,90 +134,8 @@
   border-top-color: white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin-bottom: 20px;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.loading p,
-.error p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.error button {
-  padding: 12px 30px;
-  font-size: 16px;
-  background: white;
-  color: #667eea;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.error button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.complete-message {
-  background: white;
-  border-radius: 20px;
-  padding: 60px 40px;
-  text-align: center;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  width: 90%;
-}
-
-.complete-message h2 {
-  font-size: 32px;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-.complete-message p {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 30px;
-}
-
-.buttonReturnQuestions {
-  font-family: Helvetica;
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 20px;
-  line-height: 178%;
-  letter-spacing: 0%;
-  vertical-align: middle;
-  position: absolute;
-  bottom: 20px;
-  left: 30px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: white;
-}
-
-.paginationQuestions {
-  font-family: Helvetica;
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 20px;
-  line-height: 178%;
-  letter-spacing: 0%;
-  vertical-align: middle;
-  position: absolute;
-  bottom: 20px;
-  right: 30px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  color: white;
+  to { transform: rotate(360deg); }
 }

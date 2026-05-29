@@ -1,12 +1,19 @@
+/*
+ * QuestionCard — Figma frame 16 card (visual 313×471px portrait, br:32)
+ * Card is centered in card-container via translate(-50%, -50%).
+ * Stack cards offset bottom-right to simulate a card deck.
+ */
+
 .question-card {
   position: absolute;
-  width: 90vw;
-  max-width: 420px;
-  height: 520px;
-  border-radius: 20px;
+  /* Portrait: Figma visual 313.54 × 471.06 ≈ 2:3 */
+  width: min(313px, 80vw);
+  aspect-ratio: 313 / 471;
+  border-radius: 32px;
   cursor: grab;
   touch-action: none;
   user-select: none;
+  /* base transform: centered; x/y translation applied via inline style */
   transition: transform 0.8s ease, opacity 0.8s ease;
   transform: translate(-50%, -50%);
   overflow: hidden;
@@ -18,7 +25,18 @@
   transition: none;
 }
 
-/* Full-screen background image */
+/* Stack depth offsets — back cards peek bottom-right */
+/* stackIndex 0 = top card (no extra offset)
+   stackIndex 1 = first card behind
+   stackIndex 2 = second card behind */
+.question-card[style*="z-index: 9"] { /* stackIndex 1 */
+  filter: brightness(0.92);
+}
+.question-card[style*="z-index: 8"] { /* stackIndex 2 */
+  filter: brightness(0.84);
+}
+
+/* Background image via CSS custom property */
 .question-card::before {
   content: "";
   position: absolute;
@@ -29,7 +47,7 @@
   z-index: 0;
 }
 
-/* Navy overlay */
+/* Navy overlay when card has a bg image — Figma: rgba(28,40,105,0.70) */
 .question-card.has-bg::after {
   content: "";
   position: absolute;
@@ -38,44 +56,30 @@
   z-index: 1;
 }
 
-/* Progress label — top right */
-.card-progress {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 10;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* IN / OUT drag indicators */
+/* ── Swipe direction indicators ──────────────────────────────────────────── */
 .swipe-indicator {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
-  font-size: 64px;
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(40px, 10vw, 64px);
   font-weight: 700;
-  letter-spacing: 0.05em;
   pointer-events: none;
   transition: opacity 0.1s;
 }
 
 .swipe-indicator.right {
-  right: 24px;
+  right: 20px;
   color: #a5ff02;
 }
 
 .swipe-indicator.left {
-  left: 24px;
+  left: 20px;
   color: #ff6a7b;
 }
 
-/* Question text */
+/* ── Question text — Figma: w:284 h:237, center, white fs:48 fw:700 uppercase ── */
 .card-content {
   position: absolute;
   inset: 0;
@@ -83,49 +87,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 10%;
   text-align: center;
 }
 
 .card-content h2 {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
-  font-size: 40px;
+  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-size: clamp(28px, 12.3vw, 48px);
   font-weight: 700;
   color: #fff;
-  line-height: 1.2;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+  line-height: 1.33; /* 63.84/48 */
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  word-wrap: break-word;
 }
 
-/* IN/OUT buttons (desktop) */
-.button-controls {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 20px;
-  z-index: 10;
-}
-
-.control-button {
-  width: 96px;
-  height: 48px;
-  border-radius: 24px;
-  border: 2px solid rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  color: #fff;
-  transition: background 0.15s;
-}
-
-.no-button:hover { background: rgba(255, 106, 123, 0.5); }
-.yes-button:hover { background: rgba(165, 255, 2, 0.3); }
-
-@media (max-width: 768px) {
-  .button-controls { display: none; }
-  .question-card { height: 440px; }
-}
