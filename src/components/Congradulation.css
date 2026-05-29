@@ -22,8 +22,7 @@
 }
 
 .loading-text {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.18em;

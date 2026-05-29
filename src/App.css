@@ -26,8 +26,7 @@
 
 /* Heading — Figma: fs:42 fw:700 uppercase lh:44 */
 .quiz-intro-heading {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(28px, 10.8vw, 42px);
   font-weight: 700;
   color: var(--navy);
@@ -39,8 +38,7 @@
 
 /* Body text — Figma: fs:22 fw:700 uppercase lh:30 */
 .quiz-intro-body-text {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(16px, 5.6vw, 22px);
   font-weight: 700;
   color: var(--navy);
@@ -64,8 +62,7 @@
   border: none;
   color: #fff;
   font-size: clamp(18px, 6.2vw, 24px);
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-weight: 400;
   text-align: center;
   cursor: pointer;

@@ -18,7 +18,7 @@
   top: 27.1%;      /* 229/844 */
   width: 62.8%;    /* 245/390 */
   margin: 0;
-  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(24px, 9vw, 35px);
   font-weight: 700;
   color: #fff;
@@ -56,7 +56,7 @@
 .tutorial-label {
   position: absolute;
   top: 43.1%;      /* 364/844 */
-  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(32px, 12.3vw, 48px);
   font-weight: 700;
   color: #fff;
@@ -84,7 +84,7 @@
   top: 62.2%;      /* 525/844 */
   width: 62.8%;    /* 245/390 */
   margin: 0;
-  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(24px, 9vw, 35px);
   font-weight: 700;
   color: #fff;

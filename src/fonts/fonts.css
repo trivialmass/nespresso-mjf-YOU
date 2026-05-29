@@ -1,3 +1,48 @@
-/* This file is imported by main.jsx and bundled by Vite.
-   When client provides font files, copy @font-face declarations here from client-config/fonts.css.
-   TODO: replace Georgia fallback with Gustavo_Display_Nespresso_Test once font files are provided by client. */
+/* Gustavo trial — served from client-config/assets/fonts/ */
+@font-face {
+  font-family: 'Gustavo_Display_Nespresso_Test';
+  src: url('../../client-config/assets/fonts/Gustavo_trial-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gustavo_Display_Nespresso_Test';
+  src: url('../../client-config/assets/fonts/Gustavo_trial-BoldItalic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gustavo_Display_Nespresso_Test';
+  src: url('../../client-config/assets/fonts/Gustavo_trial-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gustavo_Display_Nespresso_Test';
+  src: url('../../client-config/assets/fonts/Gustavo_trial-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gustavo_Display_Nespresso_Test';
+  src: url('../../client-config/assets/fonts/Gustavo_trial-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gustavo_Display_Nespresso_Test';
+  src: url('../../client-config/assets/fonts/Gustavo_trial-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}

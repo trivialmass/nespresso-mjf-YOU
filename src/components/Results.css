@@ -27,8 +27,7 @@
 }
 
 .results-card__drink-name {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: 24px;
   font-weight: 700;
   color: var(--navy);
@@ -46,8 +45,7 @@
 }
 
 .results-card__description {
-  font-family: Georgia, serif;
-  /* TODO: replace with Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: 16px;
   font-weight: 700;
   color: var(--navy);

@@ -31,7 +31,7 @@
 .questions-label {
   position: absolute;
   top: 19.8%;
-  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(30px, 12.3vw, 48px);
   font-weight: 700;
   color: #fff;
@@ -73,7 +73,7 @@
 
 /* BACK — Figma: fs:30 fw:700 navy */
 .questions-back {
-  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(20px, 7.7vw, 30px);
   font-weight: 700;
   color: var(--navy);
@@ -86,7 +86,7 @@
 
 /* Pagination — Figma: fs:30 fw:700 navy, right side */
 .questions-pagination {
-  font-family: Georgia, serif; /* TODO: Gustavo_Display_Nespresso_Test */
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(20px, 7.7vw, 30px);
   font-weight: 700;
   color: var(--navy);
