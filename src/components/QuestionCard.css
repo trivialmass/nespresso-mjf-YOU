@@ -92,12 +92,12 @@
   justify-content: center;
   padding: 10%;
   text-align: center;
-  overflow: hidden;
+  overflow: hidden; /* clips text that overflows the card; quiz content is controlled */
 }
 
 .card-content h2 {
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: clamp(14px, 12.3vw, 48px);
+  font-size: clamp(14px, 8vw, 48px);
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
