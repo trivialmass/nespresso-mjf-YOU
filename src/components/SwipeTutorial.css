@@ -3,20 +3,22 @@
  * All positions: left% = px/390*100, top% = px/844*100
  */
 
-/* Fill the PoolBg content area so children can use absolute positioning */
+/* Fill the PoolBg content area; flex column spaces all 5 children evenly */
 .tutorial-frame {
   position: absolute;
   inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 3dvh 5.9%;
 }
 
 /* ── Top instruction text ───────────────────────────────────────────────────
  * Figma: left:74 top:229 w:245 fs:35 fw:700 uppercase lh:37 center white
  */
 .tutorial-text-top {
-  position: absolute;
-  left: 19%;       /* 74/390 */
-  top: 27.1%;      /* 229/844 */
-  width: 62.8%;    /* 245/390 */
+  width: 62.8%;
   margin: 0;
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(24px, 9vw, 35px);
@@ -31,11 +33,10 @@
  * Figma: left:23 top:343 w:347 h:106 → aspect ratio 347:106
  */
 .tutorial-arrow-wrap {
-  position: absolute;
-  left: 5.9%;      /* 23/390 */
-  top: 40.6%;      /* 343/844 */
-  width: 89%;      /* 347/390 */
+  position: relative;  /* positioning context for labels inside */
+  width: 89%;          /* 347/390 */
   aspect-ratio: 347 / 106;
+  flex-shrink: 0;
 }
 
 .tutorial-arrow-svg {
@@ -53,22 +54,21 @@
  */
 .tutorial-label {
   position: absolute;
-  top: 33%;      /* 364/844 */
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(32px, 12.3vw, 48px);
   font-weight: 700;
   color: #fff;
   line-height: 1.2;
-  display: flex;
-  align-items: center;
 }
 
 .tutorial-out {
-  left: 15.1%;     /* 59/390 */
+  left: 10.4%;     /* 36/347 — Figma: 36px from arrow left */
 }
 
 .tutorial-in {
-  left: 72.1%;     /* 281/390 */
+  left: 74.4%;     /* 258/347 — Figma: 258px from arrow left */
   text-align: right;
 }
 
@@ -77,10 +77,7 @@
  * at top = 229 + (2+6)×37 = 229+296 = 525 → 525/844 = 62.2%
  */
 .tutorial-text-bottom {
-  position: absolute;
-  left: 19%;       /* 74/390 */
-  top: 62.2%;      /* 525/844 */
-  width: 62.8%;    /* 245/390 */
+  width: 62.8%;
   margin: 0;
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(24px, 9vw, 35px);
@@ -95,10 +92,6 @@
  * Placed at ~73% — between bottom text (~627) and logo (748)
  */
 .tutorial-cta {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 73%;
   padding: 14px 40px;
   background: var(--pink-cta);
   box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.25);
@@ -117,12 +110,8 @@
 .tutorial-cta:active { opacity: 0.75; }
 
 /* ── Nespresso × MJF logo ───────────────────────────────────────────────────
- * Figma: left:168 top:748 → centered horizontally, top:88.6%
+ * Figma: left:168 top:748 → in-flow flex child, centered by parent
  */
 .tutorial-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 88.6%;      /* 748/844 */
 }
 
