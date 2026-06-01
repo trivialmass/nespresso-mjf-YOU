@@ -325,41 +325,88 @@ async function requestLink() {
   }
 
   const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
+
+  const parseProfile = (raw) => {
+    if (!raw) return null;
+    try {
+      const p = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      // handle double-stringified
+      return typeof p === 'string' ? JSON.parse(p) : p;
+    } catch { return null; }
+  };
+
+  const parseAnswers = (raw) => {
+    try { return JSON.parse(raw || '[]'); } catch { return []; }
+  };
+
+  const DRINK_COLORS = {
+    'Ice Yuzu Tonic':   '#a5ff02',
+    'Ice Piña Colada':  '#ffcc00',
+    'Nespresso Martini':'#c084fc',
+  };
+
+  // Stats per drink
+  const stats = {};
+  rows.forEach(r => {
+    const p = parseProfile(r.profile);
+    const drink = p?.drink || 'Inconnu';
+    stats[drink] = (stats[drink] || 0) + 1;
+  });
+
+  const statsHtml = Object.entries(stats).map(([drink, count]) => {
+    const color = DRINK_COLORS[drink] || '#888';
+    return `<span style="background:${color};color:#000;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;margin-right:8px">${count} × ${drink}</span>`;
+  }).join('');
+
   const tableRows = rows.map(r => {
-    const answers = JSON.parse(r.answers || "[]").map(a => `${a.question}: ${a.answer}`).join("<br>");
-    let profileData;
-    try { profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile; } catch { profileData = null; }
-    const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile?.split('\n')[0]?.replace(/^##\s*/, '') || '');
+    const profile = parseProfile(r.profile);
+    const answers = parseAnswers(r.answers);
+    const drink = profile?.drink || '';
+    const color = DRINK_COLORS[drink] || '#555';
+
+    const profileHtml = drink
+      ? `<span style="background:${color};color:#000;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;white-space:nowrap">${drink}</span><br><span style="color:#999;font-size:11px">${profile.tagline || ''}</span>`
+      : `<span style="color:#555">—</span>`;
+
+    const answersHtml = answers.map(a => {
+      const q = a.question?.question || a.question || '';
+      const label = typeof q === 'string' ? q.replace('?','').trim() : '';
+      return `<span style="display:inline-block;background:#1e1e1e;border:1px solid #333;border-radius:6px;padding:2px 8px;font-size:11px;margin:2px 2px 2px 0;white-space:nowrap"><b>${label}</b> → ${a.answer}</span>`;
+    }).join('');
+
     return `<tr>
-      <td>${r.created_at?.slice(0,16).replace("T"," ")}</td>
-      <td>${r.name}</td>
-      <td>${r.company}</td>
-      <td>${r.email}</td>
-      <td>${profile}</td>
-      <td style="font-size:12px">${answers}</td>
+      <td style="white-space:nowrap;color:#aaa;font-size:12px">${r.created_at?.slice(0,16).replace('T',' ')}</td>
+      <td><b>${r.name || ''}</b>${r.company ? `<br><span style="color:#999;font-size:11px">${r.company}</span>` : ''}</td>
+      <td style="color:#ccc">${r.email || ''}</td>
+      <td style="color:#ccc">${r.phone || ''}</td>
+      <td>${profileHtml}</td>
+      <td>${answersHtml}</td>
     </tr>`;
-  }).join("");
+  }).join('');
 
   res.send(`<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><title>Résultats — Trivial YOU</title>
 <style>
-  body{font-family:Helvetica,sans-serif;padding:32px;background:#111;color:#fff}
-  h1{font-size:24px;margin-bottom:4px}
-  p{color:#999;font-size:14px;margin-bottom:24px}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th{background:#a5ff02;color:#000;padding:10px 12px;text-align:left}
-  td{padding:10px 12px;border-bottom:1px solid #222;vertical-align:top}
-  tr:hover td{background:#1a1a1a}
-  .export-btn{display:inline-block;margin-bottom:24px;padding:10px 20px;background:#a5ff02;color:#000;font-weight:700;font-size:14px;border-radius:8px;text-decoration:none}
+  *{box-sizing:border-box}
+  body{font-family:Helvetica,sans-serif;padding:32px;background:#111;color:#fff;margin:0}
+  h1{font-size:22px;margin:0 0 4px}
+  .meta{color:#666;font-size:13px;margin-bottom:16px}
+  .stats{margin-bottom:20px}
+  .export-btn{display:inline-block;padding:8px 18px;background:#a5ff02;color:#000;font-weight:700;font-size:13px;border-radius:8px;text-decoration:none;margin-bottom:20px}
   .export-btn:hover{background:#c0ff40}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{background:#1a1a1a;color:#888;padding:8px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid #333}
+  td{padding:10px 12px;border-bottom:1px solid #1e1e1e;vertical-align:top}
+  tr:hover td{background:#161616}
 </style></head>
 <body>
   <h1>Résultats du quiz</h1>
-  <p>${rows.length} participant${rows.length !== 1 ? "s" : ""} · connecté en tant que ${session.email}</p>
+  <p class="meta">${rows.length} participant${rows.length !== 1 ? 's' : ''} · ${session.email}</p>
+  <div class="stats">${statsHtml || '<span style="color:#555">Aucun résultat.</span>'}</div>
   <a class="export-btn" href="/api/results/export">⬇ Exporter CSV</a>
   <table>
-    <thead><tr><th>Date</th><th>Nom</th><th>Entreprise</th><th>Email</th><th>Profil</th><th>Réponses</th></tr></thead>
-    <tbody>${tableRows || "<tr><td colspan='6' style='color:#666'>Aucun résultat.</td></tr>"}</tbody>
+    <thead><tr><th>Date</th><th>Participant</th><th>Email</th><th>Tél.</th><th>Profil</th><th>Réponses</th></tr></thead>
+    <tbody>${tableRows || "<tr><td colspan='6' style='color:#555;padding:24px'>Aucun résultat.</td></tr>"}</tbody>
   </table>
 </body></html>`);
 });
