@@ -69,7 +69,10 @@
   position: absolute;
   left: 6.12%;    /* 20/327 */
   top: 65.77%;    /* 415/631 */
+  bottom: 4%;
   width: 86.85%;  /* 284/327 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
   font-size: clamp(12px, 4.1vw, 16px);
   font-weight: 700;
