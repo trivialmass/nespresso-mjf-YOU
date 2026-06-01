@@ -28,14 +28,14 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
     if (!isDragging) return;
     setIsDragging(false);
 
-    const threshold = window.innerWidth * 0.3;
+    const cardWidth = cardRef.current?.offsetWidth ?? 310;
+    const threshold = cardWidth * 0.3;
 
     if (Math.abs(position.x) > threshold) {
       const direction = position.x > 0 ? 'right' : 'left';
       animateSwipe(direction);
-      setTimeout(() => onSwipe(direction), 800);
+      setTimeout(() => onSwipe(direction), 500);
     } else {
-      // Snap back
       setPosition({ x: 0, y: 0 });
     }
   };
