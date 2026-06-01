@@ -104,5 +104,6 @@
   line-height: 1.33; /* 63.84/48 */
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   word-wrap: break-word;
+  padding: 0 8%;
 }
 
