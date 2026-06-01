@@ -35,9 +35,7 @@
   left: 5.9%;      /* 23/390 */
   top: 40.6%;      /* 343/844 */
   width: 89%;      /* 347/390 */
-  /* intrinsic height via padding-bottom trick */
-  height: 0;
-  padding-bottom: calc(89vw * 106 / 347);
+  aspect-ratio: 347 / 106;
 }
 
 .tutorial-arrow-svg {
