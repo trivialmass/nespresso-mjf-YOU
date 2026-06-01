@@ -1,54 +1,21 @@
 /**
- * Service to generate personality profiles via backend proxy
- *
- * The backend server handles the Infomaniak API call to avoid CORS issues.
+ * Profile matching — purely client-side, no LLM or backend.
+ * Sorts the 3 answer traits alphabetically, joins them, then looks up
+ * against each profile's traitCombinations. Falls back to last profile.
  */
-import getMockProfile from "../utils/getMockProfiles.js";
 import { PROFILES } from "../../client-config/profiles.js";
 
-const enrichWithImage = (profile) => {
-  const match = PROFILES.find(p => p.id === profile.id);
-  return match ? { ...profile, image: match.image } : profile;
-};
+export const generateProfile = (answers) => {
+  const traitKey = answers.map(({ answer }) => answer).sort().join(',');
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
-
-export const generateProfile = async (answers) => {
-  //Check if env is dev or prod
-  const isDev = import.meta.env.MODE === "development";
-
-  if (!isDev) {
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/generate-profile`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ answers }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Failed to generate profile");
+  for (const profile of PROFILES) {
+    for (const combo of profile.traitCombinations) {
+      if ([...combo].sort().join(',') === traitKey) {
+        return profile;
       }
-
-      const data = await response.json();
-
-      if (!data.profile || !data.profile.drink) {
-        console.warn("Backend response missing profile data, using mock");
-        return getMockProfile(answers);
-      }
-
-      return enrichWithImage(data.profile);
-    } catch (error) {
-      console.error("Error generating profile via backend:", error);
-      console.warn(
-        "Is the backend server running? Start it with: npm run server",
-      );
-      console.warn("Falling back to mock profile.");
-      return getMockProfile(answers);
     }
-  } else {
-    return getMockProfile(answers);
   }
+
+  // Fallback to last profile if no exact match
+  return PROFILES[PROFILES.length - 1];
 };

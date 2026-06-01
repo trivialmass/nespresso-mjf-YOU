@@ -72,7 +72,7 @@ function Questions(userData) {
   const handleComplete = async (finalAnswers) => {
     try {
       setLoading(true);
-      const generatedProfile = await generateProfile(finalAnswers);
+      const generatedProfile = generateProfile(finalAnswers);
       setProfile(generatedProfile);
       setShowCongradulation(true);
       setLoading(false);
