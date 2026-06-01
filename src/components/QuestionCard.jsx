@@ -28,7 +28,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
     if (!isDragging) return;
     setIsDragging(false);
 
-    const cardWidth = cardRef.current?.offsetWidth ?? 310;
+    const cardWidth = cardRef.current?.offsetWidth ?? 313;
     const threshold = cardWidth * 0.3;
 
     if (Math.abs(position.x) > threshold) {
@@ -79,7 +79,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
     setDisabledButton(true);
     const exitX = direction === 'right' ? window.innerWidth : -window.innerWidth;
     setPosition({ x: exitX, y: 0 });
-    setTimeout(() => onSwipe(direction), 300);
+    setTimeout(() => onSwipe(direction), 500);
   };
 
   // Expose handleButtonClick to parent via ref
@@ -116,7 +116,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
       setPosition({ x: exitX, y: 0 });
       setTimeout(() => {
         setPosition({ x: 0, y: 0 });
-      }, 700);
+      }, 550);
     }
   }, [resetPosition]);
 
