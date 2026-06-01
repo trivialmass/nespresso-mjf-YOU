@@ -1,7 +1,3 @@
-import yuzuImg from './assets/nespresso-yuzu.avif';
-import pinaColadaImg from './assets/nespresso-pina-colada.png';
-import martiniImg from './assets/nespresso-martini.webp';
-
 /**
  * Nespresso × MJF — Coffee profiles
  *
@@ -17,7 +13,6 @@ export const PROFILES = [
   {
     id: 'bold',
     drink: 'Ice Yuzu Tonic',
-    image: yuzuImg,
     tagline: 'Bold, fearless, all-in.',
     description: 'Espresso meets yuzu over iced tonic, with a twist of gin — bold, unapologetic, one of a kind. You don\'t test the water. You dive in. And the pool is always warm.',
     traitCombinations: [
@@ -27,7 +22,6 @@ export const PROFILES = [
   {
     id: 'electric',
     drink: 'Ice Yuzu Tonic',
-    image: yuzuImg,
     tagline: 'Electric, exclusive, unexpected.',
     description: 'Espresso meets yuzu over iced tonic, with a twist of gin. You\'re the one who finds the hidden door at the Nespresso Terrasse — and orders something that sparks.',
     traitCombinations: [
@@ -38,7 +32,6 @@ export const PROFILES = [
   {
     id: 'pincolada',
     drink: 'Ice Piña Colada',
-    image: pinaColadaImg,
     tagline: 'Smooth, exotic, effortless.',
     description: 'Espresso, coconut, pineapple — three islands, one cup. You drift into the Pool Universe like you own it.',
     traitCombinations: [
@@ -49,7 +42,6 @@ export const PROFILES = [
   {
     id: 'classic',
     drink: 'Nespresso Martini',
-    image: martiniImg,
     tagline: 'Classic, refined, timeless.',
     description: 'Under warm lights and deep basslines, you choose the essence. Espresso shaken with vodka and coffee liqueur — pure, iconic, no compromise. You don\'t chase trends, you set the tone.',
     traitCombinations: [
@@ -60,7 +52,6 @@ export const PROFILES = [
   {
     id: 'pure',
     drink: 'Nespresso Martini',
-    image: martiniImg,
     tagline: 'Pure, open, undefined.',
     description: 'Espresso, vodka, coffee liqueur — shaken, not overthought. No label needed. The best nights are the ones you didn\'t plan.',
     traitCombinations: [
