@@ -196,6 +196,48 @@ app.get("/api/results", requireSession, (req, res) => {
   }
 });
 
+// Protected: export all results as CSV
+app.get("/api/results/export", requireSession, (req, res) => {
+  try {
+    const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
+
+    const escape = (val) => {
+      if (val == null) return '';
+      const str = String(val).replace(/"/g, '""');
+      return /[",\n\r]/.test(str) ? `"${str}"` : str;
+    };
+
+    const headers = ['Date', 'Nom', 'Entreprise', 'Email', 'Téléphone', 'Profil', 'Réponses'];
+    const lines = [headers.join(',')];
+
+    for (const r of rows) {
+      let profileData;
+      try { profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile; } catch { profileData = null; }
+      const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile || '');
+
+      const answers = JSON.parse(r.answers || '[]')
+        .map(a => `${a.question?.question || a.question}: ${a.answer}`)
+        .join(' | ');
+
+      lines.push([
+        escape(r.created_at?.slice(0, 16).replace('T', ' ')),
+        escape(r.name),
+        escape(r.company),
+        escape(r.email),
+        escape(r.phone),
+        escape(profile),
+        escape(answers),
+      ].join(','));
+    }
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', 'attachment; filename="resultats-trivial-you.csv"');
+    res.send('\uFEFF' + lines.join('\r\n')); // BOM for Excel UTF-8 compatibility
+  } catch (error) {
+    res.status(500).json({ error: "Failed to export results" });
+  }
+});
+
 /**
  * Exact-key profile matching.
  * Sorts the 3 answer traits alphabetically, joins them, then looks up the key
@@ -308,10 +350,13 @@ async function requestLink() {
   th{background:#a5ff02;color:#000;padding:10px 12px;text-align:left}
   td{padding:10px 12px;border-bottom:1px solid #222;vertical-align:top}
   tr:hover td{background:#1a1a1a}
+  .export-btn{display:inline-block;margin-bottom:24px;padding:10px 20px;background:#a5ff02;color:#000;font-weight:700;font-size:14px;border-radius:8px;text-decoration:none}
+  .export-btn:hover{background:#c0ff40}
 </style></head>
 <body>
   <h1>Résultats du quiz</h1>
   <p>${rows.length} participant${rows.length !== 1 ? "s" : ""} · connecté en tant que ${session.email}</p>
+  <a class="export-btn" href="/api/results/export">⬇ Exporter CSV</a>
   <table>
     <thead><tr><th>Date</th><th>Nom</th><th>Entreprise</th><th>Email</th><th>Profil</th><th>Réponses</th></tr></thead>
     <tbody>${tableRows || "<tr><td colspan='6' style='color:#666'>Aucun résultat.</td></tr>"}</tbody>
