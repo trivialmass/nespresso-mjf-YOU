@@ -10,7 +10,7 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding-top: 5.8%; /* Figma top offset: 49/844 */
+  padding-top: 5.8dvh; /* Figma top offset: 49/844 — dvh resolves against viewport height */
 }
 
 /* ── Top arrow banner — Figma: left:23 top:49 w:347 h:106 ────────────────── */
@@ -29,7 +29,7 @@
   height: 100%;
 }
 
-/* OUT / IN labels — Figma: both at top:21 inside arrow (21/106 = 19.8% of arrow h) */
+/* OUT / IN labels — vertically centered in arrow (Figma top:21/h:106 ≈ 50% visual centre) */
 .questions-label {
   position: absolute;
   top: 50%;
@@ -59,11 +59,11 @@
 /* ── Bottom bar — Figma: all elements at top:740 (87.7%) ─────────────────── */
 .questions-bottom {
   flex-shrink: 0;
-  /* keep: display: flex; align-items: center; justify-content: space-between */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 7.7%;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
 }
 
 /* BACK — Figma: fs:30 fw:700 navy */
