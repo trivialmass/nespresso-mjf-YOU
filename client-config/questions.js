@@ -1,33 +1,33 @@
-import grooveBg from './assets/groove.png';
-import vinylBg from './assets/vinyl.jpg';
-import backstageBg from './assets/backstage.png';
+import zestyBg from './assets/zesty.png';
+import creamyBg from './assets/creamy.png';
+import vinylBg from './assets/vinyl.png';
 
 /**
  * Quiz questions.
  * traitRight = answer stored when user swipes RIGHT (IN)
  * traitLeft  = answer stored when user swipes LEFT  (OUT)
  *
- * Q1: GROOVE?    → right: groove   / left: chill
- * Q2: VINYL?     → right: vinyl    / left: digital
- * Q3: BACKSTAGE? → right: backstage/ left: frontrow
+ * Q1: ZESTY?  → right: zesty  / left: mellow
+ * Q2: CREAMY? → right: creamy / left: light
+ * Q3: VINYL?  → right: vinyl  / left: digital
  */
 export const mockQuestions = [
   {
-    question: 'GROOVE?',
-    traitRight: 'groove',
-    traitLeft: 'chill',
-    bgImage: grooveBg,
+    question: 'ZESTY?',
+    traitRight: 'zesty',
+    traitLeft: 'mellow',
+    bgImage: zestyBg,
+  },
+  {
+    question: 'CREAMY?',
+    traitRight: 'creamy',
+    traitLeft: 'light',
+    bgImage: creamyBg,
   },
   {
     question: 'VINYL?',
     traitRight: 'vinyl',
     traitLeft: 'digital',
     bgImage: vinylBg,
-  },
-  {
-    question: 'BACKSTAGE?',
-    traitRight: 'backstage',
-    traitLeft: 'frontrow',
-    bgImage: backstageBg,
   },
 ];
