@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 3000 --mode development --host",
     "server": "PORT=3001 node server.js",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
+    "dev:all": "concurrently -k \"npm run server\" \"sleep 2 && npm run dev\"",
     "build": "vite build",
     "preview": "vite preview",
     "production": "npm run build && node server.js",
