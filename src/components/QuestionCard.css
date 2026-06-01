@@ -10,6 +10,7 @@
   left: 50%;
   /* Portrait: Figma visual 313.54 × 471.06 ≈ 2:3 */
   width: min(313px, 80vw);
+  max-height: 90%;
   aspect-ratio: 313 / 471;
   border-radius: 32px;
   cursor: grab;
@@ -62,22 +63,22 @@
 .swipe-indicator {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 10;
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: clamp(40px, 10vw, 64px);
+  font-size: clamp(60px, 20vw, 90px);
   font-weight: 700;
   pointer-events: none;
   transition: opacity 0.1s;
+  white-space: nowrap;
 }
 
 .swipe-indicator.right {
-  right: 20px;
   color: #a5ff02;
 }
 
 .swipe-indicator.left {
-  left: 20px;
   color: #ff6a7b;
 }
 
@@ -91,11 +92,12 @@
   justify-content: center;
   padding: 10%;
   text-align: center;
+  overflow: hidden;
 }
 
 .card-content h2 {
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: clamp(28px, 12.3vw, 48px);
+  font-size: clamp(14px, 12.3vw, 48px);
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
