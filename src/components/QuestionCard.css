@@ -97,13 +97,12 @@
 
 .card-content h2 {
   font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: clamp(14px, 8vw, 48px);
+  font-size: clamp(14px, 8vw, 36px);
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
   line-height: 1.33; /* 63.84/48 */
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   word-wrap: break-word;
-  padding: 0 8%;
 }
 
