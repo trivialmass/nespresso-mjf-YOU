@@ -89,3 +89,19 @@
   transform: translateX(-50%);
 }
 
+
+/* ── See you soon — below the card, above the logo ───────────────────── */
+.results-see-you-soon {
+  position: absolute;
+  left: 50%;
+  top: 82.9%; /* card bottom ~81.16% + small gap */
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-size: clamp(13px, 3.8vw, 15px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-align: center;
+  margin: 0;
+}

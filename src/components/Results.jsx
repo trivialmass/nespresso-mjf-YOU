@@ -1,6 +1,7 @@
 import React from 'react';
 import './Results.css';
 import PoolBg from './PoolBg.jsx';
+import { resultsSeeYouSoon } from '../../client-config/content.js';
 
 const Results = ({ profile }) => (
   <PoolBg overlay>
@@ -25,6 +26,9 @@ const Results = ({ profile }) => (
         <p className="results-card__description">{profile?.description}</p>
 
       </div>
+
+      {/* See you soon text — below the card */}
+      <p className="results-see-you-soon">{resultsSeeYouSoon}</p>
 
       {/* Nespresso × MJF logo — Figma: left:168 top:748 (centered) */}
       <div className="results-logo" aria-label="Nespresso × MJF">

@@ -20,5 +20,7 @@ export const quizIntro = {
 
 export const congratsLoading = "YOUR RESULT IS LOADING";
 
+export const resultsSeeYouSoon = "See you soon at the festival!";
+
 export const privacy =
   "Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.";
