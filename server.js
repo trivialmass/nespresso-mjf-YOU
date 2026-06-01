@@ -51,8 +51,10 @@ db.exec(`
   );
 `);
 
-// Migrate: add phone column if not present (safe to run on every startup)
+// Migrations (safe to run on every startup)
 try { db.prepare("ALTER TABLE results ADD COLUMN phone TEXT").run(); } catch (_) {}
+try { db.prepare("ALTER TABLE results ADD COLUMN first_name TEXT").run(); } catch (_) {}
+try { db.prepare("ALTER TABLE results ADD COLUMN last_name TEXT").run(); } catch (_) {}
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -174,11 +176,14 @@ function requireSession(req, res, next) {
 // Save quiz result to SQLite
 app.post("/api/save-result", (req, res) => {
   try {
-    const { name, company, email, phone, profile, answers } = req.body;
+    const { name, first_name, last_name, company, email, phone, profile, answers } = req.body;
+    // Support both separate first/last name and legacy combined name
+    const firstName = first_name || (name ? name.split(' ')[0] : '');
+    const lastName = last_name || (name ? name.split(' ').slice(1).join(' ') : '');
     const stmt = db.prepare(
-      "INSERT INTO results (name, company, email, phone, profile, answers) VALUES (?, ?, ?, ?, ?, ?)"
+      "INSERT INTO results (name, first_name, last_name, company, email, phone, profile, answers) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    stmt.run(name || "", company || "", email || "", phone || "", profile ? JSON.stringify(profile) : "", JSON.stringify(answers || []));
+    stmt.run(name || `${firstName} ${lastName}`.trim(), firstName, lastName, company || "", email || "", phone || "", profile ? JSON.stringify(profile) : "", JSON.stringify(answers || []));
     res.json({ success: true });
   } catch (error) {
     console.error("Error saving result:", error);
@@ -207,7 +212,7 @@ app.get("/api/results/export", requireSession, (req, res) => {
       return /[",\n\r]/.test(str) ? `"${str}"` : str;
     };
 
-    const headers = ['Date', 'Nom', 'Entreprise', 'Email', 'Téléphone', 'Profil', 'Réponses'];
+    const headers = ['Date', 'Prénom', 'Nom', 'Email', 'Téléphone', 'Profil', 'Réponses'];
     const lines = [headers.join(',')];
 
     for (const r of rows) {
@@ -221,8 +226,8 @@ app.get("/api/results/export", requireSession, (req, res) => {
 
       lines.push([
         escape(r.created_at?.slice(0, 16).replace('T', ' ')),
-        escape(r.name),
-        escape(r.company),
+        escape(r.first_name || r.name?.split(' ')[0] || ''),
+        escape(r.last_name || r.name?.split(' ').slice(1).join(' ') || ''),
         escape(r.email),
         escape(r.phone),
         escape(profile),
@@ -376,7 +381,8 @@ async function requestLink() {
 
     return `<tr>
       <td style="white-space:nowrap;color:#aaa;font-size:12px">${r.created_at?.slice(0,16).replace('T',' ')}</td>
-      <td><b>${r.name || ''}</b>${r.company ? `<br><span style="color:#999;font-size:11px">${r.company}</span>` : ''}</td>
+      <td style="color:#ccc">${r.first_name || r.name?.split(' ')[0] || ''}</td>
+      <td style="color:#ccc">${r.last_name || r.name?.split(' ').slice(1).join(' ') || ''}</td>
       <td style="color:#ccc">${r.email || ''}</td>
       <td style="color:#ccc">${r.phone || ''}</td>
       <td>${profileHtml}</td>
@@ -405,8 +411,8 @@ async function requestLink() {
   <div class="stats">${statsHtml || '<span style="color:#555">Aucun résultat.</span>'}</div>
   <a class="export-btn" href="/api/results/export">⬇ Exporter CSV</a>
   <table>
-    <thead><tr><th>Date</th><th>Participant</th><th>Email</th><th>Tél.</th><th>Profil</th><th>Réponses</th></tr></thead>
-    <tbody>${tableRows || "<tr><td colspan='6' style='color:#555;padding:24px'>Aucun résultat.</td></tr>"}</tbody>
+    <thead><tr><th>Date</th><th>Prénom</th><th>Nom</th><th>Email</th><th>Tél.</th><th>Profil</th><th>Réponses</th></tr></thead>
+    <tbody>${tableRows || "<tr><td colspan='7' style='color:#555;padding:24px'>Aucun résultat.</td></tr>"}</tbody>
   </table>
 </body></html>`);
 });

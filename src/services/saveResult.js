@@ -11,8 +11,9 @@ export const saveResult = async (userData, answers, profile) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        first_name: userData?.firstName || '',
+        last_name: userData?.lastName || '',
         name: `${userData?.firstName || ''} ${userData?.lastName || ''}`.trim(),
-        company: '',
         email: userData?.email || '',
         phone: userData?.phone || '',
         profile: profile ? JSON.stringify({ id: profile.id, drink: profile.drink, tagline: profile.tagline }) : '',
