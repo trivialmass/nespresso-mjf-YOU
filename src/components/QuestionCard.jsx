@@ -34,7 +34,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
     if (Math.abs(position.x) > threshold) {
       const direction = position.x > 0 ? 'right' : 'left';
       animateSwipe(direction);
-      setTimeout(() => onSwipe(direction), 500);
+      setTimeout(() => onSwipe(direction), 800);
     } else {
       setPosition({ x: 0, y: 0 });
     }
@@ -79,7 +79,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
     setDisabledButton(true);
     const exitX = direction === 'right' ? window.innerWidth : -window.innerWidth;
     setPosition({ x: exitX, y: 0 });
-    setTimeout(() => onSwipe(direction), 500);
+    setTimeout(() => onSwipe(direction), 800);
   };
 
   // Expose handleButtonClick to parent via ref
@@ -129,7 +129,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
         transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) rotate(${position.x * 0.03}deg)`,
         zIndex: 10 - stackIndex,
         pointerEvents: pointEvents,
-        opacity: stackIndex === 0 ? 1 : 0.85 - stackIndex * 0.1,
+        opacity: 1,
       }}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}

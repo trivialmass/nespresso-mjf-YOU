@@ -37,7 +37,7 @@ const SwipeTutorial = ({ onReady }) => (
 
       {/* CTA — not in Figma, required for flow; positioned between bottom text and logo */}
       <button className="tutorial-cta" onClick={onReady}>
-        C&apos;est parti
+        LET'S PLAY
       </button>
 
       {/* Nespresso × MJF logo — Figma: left:168 top:748 */}

@@ -4,6 +4,12 @@
  * The backend server handles the Infomaniak API call to avoid CORS issues.
  */
 import getMockProfile from "../utils/getMockProfiles.js";
+import { PROFILES } from "../../client-config/profiles.js";
+
+const enrichWithImage = (profile) => {
+  const match = PROFILES.find(p => p.id === profile.id);
+  return match ? { ...profile, image: match.image } : profile;
+};
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
@@ -33,7 +39,7 @@ export const generateProfile = async (answers) => {
         return getMockProfile(answers);
       }
 
-      return data.profile;
+      return enrichWithImage(data.profile);
     } catch (error) {
       console.error("Error generating profile via backend:", error);
       console.warn(

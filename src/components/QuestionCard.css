@@ -50,15 +50,6 @@
   z-index: 0;
 }
 
-/* Navy overlay when card has a bg image — Figma: rgba(28,40,105,0.70) */
-.question-card.has-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--overlay);
-  z-index: 1;
-}
-
 /* ── Swipe direction indicators ──────────────────────────────────────────── */
 .swipe-indicator {
   position: absolute;

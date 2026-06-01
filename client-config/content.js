@@ -2,7 +2,7 @@
 // against the mailing list server-side. Only invited guests see the RSVP; quiz can be open to all.
 
 export const rsvp = {
-  heading: "you're invited",
+  heading: "YOU'RE INVITED",
   firstNameLabel: "First name*",
   lastNameLabel: "Last name*",
   emailLabel: "Email address*",

@@ -6,6 +6,7 @@ const getMockProfile = (_answers) => ({
   drink: PROFILES[0].drink,
   tagline: PROFILES[0].tagline,
   description: PROFILES[0].description,
+  image: PROFILES[0].image,
 });
 
 export default getMockProfile;
