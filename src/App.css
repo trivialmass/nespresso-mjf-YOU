@@ -6,6 +6,16 @@
   overflow: hidden;
 }
 
+/* Constrains absolute-positioned content to 440px, centered in the cream bg */
+.quiz-intro-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(100%, 440px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /*
  * All positions are expressed as % of Figma frame (390×844):
  *   horizontal %  = px / 390 * 100
