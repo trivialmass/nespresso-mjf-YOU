@@ -14,9 +14,8 @@
   font-size: 34px;
   font-weight: 700;
   color: var(--navy);
-  margin: 0 0 20px ;
-  text-align: center;
-    line-height: 1.1;
+  margin: 0 0 20px;
+  line-height: 1.1;
 }
 
 /* Pill inputs — Figma: w:285 h:50 br:50 */
