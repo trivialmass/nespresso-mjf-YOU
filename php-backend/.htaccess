@@ -9,7 +9,7 @@ Require valid-user
     RewriteEngine On
     RewriteBase /
 
-    # Pass through real files and directories (e.g. /admin, /assets)
+    # Pass through real files and directories (e.g. /assets)
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
@@ -17,7 +17,11 @@ Require valid-user
     # Serve SPA for all 6 invitation paths
     RewriteRule ^invitation_[zot]_july_[89]$ index.html [L]
 
+    # Route /api/* to the PHP backend
     RewriteRule ^api/(.*)$ php-backend/api/$1.php [L]
+
+    # Fallback: all other paths served by the SPA (e.g. /admin)
+    RewriteRule ^ index.html [L]
 </IfModule>
 
 # Explicit MIME types — prevents browser rejecting JS modules
