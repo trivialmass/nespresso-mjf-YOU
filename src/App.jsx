@@ -21,7 +21,7 @@ function App() {
   const handleTutorialReady = () => setStep('quiz');
   const handleRestart = () => {
     setUserData(null);
-    setStep('rsvp');
+    setStep(invitation.valid ? 'rsvp' : 'quiz-intro');
   };
 
   if (step === 'rsvp') {
