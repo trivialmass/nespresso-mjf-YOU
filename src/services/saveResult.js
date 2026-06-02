@@ -7,7 +7,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 
 export const saveResult = async (userData, answers, profile) => {
   try {
-    await fetch(`${BACKEND_URL}/api/save-result`, {
+    await fetch(`${BACKEND_URL}/php-backend/api/save-result.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -15,6 +15,8 @@ export const saveResult = async (userData, answers, profile) => {
         last_name: userData?.lastName || '',
         name: `${userData?.firstName || ''} ${userData?.lastName || ''}`.trim(),
         email: userData?.email || '',
+        event_date: userData?.eventDate || '',
+        guest_count: userData?.guestCount ?? 0,
         phone: userData?.phone || '',
         profile: profile ? JSON.stringify({ id: profile.id, drink: profile.drink, tagline: profile.tagline }) : '',
         answers: answers.map(a => ({ question: a.question?.question || a.question, answer: a.answer })),
