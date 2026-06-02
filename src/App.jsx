@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import './App.css';
 import { logoGame } from '../client-config/brand.js';
 import { quizIntro } from '../client-config/content.js';
 import RsvpForm from './components/RsvpForm.jsx';
 import SwipeTutorial from './components/SwipeTutorial.jsx';
 import Questions from './Questions.jsx';
-
-// TODO: URL-key invitation gating — read ?key=<token> from URL, validate against mailing list
-// before rendering RsvpForm. Users without a valid key see only the quiz (no form).
+import { parseInvitation } from './utils/invitation.js';
 
 function App() {
-  const [step, setStep] = useState('rsvp'); // rsvp | quiz-intro | tutorial | quiz | result
+  const invitation = useMemo(() => parseInvitation(), []);
+  const [step, setStep] = useState(invitation.valid ? 'rsvp' : 'quiz-intro');
   const [userData, setUserData] = useState(null);
 
   const handleRsvpSubmit = (formData) => {
-    setUserData(formData);
+    setUserData({ ...formData, eventDate: invitation.date, guestCount: formData.guestCount ?? 0 });
     setStep('quiz-intro');
   };
 
@@ -26,7 +25,7 @@ function App() {
   };
 
   if (step === 'rsvp') {
-    return <RsvpForm onSubmit={handleRsvpSubmit} />;
+    return <RsvpForm invitation={invitation} onSubmit={handleRsvpSubmit} />;
   }
 
   if (step === 'quiz-intro') {
