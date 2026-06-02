@@ -15,7 +15,7 @@ const RsvpForm = ({ invitation, onSubmit }) => {
   });
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
-  const handleAttend = (value) => setForm({ ...form, attending: value });
+  const handleAttend = (value) => setForm({ ...form, attending: value, guestCount: value ? form.guestCount : 0 });
   const handleGuestCount = (count) => setForm({ ...form, guestCount: count });
 
   const handleSubmit = (e) => {
