@@ -1,6 +1,3 @@
-// TODO: URL-key invitation gating — before showing the RSVP form, validate a URL param (e.g. ?key=xxx)
-// against the mailing list server-side. Only invited guests see the RSVP; quiz can be open to all.
-
 export const rsvp = {
   heading: "YOU'RE INVITED",
   firstNameLabel: "First name*",
@@ -9,6 +6,7 @@ export const rsvp = {
   phoneLabel: "Phone number",
   attendYes: "I'd be delighted to attend",
   attendNo: "I won't be able to make it this time",
+  guestLabel: "How many guests are you bringing?",
   ctaLabel: "CONFIRM",
 };
 
@@ -20,7 +18,7 @@ export const quizIntro = {
 
 export const congratsLoading = "YOUR RESULT IS LOADING";
 
-export const resultsSeeYouSoon = "See you soon at the festival!";
+export const resultsSeeYouSoon = "See you soon";
 
 export const privacy =
   "Vos données sont utilisées uniquement dans le cadre de cet événement Nespresso × MJF. Elles ne sont ni exploitées commercialement ni transmises à des tiers.";

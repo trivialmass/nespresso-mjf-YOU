@@ -1,6 +1,6 @@
 /* Card — floats on pool bg, top:158 equivalent via margin-top */
 .rsvp-card {
-  margin: 158px auto 40px;
+  margin: auto;
   width: min(327px, calc(100vw - 40px));
   background: #fff;
   border-radius: 25px;
@@ -98,4 +98,54 @@
 
 .rsvp-cta:not(:disabled):hover {
   opacity: 0.88;
+}
+
+/* Date + concerts label under heading */
+.rsvp-date-label {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  text-align: center;
+  margin: -10px 0 20px;
+  line-height: 1.5;
+}
+
+.rsvp-concerts {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* Guest count selector */
+.rsvp-guests {
+  margin: 8px 0 4px;
+}
+
+.rsvp-guests__label {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: var(--navy);
+  margin: 0 0 10px;
+}
+
+.rsvp-guests__options {
+  display: flex;
+  gap: 10px;
+}
+
+.rsvp-guests__btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1.5px solid var(--navy);
+  background: transparent;
+  font-size: 18px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rsvp-guests__btn--selected {
+  background: var(--navy);
+  color: #fff;
 }

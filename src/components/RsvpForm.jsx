@@ -3,20 +3,24 @@ import './RsvpForm.css';
 import PoolBg from './PoolBg.jsx';
 import { rsvp } from '../../client-config/content.js';
 
-const RsvpForm = ({ onSubmit }) => {
+const RsvpForm = ({ invitation, onSubmit }) => {
+  const { dayLabel, concerts, maxGuests } = invitation;
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
     attending: null,
+    guestCount: 0,
   });
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handleAttend = (value) => setForm({ ...form, attending: value });
+  const handleGuestCount = (count) => setForm({ ...form, guestCount: count });
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.firstName || !form.email || form.attending === null) return;
+    if (!form.firstName || !form.lastName || !form.email || form.attending === null) return;
     onSubmit(form);
   };
 
@@ -26,6 +30,9 @@ const RsvpForm = ({ onSubmit }) => {
     <PoolBg overlay={false}>
       <div className="rsvp-card">
         <h1 className="rsvp-title">{rsvp.heading}</h1>
+        {dayLabel && (
+          <p className="rsvp-date-label">{dayLabel}<br /><span className="rsvp-concerts">{concerts}</span></p>
+        )}
         <form onSubmit={handleSubmit}>
           <input
             className="rsvp-input"
@@ -43,6 +50,7 @@ const RsvpForm = ({ onSubmit }) => {
             placeholder={rsvp.lastNameLabel}
             value={form.lastName}
             onChange={handleChange}
+            required
           />
           <input
             className="rsvp-input"
@@ -52,14 +60,6 @@ const RsvpForm = ({ onSubmit }) => {
             value={form.email}
             onChange={handleChange}
             required
-          />
-          <input
-            className="rsvp-input"
-            type="tel"
-            name="phone"
-            placeholder={rsvp.phoneLabel}
-            value={form.phone}
-            onChange={handleChange}
           />
           <button
             type="button"
@@ -77,6 +77,25 @@ const RsvpForm = ({ onSubmit }) => {
             <span className="rsvp-radio__dot" />
             {rsvp.attendNo}
           </button>
+
+          {form.attending === true && maxGuests > 0 && (
+            <div className="rsvp-guests">
+              <p className="rsvp-guests__label">{rsvp.guestLabel}</p>
+              <div className="rsvp-guests__options">
+                {Array.from({ length: maxGuests + 1 }, (_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    className={`rsvp-guests__btn${form.guestCount === i ? ' rsvp-guests__btn--selected' : ''}`}
+                    onClick={() => handleGuestCount(i)}
+                  >
+                    {i}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <button className="rsvp-cta" type="submit" disabled={!isValid}>
             {rsvp.ctaLabel}
           </button>
