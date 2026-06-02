@@ -9,6 +9,11 @@ Require valid-user
     RewriteEngine On
     RewriteBase /
 
+    # Pass through real files and directories (e.g. /admin, /assets)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
     # Serve SPA for all 6 invitation paths
     RewriteRule ^invitation_[zot]_july_[89]$ index.html [L]
 
