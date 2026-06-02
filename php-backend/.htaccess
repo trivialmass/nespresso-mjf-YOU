@@ -1,0 +1,46 @@
+# HTTP Basic Auth — protects the entire site
+AuthType Basic
+AuthName "Nespresso × MJF"
+AuthUserFile /home/clients/78a49d666a169f61d6089d73db1a7ae2/sites/nespresso-mjf.trivialmass.com/.htpasswd
+Require valid-user
+
+# Route /api/* to the PHP backend only — no SPA fallback needed (no React Router)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Serve SPA for all 6 invitation paths
+    RewriteRule ^invitation_[zot]_july_[89]$ index.html [L]
+
+    RewriteRule ^api/(.*)$ php-backend/api/$1.php [L]
+</IfModule>
+
+# Explicit MIME types — prevents browser rejecting JS modules
+<IfModule mod_mime.c>
+    AddType application/javascript   .js .mjs
+    AddType text/css                 .css
+    AddType image/webp               .webp
+    AddType image/svg+xml            .svg
+    AddType application/json         .json
+    AddType font/woff2               .woff2
+    AddType font/woff                .woff
+</IfModule>
+
+# PHP files are executed server-side — source/credentials are never exposed to clients.
+# The save-result.php endpoint already rejects non-POST requests (405).
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp            "access plus 1 year"
+    ExpiresByType image/png             "access plus 1 year"
+    ExpiresByType image/jpeg            "access plus 1 year"
+    ExpiresByType image/svg+xml         "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType text/css              "access plus 1 week"
+</IfModule>
