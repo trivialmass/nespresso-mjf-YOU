@@ -71,6 +71,21 @@ $email     = $body['email']      ?? '';
 $phone     = $body['phone']      ?? '';
 $eventDate  = $body['event_date']  ?? '';
 $guestCount = isset($body['guest_count']) ? (int)$body['guest_count'] : 0;
+
+// Validate event_date against known event dates
+if ($eventDate !== '' && !in_array($eventDate, ['July 8', 'July 9'], true)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid event_date']);
+    exit;
+}
+
+// Validate guest_count range (0–2 per spec)
+if ($guestCount < 0 || $guestCount > 2) {
+    http_response_code(400);
+    echo json_encode(['error' => 'guest_count must be between 0 and 2']);
+    exit;
+}
+
 $profile   = isset($body['profile'])
     ? (is_string($body['profile']) ? $body['profile'] : json_encode($body['profile']))
     : '';
