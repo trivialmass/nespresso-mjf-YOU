@@ -1,0 +1,11 @@
+=== Phase 0: Stack Detection ===
+HTTP/2 401 
+date: Thu, 04 Jun 2026 07:29:05 GMT
+server: Apache
+www-authenticate: Basic realm="Nespresso × MJF"
+vary: accept-language,accept-charset
+strict-transport-security: max-age=16000000
+accept-ranges: bytes
+content-type: text/html; charset=utf-8
+content-language: en
+

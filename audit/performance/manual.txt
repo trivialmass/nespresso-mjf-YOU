@@ -1,0 +1,7 @@
+=== Phase 7: Performance ===
+--- Compression ---
+no content-encoding
+--- TTFB ---
+TTFB: 0.068787s  Total: 0.068905s
+--- Cache-Control ---
+no cache-control

@@ -1,0 +1,74 @@
+=== Phase 4: SSL/TLS ===
+CONNECTED(00000005)
+---
+Certificate chain
+ 0 s:CN=nespresso-mjf.trivialmass.com
+   i:C=US, O=Let's Encrypt, CN=YR2
+   a:PKEY: RSA, 4096 (bit); sigalg: sha256WithRSAEncryption
+   v:NotBefore: Jun  1 12:49:54 2026 GMT; NotAfter: Aug 30 12:49:53 2026 GMT
+ 1 s:C=US, O=Let's Encrypt, CN=YR2
+   i:C=US, O=ISRG, CN=Root YR
+   a:PKEY: RSA, 2048 (bit); sigalg: sha256WithRSAEncryption
+   v:NotBefore: Sep  3 00:00:00 2025 GMT; NotAfter: Sep  2 23:59:59 2028 GMT
+ 2 s:C=US, O=ISRG, CN=Root YR
+   i:C=US, O=Internet Security Research Group, CN=ISRG Root X1
+   a:PKEY: RSA, 4096 (bit); sigalg: sha256WithRSAEncryption
+   v:NotBefore: May 13 00:00:00 2026 GMT; NotAfter: Sep  2 23:59:59 2032 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIGFDCCBPygAwIBAgISBq/j0SBkJnhGox/+I6kyfVI9MA0GCSqGSIb3DQEBCwUA
+MDMxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MQwwCgYDVQQD
+EwNZUjIwHhcNMjYwNjAxMTI0OTU0WhcNMjYwODMwMTI0OTUzWjAoMSYwJAYDVQQD
+Ex1uZXNwcmVzc28tbWpmLnRyaXZpYWxtYXNzLmNvbTCCAiIwDQYJKoZIhvcNAQEB
+BQADggIPADCCAgoCggIBAJ83rTxupmdiIt1w6fvyMr8th7qWXQPdijGPnxzHUb3T
+hlv6WGSTU+B8UEjW1Xytz2oqekTTGXBsnSlzmhYZsm3pY0J/qWcAac2R3sMN7cT/
+B+wpVgU89MK+RlRXledDmGq4Em8qA6X+dNLL5RrmjXGm41qECvdjXU4chbGCHBpq
+jzpZDm3H6jm1Nin/jBS6IJo85oaXRq3s2sCldhAforpwQPFaQ399Hb4/fNnWUFfC
+6bLmnWtgWLGQCRUuh9rlXPCzFxuS+BzUvzId9Dq4wlglRKIR5IXvoFLpCm2dSTBK
+8EzVPY42jpKTqgJYGbkQoBwlEMZBDKd+eeItSN33bU8YpB6wi8KQieKjHhXtuRel
+y3ZZ9g1bm206hZxVEcdnHSuwhy0Wz6DpKJFeW9eLntMB65vLFm+3Sf9EYnrr/V4S
+Kb87DW96oFxnWb0RW65aUuoBqDVWpInYRAY+TbdOv7gZb7Qv25Jjp15u7vFeJuwm
+DY5gcvlZh8AlJ+Kc4cwcCL/6btHXO1WFaE33K9whwY497+eX5Fh780DIHeYTt5AJ
+DmQU1IwwSaxYzYBrpPMFPILBKPEFOdPqXx7FP0dL+XbNWkALDLKAAuc414TMAWtb
+reSaHrH6VmBVMWgljIgSnJ5cAoPXqXDCuxdswTx9Y6RVsRvcWzD89zLTHIWQ4rbF
+AgMBAAGjggIrMIICJzAOBgNVHQ8BAf8EBAMCBaAwEwYDVR0lBAwwCgYIKwYBBQUH
+AwEwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUvxUqie3vh7z9WKs9BRVWvtGObE0w
+HwYDVR0jBBgwFoAUQBUtJnntMiCe35pyHdYyH4EMgQwwMwYIKwYBBQUHAQEEJzAl
+MCMGCCsGAQUFBzAChhdodHRwOi8veXIyLmkubGVuY3Iub3JnLzAoBgNVHREEITAf
+gh1uZXNwcmVzc28tbWpmLnRyaXZpYWxtYXNzLmNvbTATBgNVHSAEDDAKMAgGBmeB
+DAECATAuBgNVHR8EJzAlMCOgIaAfhh1odHRwOi8veXIyLmMubGVuY3Iub3JnLzYy
+LmNybDCCAQwGCisGAQQB1nkCBAIEgf0EgfoA+AB2AJROQ4f67MHvgfMZJCaoGGUB
+x9NfOAIBP3JnfVU3LhnYAAABnoNxXMcAAAQDAEcwRQIhAIffcVsyocASbuFH/gHN
+nrjNR9PxhqUW7bWUiYEs21BeAiA2wn8YgHGciEEsHsl8K2G92/cYJ2bfl0lltfY8
+97LuPwB+AGz+UBlDqF6pFrxS0TPk3Mke8UEcfSWEINFzgJ4YGOs6AAABnoNxXPEA
+CAAABQAOawyIBAMARzBFAiAvIzu1tgXUkMU7OaHln3LhuGgUU4/2PjTlcQHV/KxO
+1gIhAOi0HFV9/7t29G2vesLP43//rt2zOpZ/w2XBmnJS6FbMMA0GCSqGSIb3DQEB
+CwUAA4IBAQBSn2iSD3Ix804+QDesAtZDTyqL5zVsD7xjzU9AzoAkjUJuEoYY4fH1
+zGjpuuEM/9/So9wWvDeoC4q9aApe7sp1WVWGP1ypL/8xM/PWy85Hs0Sw3RpXhyLw
+QCALYFqyRxormKOdqEgHQ8jcMJ99gOrO/XtcUIlWh7MNXLv3wNBxxe34MYRakJ71
+cBrVnXoJj1qqo9mcA2lpgQsQgLJxkEJkkHajzgXxLbPinan/IzTlDp192T7j4ZkO
+omw8ol/kRs9/i9pPSUUsZYaqeBQ5/BG0kxGDyPGQAGjSWgol4Ll5aFrmID4uJJVn
+JKbM3iaHNBWb9jsEpcmgoeDxxvbrkdoF
+-----END CERTIFICATE-----
+subject=CN=nespresso-mjf.trivialmass.com
+issuer=C=US, O=Let's Encrypt, CN=YR2
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: rsa_pss_rsae_sha256
+Peer Temp Key: X25519, 253 bits
+---
+SSL handshake has read 5160 bytes and written 1640 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Protocol: TLSv1.3
+Server public key is 4096 bit
+This TLS version forbids renegotiation.
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---

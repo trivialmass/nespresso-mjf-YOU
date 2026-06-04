@@ -160,15 +160,13 @@
   padding: 0;
   cursor: pointer;
   font-size: 10px;
-  color: #1C2869;
-  letter-spacing: 0.05em;
+  color: #1C2869;  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .rsvp-privacy {
   font-size: 10px;
-  color: #1C2869;
-  line-height: 1.5;
+  color: #1C2869;  line-height: 1.5;
   margin: 6px 0 0;
   text-align: left;
 }
@@ -183,6 +181,7 @@
 .rsvp-consent input[type="checkbox"] {
   margin-top: 2px;
   flex-shrink: 0;
+  
 }
 
 .rsvp-consent label {
