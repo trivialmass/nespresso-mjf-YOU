@@ -27,7 +27,8 @@
   left: 0;
   width: 100%;
   height: 47.23%; /* 298/631 */
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center -20px;
 }
 
 .results-card__photo--placeholder {
@@ -89,8 +90,47 @@
   transform: translateX(-50%);
 }
 
+/* ── CTAs row — replay + discover ────────────────────────────────────── */
+.results-cta-row {
+  position: absolute;
+  left: 7.69%;
+  right: 7.69%;
+  top: 83.5%;
+  display: flex;
+  gap: 10px;
+}
 
-/* ── See you soon — below the card, above the logo ───────────────────── */
+.results-cta {
+  flex: 1;
+  height: 48px;
+  border-radius: 100px;
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-size: clamp(12px, 4vw, 18px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.results-cta--ghost {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.results-cta--pink {
+  background: var(--pink-cta);
+  border: none;
+  color: #fff;
+}
+
+
+/* ── See you soon — below the card, above the CTAs ───────────────────── */
 .results-see-you-soon {
   position: absolute;
   left: 50%;

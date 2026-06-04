@@ -1,9 +1,9 @@
 import React from 'react';
 import './Results.css';
 import PoolBg from './PoolBg.jsx';
-import { resultsSeeYouSoon } from '../../client-config/content.js';
+import { resultsSeeYouSoon, resultsCta } from '../../client-config/content.js';
 
-const Results = ({ profile }) => (
+const Results = ({ profile, onReplay }) => (
   <PoolBg overlay>
     <div className="results-frame">
 
@@ -29,6 +29,21 @@ const Results = ({ profile }) => (
 
       {/* See you soon text — below the card */}
       <p className="results-see-you-soon">{resultsSeeYouSoon}</p>
+
+      {/* CTAs — replay + discover */}
+      <div className="results-cta-row">
+        <button className="results-cta results-cta--ghost" onClick={onReplay}>
+          {resultsCta.replay}
+        </button>
+        <a
+          className="results-cta results-cta--pink"
+          href={resultsCta.discoverUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {resultsCta.discover}
+        </a>
+      </div>
 
       {/* Nespresso × MJF logo — Figma: left:168 top:748 (centered) */}
       <div className="results-logo" aria-label="Nespresso × MJF">

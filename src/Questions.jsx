@@ -87,6 +87,7 @@ function Questions(userData) {
     setCurrentIndex(0);
     setAnswers([]);
     setShowCongradulation(false);
+    setShowResults(false);
     setProfile('');
     setError(null);
   };
@@ -111,7 +112,7 @@ function Questions(userData) {
     }
   }, [resetPosition]);
 
-  if (showResults) return <Results profile={profile} />;
+  if (showResults) return <Results profile={profile} onReplay={handleRestart} />;
 
   if (showCongradulation && profile) {
     return (
