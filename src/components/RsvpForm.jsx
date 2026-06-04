@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './RsvpForm.css';
 import PoolBg from './PoolBg.jsx';
-import { rsvp } from '../../client-config/content.js';
+import { rsvp, privacy } from '../../client-config/content.js';
 
 const RsvpForm = ({ invitation, onSubmit }) => {
   const { dayLabel, concerts, maxGuests } = invitation;
@@ -13,6 +13,7 @@ const RsvpForm = ({ invitation, onSubmit }) => {
     attending: null,
     guestCount: 0,
   });
+  const [consent, setConsent] = useState(false);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const handleAttend = (value) => setForm({ ...form, attending: value, guestCount: value ? form.guestCount : 0 });
@@ -24,7 +25,7 @@ const RsvpForm = ({ invitation, onSubmit }) => {
     onSubmit(form);
   };
 
-  const isValid = form.firstName && form.lastName && form.email && form.attending !== null;
+  const isValid = form.firstName && form.lastName && form.email && form.attending !== null && consent;
 
   return (
     <PoolBg overlay={false}>
@@ -95,6 +96,17 @@ const RsvpForm = ({ invitation, onSubmit }) => {
               </div>
             </div>
           )}
+
+          <p className="rsvp-privacy">{privacy.notice}</p>
+          <div className="rsvp-consent">
+            <input
+              type="checkbox"
+              id="rsvp-consent"
+              checked={consent}
+              onChange={() => setConsent(c => !c)}
+            />
+            <label htmlFor="rsvp-consent">{privacy.consentLabel}</label>
+          </div>
 
           <button className="rsvp-cta" type="submit" disabled={!isValid}>
             {rsvp.ctaLabel}

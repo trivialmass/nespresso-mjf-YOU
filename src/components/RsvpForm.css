@@ -149,3 +149,30 @@
   background: var(--navy);
   color: #fff;
 }
+
+.rsvp-privacy {
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  margin: 4px 0 8px;
+  text-align: left;
+}
+
+.rsvp-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.rsvp-consent input[type="checkbox"] {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.rsvp-consent label {
+  font-size: 12px;
+  color: #fff;
+  line-height: 1.4;
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import './PopupInscription.css';
 import React, { useState } from 'react';
+import { privacy } from '../../client-config/content.js';
 
 function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
     const [checkbox, setCheckbox] = useState(false);
@@ -61,7 +62,7 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
                     />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <p className="popupInformation">Les données d’inscription sont utilisées uniquement dans le cadre du jeu entre Trivial Mass et le participant. Elles ne sont ni exploitées commercialement ni transmises à des tiers.</p>
+                <p className="popupInformation">{privacy.notice}</p>
                 <div className="consentContainer">
                     <input
                         type="checkbox"
@@ -71,7 +72,7 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
                         onChange={() => setCheckbox(!checkbox)}
                     />
                     <label className="consentLabel" htmlFor="consent">
-                        J’accepte les conditions générales
+                        {privacy.consentLabel}
                     </label>
                 </div>
                 <button
