@@ -3,5 +3,4 @@ node_modules/
 .DS_Store
 dist/
 results.db
-php-backend/api/save-result.php
 php-backend/.htpasswd
