@@ -47,7 +47,7 @@ export const PROFILES = [
   {
     id: "pincolada",
     name: "Creamy",
-    drink: "Ice Piña Colada",
+    drink: "Ice Pina Colada",
     tagline: "Smooth, exotic, effortless",
     description:
       "Espresso, coconut, pineapple. Three islands, one cup. You make every room feel like a holiday.",

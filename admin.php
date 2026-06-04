@@ -175,7 +175,7 @@ if ($isAuth && isset($_GET['export']) && $_GET['export'] === 'csv') {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 $DRINK_COLORS = [
     'Ice Yuzu Tonic'    => '#a5ff02',
-    'Ice Piña Colada'   => '#ffcc00',
+    'Ice Pina Colada'   => '#ffcc00',
     'Nespresso Martini' => '#c084fc',
 ];
 
