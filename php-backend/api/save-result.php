@@ -146,19 +146,14 @@ $attending = $body['attending'] ?? true; // default true for quiz-complete saves
 $isNewRow  = $stmt->rowCount() === 1;
 
 if ($isNewRow && $attending && $email) {
-    $dateSlug   = $eventDate === 'July 8' ? 'july_8' : 'july_9';
-    $tplPath    = __DIR__ . '/../../assets/mails/confirmation_' . $dateSlug . '.html';
+    $dateSlug = $eventDate === 'July 8' ? 'july_8' : 'july_9';
+    $tplPath  = __DIR__ . '/../../assets/mails/confirmation_' . $dateSlug . '.html';
 
     if (file_exists($tplPath)) {
+        require_once __DIR__ . '/../lib/sendMail.php';
         $htmlBody = file_get_contents($tplPath);
         $htmlBody = str_replace('&laquo;First_Name&raquo;', htmlspecialchars($firstName ?: $name), $htmlBody);
-
-        $headers  = "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: " . (getenv('MAIL_FROM_NAME') ?: 'Nespresso x MJF') . " <" . (getenv('MAIL_FROM') ?: 'nespresso-mjf@trivialmass.com') . ">\r\n";
-        $headers .= "Reply-To: " . (getenv('MAIL_FROM') ?: 'nespresso-mjf@trivialmass.com') . "\r\n";
-
-        @mail($email, '=?UTF-8?B?' . base64_encode('Your attendance is confirmed — Nespresso × MJF') . '?=', $htmlBody, $headers);
+        sendMail($email, 'Your attendance is confirmed — Nespresso × MJF', $htmlBody);
     }
 }
 

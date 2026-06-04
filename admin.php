@@ -116,8 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && !$isAuth)
         $linkUrl = "$base_url/admin?token=$tok";
         $subject = "Votre lien d'accès Trivial YOU";
         $body    = "Bonjour,\n\nVoici votre lien d'accès (valide 15 minutes) :\n\n$linkUrl\n\nSi vous n'avez pas fait cette demande, ignorez ce message.";
-        $headers = "From: " . (getenv('MAIL_ADMIN_FROM') ?: 'noreply@trivialmass.com') . "\r\nContent-Type: text/plain; charset=UTF-8";
-        mail($email, $subject, $body, $headers);
+        require_once __DIR__ . '/php-backend/lib/sendMail.php';
+        $adminFrom = getenv('MAIL_ADMIN_FROM') ?: 'noreply@trivialmass.com';
+        sendMail($email, $subject, nl2br(htmlspecialchars($body)), $adminFrom, 'Trivial YOU Admin');
 
         $message = '✅ Lien envoyé ! Vérifiez votre boîte mail.';
     }
