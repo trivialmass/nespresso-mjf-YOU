@@ -5,9 +5,9 @@ AuthUserFile /home/clients/78a49d666a169f61d6089d73db1a7ae2/sites/nespresso-mjf.
 Require valid-user
 
 # ── Block .git directory ──────────────────────────────────────────────────────
-<DirectoryMatch "\.git">
+<FilesMatch "^\.git">
     Require all denied
-</DirectoryMatch>
+</FilesMatch>
 
 # ── Security headers ──────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
