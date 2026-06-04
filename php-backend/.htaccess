@@ -32,6 +32,9 @@ Require valid-user
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule ^ - [L]
 
+    # Route /admin to admin.php
+    RewriteRule ^admin$ admin.php [L]
+
     # Serve SPA for all 6 invitation paths
     RewriteRule ^invitation_[zot]_july_[89]$ index.html [L]
 
