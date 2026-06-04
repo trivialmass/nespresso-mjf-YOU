@@ -1,7 +1,7 @@
 import React from 'react';
 import './Results.css';
 import PoolBg from './PoolBg.jsx';
-import { resultsSeeYouSoon, resultsCta } from '../../client-config/content.js';
+import { resultsCta } from '../../client-config/content.js';
 
 const Results = ({ profile, onReplay }) => (
   <PoolBg overlay>
@@ -26,9 +26,6 @@ const Results = ({ profile, onReplay }) => (
         <p className="results-card__description">{profile?.description}</p>
 
       </div>
-
-      {/* See you soon text — below the card */}
-      <p className="results-see-you-soon">{resultsSeeYouSoon}</p>
 
       {/* CTAs — replay + discover */}
       <div className="results-cta-row">
