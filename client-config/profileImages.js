@@ -1,7 +1,7 @@
 // Frontend-only — Vite resolves these at build time. Do NOT import in server.js.
-import yuzuImg from './assets/nespresso-yuzu.jpg';
-import pinaColadaImg from './assets/nespresso-pina-colada.jpg';
-import martiniImg from './assets/nespresso-martini.jpg';
+import yuzuImg from './assets/nespresso-yuzu.webp';
+import pinaColadaImg from './assets/nespresso-pina-colada.webp';
+import martiniImg from './assets/nespresso-martini.webp';
 
 export const PROFILE_IMAGES = {
   bold:      yuzuImg,

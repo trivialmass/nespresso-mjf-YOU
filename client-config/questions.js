@@ -1,6 +1,6 @@
-import zestyBg from './assets/zesty.png';
-import creamyBg from './assets/creamy.png';
-import jazzyBg from './assets/jazzy.jpg';
+import zestyBg from './assets/zesty.webp';
+import creamyBg from './assets/creamy.webp';
+import jazzyBg from './assets/jazzy.webp';
 
 /**
  * Quiz questions.
