@@ -6,6 +6,7 @@ import RsvpForm from './components/RsvpForm.jsx';
 import SwipeTutorial from './components/SwipeTutorial.jsx';
 import Questions from './Questions.jsx';
 import { parseInvitation } from './utils/invitation.js';
+import { saveRegistration } from './services/saveResult.js';
 
 function App() {
   const invitation = useMemo(() => parseInvitation(), []);
@@ -13,7 +14,9 @@ function App() {
   const [userData, setUserData] = useState(null);
 
   const handleRsvpSubmit = (formData) => {
-    setUserData({ ...formData, eventDate: invitation.date ?? '', guestCount: formData.guestCount ?? 0 });
+    const ud = { ...formData, eventDate: invitation.date ?? '', guestCount: formData.guestCount ?? 0 };
+    setUserData(ud);
+    saveRegistration(ud);
     setStep('quiz-intro');
   };
 
