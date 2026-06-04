@@ -15,7 +15,7 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
 
   // Full-screen flash overlay opacity + direction
   const dragAbs = Math.abs(position.x);
-  const overlayOpacity = dragAbs > 20 ? Math.min((dragAbs - 20) / 80, 0.85) : 0;
+  const overlayOpacity = dragAbs > 20 ? Math.min((dragAbs - 20) / 80, 1) : 0;
   const overlayDirection = position.x >= 0 ? 'right' : 'left';
 
   const handleStart = (clientX, clientY) => {
