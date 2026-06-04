@@ -9,11 +9,11 @@ import { parseInvitation } from './utils/invitation.js';
 
 function App() {
   const invitation = useMemo(() => parseInvitation(), []);
-  const [step, setStep] = useState(invitation.valid ? 'rsvp' : 'quiz-intro');
+  const [step, setStep] = useState(invitation.valid ? 'rsvp' : 'walk-in');
   const [userData, setUserData] = useState(null);
 
   const handleRsvpSubmit = (formData) => {
-    setUserData({ ...formData, eventDate: invitation.date, guestCount: formData.guestCount ?? 0 });
+    setUserData({ ...formData, eventDate: invitation.date ?? '', guestCount: formData.guestCount ?? 0 });
     setStep('quiz-intro');
   };
 
@@ -21,11 +21,15 @@ function App() {
   const handleTutorialReady = () => setStep('quiz');
   const handleRestart = () => {
     setUserData(null);
-    setStep(invitation.valid ? 'rsvp' : 'quiz-intro');
+    setStep(invitation.valid ? 'rsvp' : 'walk-in');
   };
 
   if (step === 'rsvp') {
     return <RsvpForm invitation={invitation} onSubmit={handleRsvpSubmit} />;
+  }
+
+  if (step === 'walk-in') {
+    return <RsvpForm walkIn onSubmit={handleRsvpSubmit} />;
   }
 
   if (step === 'quiz-intro') {

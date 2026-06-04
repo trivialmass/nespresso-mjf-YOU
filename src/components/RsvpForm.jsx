@@ -3,8 +3,8 @@ import './RsvpForm.css';
 import PoolBg from './PoolBg.jsx';
 import { rsvp, privacy } from '../../client-config/content.js';
 
-const RsvpForm = ({ invitation, onSubmit }) => {
-  const { dayLabel, concerts, maxGuests } = invitation;
+const RsvpForm = ({ invitation, walkIn, onSubmit }) => {
+  const { dayLabel, concerts, maxGuests } = invitation ?? {};
 
   const [privacyOpen, setPrivacyOpen] = useState(false);
 
@@ -12,7 +12,7 @@ const RsvpForm = ({ invitation, onSubmit }) => {
     firstName: '',
     lastName: '',
     email: '',
-    attending: null,
+    attending: walkIn ? true : null,
     guestCount: 0,
   });
   const [consent, setConsent] = useState(false);
@@ -27,7 +27,9 @@ const RsvpForm = ({ invitation, onSubmit }) => {
     onSubmit(form);
   };
 
-  const isValid = form.firstName && form.lastName && form.email && form.attending !== null && consent;
+  const isValid = walkIn
+    ? form.firstName && form.lastName && form.email && consent
+    : form.firstName && form.lastName && form.email && form.attending !== null && consent;
 
   return (
     <PoolBg overlay={false}>
@@ -64,39 +66,43 @@ const RsvpForm = ({ invitation, onSubmit }) => {
             onChange={handleChange}
             required
           />
-          <button
-            type="button"
-            className={`rsvp-radio${form.attending === true ? ' rsvp-radio--selected' : ''}`}
-            onClick={() => handleAttend(true)}
-          >
-            <span className="rsvp-radio__dot" />
-            {rsvp.attendYes}
-          </button>
-          <button
-            type="button"
-            className={`rsvp-radio${form.attending === false ? ' rsvp-radio--selected' : ''}`}
-            onClick={() => handleAttend(false)}
-          >
-            <span className="rsvp-radio__dot" />
-            {rsvp.attendNo}
-          </button>
+          {!walkIn && (
+            <>
+              <button
+                type="button"
+                className={`rsvp-radio${form.attending === true ? ' rsvp-radio--selected' : ''}`}
+                onClick={() => handleAttend(true)}
+              >
+                <span className="rsvp-radio__dot" />
+                {rsvp.attendYes}
+              </button>
+              <button
+                type="button"
+                className={`rsvp-radio${form.attending === false ? ' rsvp-radio--selected' : ''}`}
+                onClick={() => handleAttend(false)}
+              >
+                <span className="rsvp-radio__dot" />
+                {rsvp.attendNo}
+              </button>
 
-          {form.attending === true && maxGuests > 0 && (
-            <div className="rsvp-guests">
-              <p className="rsvp-guests__label">{rsvp.guestLabel}</p>
-              <div className="rsvp-guests__options">
-                {Array.from({ length: maxGuests + 1 }, (_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className={`rsvp-guests__btn${form.guestCount === i ? ' rsvp-guests__btn--selected' : ''}`}
-                    onClick={() => handleGuestCount(i)}
-                  >
-                    {i}
-                  </button>
-                ))}
-              </div>
-            </div>
+              {form.attending === true && maxGuests > 0 && (
+                <div className="rsvp-guests">
+                  <p className="rsvp-guests__label">{rsvp.guestLabel}</p>
+                  <div className="rsvp-guests__options">
+                    {Array.from({ length: maxGuests + 1 }, (_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        className={`rsvp-guests__btn${form.guestCount === i ? ' rsvp-guests__btn--selected' : ''}`}
+                        onClick={() => handleGuestCount(i)}
+                      >
+                        {i}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
 
           <div className="rsvp-privacy-disclosure">

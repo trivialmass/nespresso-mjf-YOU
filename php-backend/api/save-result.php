@@ -145,7 +145,7 @@ $stmt->execute([
 $attending = $body['attending'] ?? true; // default true for quiz-complete saves
 $isNewRow  = $stmt->rowCount() === 1;
 
-if ($isNewRow && $attending && $email) {
+if ($isNewRow && $attending && $email && in_array($eventDate, ['July 8', 'July 9'], true)) {
     $dateSlug = $eventDate === 'July 8' ? 'july_8' : 'july_9';
     $tplPath  = __DIR__ . '/../../assets/mails/confirmation_' . $dateSlug . '.html';
 
