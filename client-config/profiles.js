@@ -21,56 +21,61 @@
 
 export const PROFILES = [
   {
-    id: 'bold',
-    name: '3x In',
-    drink: 'Ice Yuzu Tonic',
-    tagline: 'Bold, fearless, all-in.',
-    description: 'Espresso meets yuzu over iced tonic, bold, unapologetic, one of a kind. You don\'t test the water. You dive in. And the pool is always warm.',
+    id: "bold",
+    name: "3x In",
+    drink: "Ice Yuzu Tonic",
+    tagline: "Bold, fearless, all-in",
+    description:
+      "Espresso meets yuzu over iced tonic. Bold, unapologetic, one of a kind. You don't test the water. You dive in. And the pool is always warm.",
     traitCombinations: [
-      ['zesty', 'creamy', 'vinyl'],     // IN IN IN
+      ["zesty", "creamy", "vinyl"], // IN IN IN
     ],
   },
   {
-    id: 'electric',
-    name: 'Zesty',
-    drink: 'Ice Yuzu Tonic',
-    tagline: 'Electric, exclusive, unexpected.',
-    description: 'Espresso meets yuzu over iced tonic, sharp, sparkling, impossible to ignore. You\'re the one who finds the unexpected twist in every night, and makes it look effortless.',
+    id: "electric",
+    name: "Zesty",
+    drink: "Ice Yuzu Tonic",
+    tagline: "Electric, exclusive, unexpected",
+    description:
+      "Espresso meets yuzu over iced tonic. Sharp, sparkling, impossible to ignore. You're the one who finds the unexpected twist in every night, and makes it look effortless.",
     traitCombinations: [
-      ['zesty', 'creamy', 'digital'],   // IN IN OUT
-      ['zesty', 'light', 'vinyl'],      // IN OUT IN
-      ['zesty', 'light', 'digital'],    // IN OUT OUT
+      ["zesty", "creamy", "digital"], // IN IN OUT
+      ["zesty", "light", "vinyl"],    // IN OUT IN
+      ["zesty", "light", "digital"],  // IN OUT OUT
     ],
   },
   {
-    id: 'pincolada',
-    name: 'Creamy',
-    drink: 'Ice Piña Colada',
-    tagline: 'Smooth, exotic, effortless.',
-    description: 'Espresso, coconut, pineapple, three islands, one cup. You make every room feel like a holiday.',
+    id: "pincolada",
+    name: "Creamy",
+    drink: "Ice Piña Colada",
+    tagline: "Smooth, exotic, effortless",
+    description:
+      "Espresso, coconut, pineapple. Three islands, one cup. You make every room feel like a holiday.",
     traitCombinations: [
-      ['mellow', 'creamy', 'vinyl'],    // OUT IN IN
-      ['mellow', 'creamy', 'digital'],  // OUT IN OUT
+      ["mellow", "creamy", "vinyl"],    // OUT IN IN
+      ["mellow", "creamy", "digital"],  // OUT IN OUT
     ],
   },
   {
-    id: 'classic',
-    name: 'Jazzy',
-    drink: 'Nespresso Martini',
-    tagline: 'Classic, refined, timeless.',
-    description: 'Under warm lights and deep basslines, you choose the essence. Espresso shaken over ice, pure, iconic, no compromise. You don\'t chase trends, you set the tone.',
+    id: "classic",
+    name: "Jazzy",
+    drink: "Nespresso Martini",
+    tagline: "Classic, refined, timeless",
+    description:
+      "Under warm lights and deep basslines, you choose the essence. Espresso shaken over ice. Pure, iconic, no compromise. You don't chase trends, you set the tone.",
     traitCombinations: [
-      ['mellow', 'light', 'vinyl'],     // OUT OUT IN
+      ["mellow", "light", "vinyl"], // OUT OUT IN
     ],
   },
   {
-    id: 'pure',
-    name: '3x Out',
-    drink: 'Nespresso Martini',
-    tagline: 'Pure, open, undefined.',
-    description: 'Espresso shaken over ice, no label needed. The best nights are the ones you didn\'t plan.',
+    id: "pure",
+    name: "3x Out",
+    drink: "Nespresso Martini",
+    tagline: "Pure, open, undefined",
+    description:
+      "Espresso shaken over ice. No label needed. The best nights are the ones you didn't plan.",
     traitCombinations: [
-      ['mellow', 'light', 'digital'],   // OUT OUT OUT
+      ["mellow", "light", "digital"], // OUT OUT OUT
     ],
   },
 ];
