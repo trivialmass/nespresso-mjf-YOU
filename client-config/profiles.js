@@ -1,5 +1,5 @@
 /**
- * Nespresso × MJF — Coffee profiles
+ * Nespresso × MJF, Coffee profiles
  *
  * traitCombinations: each entry is an array of 3 trait values [zesty/mellow, creamy/light, vinyl/digital]
  * Matching is exact (not scored): the 3 answers are sorted and joined, then looked up against sorted combos.
@@ -25,7 +25,7 @@ export const PROFILES = [
     name: '3x In',
     drink: 'Ice Yuzu Tonic',
     tagline: 'Bold, fearless, all-in.',
-    description: 'Espresso meets yuzu over iced tonic — bold, unapologetic, one of a kind. You don\'t test the water. You dive in. And the pool is always warm.',
+    description: 'Espresso meets yuzu over iced tonic, bold, unapologetic, one of a kind. You don\'t test the water. You dive in. And the pool is always warm.',
     traitCombinations: [
       ['zesty', 'creamy', 'vinyl'],     // IN IN IN
     ],
@@ -35,7 +35,7 @@ export const PROFILES = [
     name: 'Zesty',
     drink: 'Ice Yuzu Tonic',
     tagline: 'Electric, exclusive, unexpected.',
-    description: 'Espresso meets yuzu over iced tonic — sharp, sparkling, impossible to ignore. You\'re the one who finds the unexpected twist in every night — and makes it look effortless.',
+    description: 'Espresso meets yuzu over iced tonic, sharp, sparkling, impossible to ignore. You\'re the one who finds the unexpected twist in every night, and makes it look effortless.',
     traitCombinations: [
       ['zesty', 'creamy', 'digital'],   // IN IN OUT
       ['zesty', 'light', 'vinyl'],      // IN OUT IN
@@ -47,7 +47,7 @@ export const PROFILES = [
     name: 'Creamy',
     drink: 'Ice Piña Colada',
     tagline: 'Smooth, exotic, effortless.',
-    description: 'Espresso, coconut, pineapple — three islands, one cup. You make every room feel like a holiday.',
+    description: 'Espresso, coconut, pineapple, three islands, one cup. You make every room feel like a holiday.',
     traitCombinations: [
       ['mellow', 'creamy', 'vinyl'],    // OUT IN IN
       ['mellow', 'creamy', 'digital'],  // OUT IN OUT
@@ -58,7 +58,7 @@ export const PROFILES = [
     name: 'Jazzy',
     drink: 'Nespresso Martini',
     tagline: 'Classic, refined, timeless.',
-    description: 'Under warm lights and deep basslines, you choose the essence. Espresso shaken over ice — pure, iconic, no compromise. You don\'t chase trends, you set the tone.',
+    description: 'Under warm lights and deep basslines, you choose the essence. Espresso shaken over ice, pure, iconic, no compromise. You don\'t chase trends, you set the tone.',
     traitCombinations: [
       ['mellow', 'light', 'vinyl'],     // OUT OUT IN
     ],
@@ -68,7 +68,7 @@ export const PROFILES = [
     name: '3x Out',
     drink: 'Nespresso Martini',
     tagline: 'Pure, open, undefined.',
-    description: 'Espresso shaken over ice — no label needed. The best nights are the ones you didn\'t plan.',
+    description: 'Espresso shaken over ice, no label needed. The best nights are the ones you didn\'t plan.',
     traitCombinations: [
       ['mellow', 'light', 'digital'],   // OUT OUT OUT
     ],
