@@ -150,11 +150,26 @@
   color: #fff;
 }
 
-.rsvp-privacy {
-  font-size: 11px;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.5;
+.rsvp-privacy-disclosure {
   margin: 4px 0 8px;
+}
+
+.rsvp-privacy-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.rsvp-privacy {
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+  margin: 6px 0 0;
   text-align: left;
 }
 

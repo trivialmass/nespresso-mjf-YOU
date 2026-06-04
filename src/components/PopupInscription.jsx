@@ -9,6 +9,8 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
 
+    const [privacyOpen, setPrivacyOpen] = useState(false);
+
     const handleSubmit = () => {
         if (!name || !company || !email) {
             setError('Veuillez remplir tous les champs.');
@@ -62,7 +64,12 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
                     />
                 </div>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <p className="popupInformation">{privacy.notice}</p>
+                <div className="popupPrivacyDisclosure">
+                    <button type="button" className="popupPrivacyToggle" onClick={() => setPrivacyOpen(o => !o)}>
+                        Données personnelles {privacyOpen ? '▴' : '▾'}
+                    </button>
+                    {privacyOpen && <p className="popupInformation">{privacy.notice}</p>}
+                </div>
                 <div className="consentContainer">
                     <input
                         type="checkbox"

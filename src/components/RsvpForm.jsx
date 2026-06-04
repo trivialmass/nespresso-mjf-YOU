@@ -6,6 +6,8 @@ import { rsvp, privacy } from '../../client-config/content.js';
 const RsvpForm = ({ invitation, onSubmit }) => {
   const { dayLabel, concerts, maxGuests } = invitation;
 
+  const [privacyOpen, setPrivacyOpen] = useState(false);
+
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -97,7 +99,12 @@ const RsvpForm = ({ invitation, onSubmit }) => {
             </div>
           )}
 
-          <p className="rsvp-privacy">{privacy.notice}</p>
+          <div className="rsvp-privacy-disclosure">
+            <button type="button" className="rsvp-privacy-toggle" onClick={() => setPrivacyOpen(o => !o)}>
+              Données personnelles {privacyOpen ? '▴' : '▾'}
+            </button>
+            {privacyOpen && <p className="rsvp-privacy">{privacy.notice}</p>}
+          </div>
           <div className="rsvp-consent">
             <input
               type="checkbox"
