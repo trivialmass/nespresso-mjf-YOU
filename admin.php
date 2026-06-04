@@ -124,6 +124,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && !$isAuth)
     }
 }
 
+// ── Clear all entries ─────────────────────────────────────────────────────────
+if ($isAuth && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'clear_results') {
+    $pdo->exec("DELETE FROM results");
+    header('Location: /admin');
+    exit;
+}
+
 // ── CSV export ────────────────────────────────────────────────────────────────
 if ($isAuth && isset($_GET['export']) && $_GET['export'] === 'csv') {
     $rows = $pdo->query("SELECT * FROM results ORDER BY created_at DESC")->fetchAll();
@@ -411,6 +418,10 @@ function parseAnswers(string $raw): array
         </div>
 
         <a class="export-btn" href="/admin?export=csv">⬇ Exporter CSV</a>
+        <form method="POST" action="/admin" style="display:inline" onsubmit="return confirm('Supprimer toutes les entrées ? Cette action est irréversible.')">
+            <input type="hidden" name="action" value="clear_results">
+            <button type="submit" class="export-btn" style="background:#ff5555;border:none;cursor:pointer">🗑 Vider les entrées</button>
+        </form>
 
         <table>
             <thead>
