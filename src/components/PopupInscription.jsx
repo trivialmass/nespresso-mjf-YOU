@@ -66,7 +66,7 @@ function PopupInscription({ setShowPopup, setUserData, setShowPret }) {
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 <div className="popupPrivacyDisclosure">
                     <button type="button" className="popupPrivacyToggle" onClick={() => setPrivacyOpen(o => !o)}>
-                        Données personnelles {privacyOpen ? '▴' : '▾'}
+                        Personal data {privacyOpen ? '▴' : '▾'}
                     </button>
                     {privacyOpen && <p className="popupInformation">{privacy.notice}</p>}
                 </div>

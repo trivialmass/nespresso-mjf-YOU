@@ -101,7 +101,7 @@ const RsvpForm = ({ invitation, onSubmit }) => {
 
           <div className="rsvp-privacy-disclosure">
             <button type="button" className="rsvp-privacy-toggle" onClick={() => setPrivacyOpen(o => !o)}>
-              Données personnelles {privacyOpen ? '▴' : '▾'}
+              Personal data {privacyOpen ? '▴' : '▾'}
             </button>
             {privacyOpen && <p className="rsvp-privacy">{privacy.notice}</p>}
           </div>

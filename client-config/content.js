@@ -21,13 +21,14 @@ export const congratsLoading = "YOUR RESULT IS LOADING";
 export const resultsSeeYouSoon = "See you soon";
 
 export const resultsCta = {
-  replay: "REPLAY",
-  discover: "DISCOVER",
+  replay: "RETAKE THE QUIZ",
+  discover: "DISCOVER THE RECIPES",
   discoverUrl: "https://www.nespresso.com/ch/en/recipes",
 };
 
 export const privacy = {
   notice:
     "Vos données (nom, entreprise, e-mail) sont collectées par Trivial Mass pour le compte de Nespresso Suisse SA, dans le but d'organiser l'événement Nespresso × MJF et de vous envoyer votre confirmation de participation. Elles sont hébergées sur un serveur Infomaniak en Suisse, conservées jusqu'au 31 août 2026, puis supprimées. Elles ne sont ni exploitées commercialement ni transmises à des tiers. Conformément à la LPD, vous pouvez demander l'accès, la rectification ou la suppression de vos données à : contact@trivialmass.com",
-  consentLabel: "J'accepte que mes données soient utilisées dans le cadre de cet événement",
+  consentLabel:
+    "I consent to my data being used in connection with this event",
 };
