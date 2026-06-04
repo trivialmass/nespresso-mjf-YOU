@@ -11,7 +11,7 @@ $host            = getenv('DB_HOST');
 $dbName          = getenv('DB_NAME');
 $user            = getenv('DB_USER');
 $pass            = getenv('DB_PASS');
-$base_url        = 'https://nespresso-mjf.trivialmass.com';
+$base_url        = getenv('BASE_URL') ?: 'https://nespresso-mjf.trivialmass.com';
 $allowed_domains = ['trivialmass.com', 'trivialmass.ch'];
 
 if (!$host || !$dbName || !$user || $pass === false) {
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email']) && !$isAuth)
         $linkUrl = "$base_url/admin?token=$tok";
         $subject = "Votre lien d'accès Trivial YOU";
         $body    = "Bonjour,\n\nVoici votre lien d'accès (valide 15 minutes) :\n\n$linkUrl\n\nSi vous n'avez pas fait cette demande, ignorez ce message.";
-        $headers = "From: noreply@trivialmass.com\r\nContent-Type: text/plain; charset=UTF-8";
+        $headers = "From: " . (getenv('MAIL_ADMIN_FROM') ?: 'noreply@trivialmass.com') . "\r\nContent-Type: text/plain; charset=UTF-8";
         mail($email, $subject, $body, $headers);
 
         $message = '✅ Lien envoyé ! Vérifiez votre boîte mail.';

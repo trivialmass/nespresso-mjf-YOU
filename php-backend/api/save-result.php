@@ -155,8 +155,8 @@ if ($isNewRow && $attending && $email) {
 
         $headers  = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-        $headers .= "From: Nespresso x MJF <nespresso-mjf@trivialmass.com>\r\n";
-        $headers .= "Reply-To: nespresso-mjf@trivialmass.com\r\n";
+        $headers .= "From: " . (getenv('MAIL_FROM_NAME') ?: 'Nespresso x MJF') . " <" . (getenv('MAIL_FROM') ?: 'nespresso-mjf@trivialmass.com') . ">\r\n";
+        $headers .= "Reply-To: " . (getenv('MAIL_FROM') ?: 'nespresso-mjf@trivialmass.com') . "\r\n";
 
         @mail($email, '=?UTF-8?B?' . base64_encode('Your attendance is confirmed — Nespresso × MJF') . '?=', $htmlBody, $headers);
     }
