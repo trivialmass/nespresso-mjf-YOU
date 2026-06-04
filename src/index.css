@@ -5,6 +5,7 @@
 }
 
 :root {
+  color-scheme: light;
   --bg-cream:   #F1F0E3;
   --navy:       #1C2869;
   --blue-band:  #749BD1;
