@@ -160,14 +160,14 @@
   padding: 0;
   cursor: pointer;
   font-size: 10px;
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.75);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .rsvp-privacy {
   font-size: 10px;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.75);
   line-height: 1.5;
   margin: 6px 0 0;
   text-align: left;
