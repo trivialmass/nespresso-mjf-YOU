@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
+import ReactDOM from 'react-dom';
 import './QuestionCard.css';
 
 
@@ -10,15 +11,28 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
   const [startPos, setStartPos] = useState({ x: 0, y: 0 });
   const cardRef = useRef(null);
   const [disabledButton, setDisabledButton] = useState(false);
+  const velocityRef = useRef({ x: 0, lastX: 0, lastTime: 0 });
+
+  // Full-screen flash overlay opacity + direction
+  const dragAbs = Math.abs(position.x);
+  const overlayOpacity = dragAbs > 20 ? Math.min((dragAbs - 20) / 80, 0.85) : 0;
+  const overlayDirection = position.x >= 0 ? 'right' : 'left';
 
   const handleStart = (clientX, clientY) => {
     setIsDragging(true);
     setStartPos({ x: clientX - position.x, y: clientY - position.y });
+    velocityRef.current = { x: 0, lastX: clientX, lastTime: Date.now() };
   };
 
   const handleMove = (clientX, clientY) => {
     if (!isDragging) return;
-
+    const now = Date.now();
+    const dt = now - velocityRef.current.lastTime;
+    if (dt > 0) {
+      velocityRef.current.x = (clientX - velocityRef.current.lastX) / dt;
+      velocityRef.current.lastX = clientX;
+      velocityRef.current.lastTime = now;
+    }
     const newX = clientX - startPos.x;
     const newY = clientY - startPos.y;
     setPosition({ x: newX, y: newY });
@@ -30,9 +44,11 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
 
     const cardWidth = cardRef.current?.offsetWidth ?? 313;
     const threshold = cardWidth * 0.3;
+    const velocity = velocityRef.current.x;
+    const VELOCITY_THRESHOLD = 0.4; // px/ms — enables quick flick swipes
 
-    if (Math.abs(position.x) > threshold) {
-      const direction = position.x > 0 ? 'right' : 'left';
+    if (Math.abs(position.x) > threshold || Math.abs(velocity) > VELOCITY_THRESHOLD) {
+      const direction = position.x > 0 || velocity > 0 ? 'right' : 'left';
       animateSwipe(direction);
       setTimeout(() => onSwipe(direction), 800);
     } else {
@@ -121,43 +137,41 @@ const QuestionCard = forwardRef(({ question, bgImage, onSwipe, stackIndex = 0, p
   }, [resetPosition]);
 
   return (
-    <div
-      ref={cardRef}
-      className={`question-card${bgImage ? ' has-bg' : ''}${isDragging ? ' dragging' : ''}`}
-      style={{
-        '--bg-image': bgImage ? `url(${bgImage})` : 'none',
-        transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) rotate(${position.x * 0.03}deg)`,
-        zIndex: 10 - stackIndex,
-        pointerEvents: pointEvents,
-        opacity: 1,
-      }}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      {/* IN indicator — shown when dragging right */}
-      <span
-        className="swipe-indicator right"
-        style={{ opacity: position.x > 20 ? Math.min((position.x - 20) / 80, 1) : 0 }}
-      >
-        IN
-      </span>
-      {/* OUT indicator — shown when dragging left */}
-      <span
-        className="swipe-indicator left"
-        style={{ opacity: position.x < -20 ? Math.min((-position.x - 20) / 80, 1) : 0 }}
-      >
-        OUT
-      </span>
+    <>
+      {/* Full-screen flash overlay — rendered outside card via portal */}
+      {overlayOpacity > 0 && ReactDOM.createPortal(
+        <div
+          className={`swipe-flash-overlay ${overlayDirection}`}
+          style={{ opacity: overlayOpacity }}
+        >
+          {overlayDirection === 'right' ? 'IN' : 'OUT'}
+        </div>,
+        document.body
+      )}
 
-      <div className="card-content">
-        <h2>{question?.question}</h2>
+      <div
+        ref={cardRef}
+        className={`question-card${bgImage ? ' has-bg' : ''}${isDragging ? ' dragging' : ''}`}
+        style={{
+          '--bg-image': bgImage ? `url(${bgImage})` : 'none',
+          transform: `translate(calc(-50% + ${position.x}px), calc(-50% + ${position.y}px)) rotate(${position.x * 0.03}deg)`,
+          zIndex: 10 - stackIndex,
+          pointerEvents: pointEvents,
+          opacity: 1,
+        }}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="card-content">
+          <h2>{question?.question}</h2>
+        </div>
       </div>
-    </div>
+    </>
   );
 });
 

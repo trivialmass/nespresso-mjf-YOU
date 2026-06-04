@@ -50,27 +50,28 @@
   z-index: 0;
 }
 
-/* ── Swipe direction indicators ──────────────────────────────────────────── */
-.swipe-indicator {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: clamp(60px, 20vw, 90px);
-  font-weight: 700;
+/* ── Full-screen swipe flash overlay (rendered via portal on document.body) ── */
+.swipe-flash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
-  transition: opacity 0.1s;
-  white-space: nowrap;
+  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-size: clamp(80px, 25vw, 140px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 4px;
 }
 
-.swipe-indicator.right {
-  color: #a5ff02;
+.swipe-flash-overlay.right {
+  background: rgb(234, 146, 160);
 }
 
-.swipe-indicator.left {
-  color: #ff6a7b;
+.swipe-flash-overlay.left {
+  background: rgb(125, 103, 171);
 }
 
 /* ── Question text — Figma: w:284 h:237, center, white fs:48 fw:700 uppercase ── */
