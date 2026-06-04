@@ -22,6 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // ── DB config — all values must be set via environment variables ──────────
+// Load credentials.php if present (shared hosting fallback, never committed)
+$credFile = __DIR__ . '/credentials.php';
+if (file_exists($credFile)) require_once $credFile;
+
 $host = getenv('DB_HOST');
 $db   = getenv('DB_NAME');
 $user = getenv('DB_USER');
