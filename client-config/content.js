@@ -28,7 +28,7 @@ export const resultsCta = {
 
 export const privacy = {
   notice:
-    "Vos données (nom, entreprise, e-mail) sont collectées par Trivial Mass pour le compte de Nespresso Suisse SA, dans le but d'organiser l'événement Nespresso × MJF et de vous envoyer votre confirmation de participation. Elles sont hébergées sur un serveur Infomaniak en Suisse, conservées jusqu'au 31 août 2026, puis supprimées. Elles ne sont ni exploitées commercialement ni transmises à des tiers. Conformément à la LPD, vous pouvez demander l'accès, la rectification ou la suppression de vos données à : contact@trivialmass.com",
+    "Your data (last name, first name, email address) is collected by Trivial Mass SA on behalf of Nespresso Switzerland SA, for the purpose of organising the Nespresso × MJF event on 8 and 9 July 2026 and sending you your participation confirmation. It is hosted on an Infomaniak server in Switzerland, retained until 31 August 2026, then deleted. It is neither used for commercial purposes nor shared with third parties. In accordance with the FDPA, you may request access to, correction of, or deletion of your data at: contact@trivialmass.com",
   consentLabel:
     "I consent to my data being used in connection with this event",
 };
