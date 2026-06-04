@@ -7,7 +7,7 @@ import Database from "better-sqlite3";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 import cookieParser from "cookie-parser";
-import { PROFILES } from './client-config/profiles.js';
+import { PROFILES } from "./client-config/profiles.js";
 
 // Load environment variables
 dotenv.config();
@@ -52,9 +52,15 @@ db.exec(`
 `);
 
 // Migrations (safe to run on every startup)
-try { db.prepare("ALTER TABLE results ADD COLUMN phone TEXT").run(); } catch (_) {}
-try { db.prepare("ALTER TABLE results ADD COLUMN first_name TEXT").run(); } catch (_) {}
-try { db.prepare("ALTER TABLE results ADD COLUMN last_name TEXT").run(); } catch (_) {}
+try {
+  db.prepare("ALTER TABLE results ADD COLUMN phone TEXT").run();
+} catch (_) {}
+try {
+  db.prepare("ALTER TABLE results ADD COLUMN first_name TEXT").run();
+} catch (_) {}
+try {
+  db.prepare("ALTER TABLE results ADD COLUMN last_name TEXT").run();
+} catch (_) {}
 
 // Email transporter
 const transporter = nodemailer.createTransport({
@@ -83,10 +89,16 @@ app.get("/api/health", (req, res) => {
 // ── Invitation key validation ─────────────────────────────────────────────────
 
 app.get("/api/key/:token", (req, res) => {
-  const key = db.prepare("SELECT * FROM invitation_keys WHERE token = ?").get(req.params.token);
+  const key = db
+    .prepare("SELECT * FROM invitation_keys WHERE token = ?")
+    .get(req.params.token);
   if (!key) return res.json({ valid: false, reason: "invalid" });
   if (new Date(key.expires_at) < new Date()) {
-    return res.json({ valid: false, reason: "expired", expiresAt: key.expires_at });
+    return res.json({
+      valid: false,
+      reason: "expired",
+      expiresAt: key.expires_at,
+    });
   }
   return res.json({ valid: true, plusOne: !!key.plus_one });
 });
@@ -106,7 +118,9 @@ app.post("/api/admin/request-link", async (req, res) => {
   const token = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 min
 
-  db.prepare("INSERT INTO magic_links (token, email, expires_at) VALUES (?, ?, ?)").run(token, email, expiresAt);
+  db.prepare(
+    "INSERT INTO magic_links (token, email, expires_at) VALUES (?, ?, ?)",
+  ).run(token, email, expiresAt);
 
   const link = `${BASE_URL}/api/admin/verify/${token}`;
 
@@ -132,7 +146,9 @@ app.post("/api/admin/request-link", async (req, res) => {
 // Step 2: verify magic link → set session cookie → redirect to admin page
 app.get("/api/admin/verify/:token", (req, res) => {
   const { token } = req.params;
-  const link = db.prepare("SELECT * FROM magic_links WHERE token = ?").get(token);
+  const link = db
+    .prepare("SELECT * FROM magic_links WHERE token = ?")
+    .get(token);
 
   if (!link || link.used || new Date(link.expires_at) < new Date()) {
     return res.status(401).send(`
@@ -147,7 +163,9 @@ app.get("/api/admin/verify/:token", (req, res) => {
 
   const sessionToken = crypto.randomBytes(32).toString("hex");
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24h
-  db.prepare("INSERT INTO sessions (token, email, expires_at) VALUES (?, ?, ?)").run(sessionToken, link.email, expiresAt);
+  db.prepare(
+    "INSERT INTO sessions (token, email, expires_at) VALUES (?, ?, ?)",
+  ).run(sessionToken, link.email, expiresAt);
 
   res.cookie("admin_session", sessionToken, {
     httpOnly: true,
@@ -163,7 +181,9 @@ function requireSession(req, res, next) {
   const token = req.cookies?.admin_session;
   if (!token) return res.status(401).json({ error: "Not authenticated" });
 
-  const session = db.prepare("SELECT * FROM sessions WHERE token = ?").get(token);
+  const session = db
+    .prepare("SELECT * FROM sessions WHERE token = ?")
+    .get(token);
   if (!session || new Date(session.expires_at) < new Date()) {
     return res.status(401).json({ error: "Session expired" });
   }
@@ -176,14 +196,33 @@ function requireSession(req, res, next) {
 // Save quiz result to SQLite
 app.post("/api/save-result", (req, res) => {
   try {
-    const { name, first_name, last_name, company, email, phone, profile, answers } = req.body;
+    const {
+      name,
+      first_name,
+      last_name,
+      company,
+      email,
+      phone,
+      profile,
+      answers,
+    } = req.body;
     // Support both separate first/last name and legacy combined name
-    const firstName = first_name || (name ? name.split(' ')[0] : '');
-    const lastName = last_name || (name ? name.split(' ').slice(1).join(' ') : '');
+    const firstName = first_name || (name ? name.split(" ")[0] : "");
+    const lastName =
+      last_name || (name ? name.split(" ").slice(1).join(" ") : "");
     const stmt = db.prepare(
-      "INSERT INTO results (name, first_name, last_name, company, email, phone, profile, answers) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+      "INSERT INTO results (name, first_name, last_name, company, email, phone, profile, answers) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
     );
-    stmt.run(name || `${firstName} ${lastName}`.trim(), firstName, lastName, company || "", email || "", phone || "", profile ? JSON.stringify(profile) : "", JSON.stringify(answers || []));
+    stmt.run(
+      name || `${firstName} ${lastName}`.trim(),
+      firstName,
+      lastName,
+      company || "",
+      email || "",
+      phone || "",
+      profile ? JSON.stringify(profile) : "",
+      JSON.stringify(answers || []),
+    );
     res.json({ success: true });
   } catch (error) {
     console.error("Error saving result:", error);
@@ -194,7 +233,9 @@ app.post("/api/save-result", (req, res) => {
 // Protected: list all results
 app.get("/api/results", requireSession, (req, res) => {
   try {
-    const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
+    const rows = db
+      .prepare("SELECT * FROM results ORDER BY created_at DESC")
+      .all();
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch results" });
@@ -204,40 +245,62 @@ app.get("/api/results", requireSession, (req, res) => {
 // Protected: export all results as CSV
 app.get("/api/results/export", requireSession, (req, res) => {
   try {
-    const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
+    const rows = db
+      .prepare("SELECT * FROM results ORDER BY created_at DESC")
+      .all();
 
     const escape = (val) => {
-      if (val == null) return '';
+      if (val == null) return "";
       const str = String(val).replace(/"/g, '""');
       return /[",\n\r]/.test(str) ? `"${str}"` : str;
     };
 
-    const headers = ['Date', 'Prénom', 'Nom', 'Email', 'Téléphone', 'Profil', 'Réponses'];
-    const lines = [headers.join(',')];
+    const headers = [
+      "Date",
+      "Prénom",
+      "Nom",
+      "Email",
+      "Téléphone",
+      "Profil",
+      "Réponses",
+    ];
+    const lines = [headers.join(",")];
 
     for (const r of rows) {
       let profileData;
-      try { profileData = typeof r.profile === 'string' ? JSON.parse(r.profile) : r.profile; } catch { profileData = null; }
-      const profile = profileData?.drink ? `${profileData.drink} — ${profileData.tagline}` : (r.profile || '');
+      try {
+        profileData =
+          typeof r.profile === "string" ? JSON.parse(r.profile) : r.profile;
+      } catch {
+        profileData = null;
+      }
+      const profile = profileData?.drink
+        ? `${profileData.drink} — ${profileData.tagline}`
+        : r.profile || "";
 
-      const answers = JSON.parse(r.answers || '[]')
-        .map(a => `${a.question?.question || a.question}: ${a.answer}`)
-        .join(' | ');
+      const answers = JSON.parse(r.answers || "[]")
+        .map((a) => `${a.question?.question || a.question}: ${a.answer}`)
+        .join(" | ");
 
-      lines.push([
-        escape(r.created_at?.slice(0, 16).replace('T', ' ')),
-        escape(r.first_name || r.name?.split(' ')[0] || ''),
-        escape(r.last_name || r.name?.split(' ').slice(1).join(' ') || ''),
-        escape(r.email),
-        escape(r.phone),
-        escape(profile),
-        escape(answers),
-      ].join(','));
+      lines.push(
+        [
+          escape(r.created_at?.slice(0, 16).replace("T", " ")),
+          escape(r.first_name || r.name?.split(" ")[0] || ""),
+          escape(r.last_name || r.name?.split(" ").slice(1).join(" ") || ""),
+          escape(r.email),
+          escape(r.phone),
+          escape(profile),
+          escape(answers),
+        ].join(","),
+      );
     }
 
-    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-    res.setHeader('Content-Disposition', 'attachment; filename="resultats-trivial-you.csv"');
-    res.send('\uFEFF' + lines.join('\r\n')); // BOM for Excel UTF-8 compatibility
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="resultats-trivial-you.csv"',
+    );
+    res.send("\uFEFF" + lines.join("\r\n")); // BOM for Excel UTF-8 compatibility
   } catch (error) {
     res.status(500).json({ error: "Failed to export results" });
   }
@@ -249,19 +312,27 @@ app.get("/api/results/export", requireSession, (req, res) => {
  * against each profile's traitCombinations. Falls back to the last profile.
  */
 function findBestProfile(answers) {
-  const traitKey = answers.map(({ answer }) => answer).sort().join(',');
-  console.log('Trait key:', traitKey);
+  const traitKey = answers
+    .map(({ answer }) => answer)
+    .sort()
+    .join(",");
+  console.log("Trait key:", traitKey);
 
   for (const profile of PROFILES) {
     for (const combo of profile.traitCombinations) {
-      if ([...combo].sort().join(',') === traitKey) {
+      if ([...combo].sort().join(",") === traitKey) {
         console.log(`Matched profile: ${profile.id} — ${profile.drink}`);
         return profile;
       }
     }
   }
 
-  console.warn('No exact match for key:', traitKey, '— falling back to:', PROFILES[PROFILES.length - 1].id);
+  console.warn(
+    "No exact match for key:",
+    traitKey,
+    "— falling back to:",
+    PROFILES[PROFILES.length - 1].id,
+  );
   return PROFILES[PROFILES.length - 1];
 }
 
@@ -271,7 +342,9 @@ app.post("/api/generate-profile", (req, res) => {
     const { answers } = req.body;
 
     if (!answers || !Array.isArray(answers)) {
-      return res.status(400).json({ error: "Invalid request: answers array required" });
+      return res
+        .status(400)
+        .json({ error: "Invalid request: answers array required" });
     }
 
     const profile = findBestProfile(answers);
@@ -285,14 +358,18 @@ app.post("/api/generate-profile", (req, res) => {
     });
   } catch (error) {
     console.error("Error in generate-profile endpoint:", error);
-    res.status(500).json({ error: "Failed to generate profile", message: error.message });
+    res
+      .status(500)
+      .json({ error: "Failed to generate profile", message: error.message });
   }
 });
 
 // Admin page
 app.get("/admin", (req, res) => {
   const session = req.cookies?.admin_session
-    ? db.prepare("SELECT * FROM sessions WHERE token = ?").get(req.cookies.admin_session)
+    ? db
+        .prepare("SELECT * FROM sessions WHERE token = ?")
+        .get(req.cookies.admin_session)
     : null;
   const isAuth = session && new Date(session.expires_at) > new Date();
 
@@ -329,66 +406,80 @@ async function requestLink() {
 </script></body></html>`);
   }
 
-  const rows = db.prepare("SELECT * FROM results ORDER BY created_at DESC").all();
+  const rows = db
+    .prepare("SELECT * FROM results ORDER BY created_at DESC")
+    .all();
 
   const parseProfile = (raw) => {
     if (!raw) return null;
     try {
-      const p = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      const p = typeof raw === "string" ? JSON.parse(raw) : raw;
       // handle double-stringified
-      return typeof p === 'string' ? JSON.parse(p) : p;
-    } catch { return null; }
+      return typeof p === "string" ? JSON.parse(p) : p;
+    } catch {
+      return null;
+    }
   };
 
   const parseAnswers = (raw) => {
-    try { return JSON.parse(raw || '[]'); } catch { return []; }
+    try {
+      return JSON.parse(raw || "[]");
+    } catch {
+      return [];
+    }
   };
 
   const DRINK_COLORS = {
-    'Ice Yuzu Tonic':   '#a5ff02',
-    'Ice Piña Colada':  '#ffcc00',
-    'Nespresso Martini':'#c084fc',
+    "Ice Yuzu Tonic": "#a5ff02",
+    "Ice Pina Colada": "#ffcc00",
+    "Nespresso Martini": "#c084fc",
   };
 
   // Stats per drink
   const stats = {};
-  rows.forEach(r => {
+  rows.forEach((r) => {
     const p = parseProfile(r.profile);
-    const drink = p?.drink || 'Inconnu';
+    const drink = p?.drink || "Inconnu";
     stats[drink] = (stats[drink] || 0) + 1;
   });
 
-  const statsHtml = Object.entries(stats).map(([drink, count]) => {
-    const color = DRINK_COLORS[drink] || '#888';
-    return `<span style="background:${color};color:#000;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;margin-right:8px">${count} × ${drink}</span>`;
-  }).join('');
+  const statsHtml = Object.entries(stats)
+    .map(([drink, count]) => {
+      const color = DRINK_COLORS[drink] || "#888";
+      return `<span style="background:${color};color:#000;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;margin-right:8px">${count} × ${drink}</span>`;
+    })
+    .join("");
 
-  const tableRows = rows.map(r => {
-    const profile = parseProfile(r.profile);
-    const answers = parseAnswers(r.answers);
-    const drink = profile?.drink || '';
-    const color = DRINK_COLORS[drink] || '#555';
+  const tableRows = rows
+    .map((r) => {
+      const profile = parseProfile(r.profile);
+      const answers = parseAnswers(r.answers);
+      const drink = profile?.drink || "";
+      const color = DRINK_COLORS[drink] || "#555";
 
-    const profileHtml = drink
-      ? `<span style="background:${color};color:#000;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;white-space:nowrap">${drink}</span><br><span style="color:#999;font-size:11px">${profile.tagline || ''}</span>`
-      : `<span style="color:#555">—</span>`;
+      const profileHtml = drink
+        ? `<span style="background:${color};color:#000;padding:3px 10px;border-radius:12px;font-size:12px;font-weight:700;white-space:nowrap">${drink}</span><br><span style="color:#999;font-size:11px">${profile.tagline || ""}</span>`
+        : `<span style="color:#555">—</span>`;
 
-    const answersHtml = answers.map(a => {
-      const q = a.question?.question || a.question || '';
-      const label = typeof q === 'string' ? q.replace('?','').trim() : '';
-      return `<span style="display:inline-block;background:#1e1e1e;border:1px solid #333;border-radius:6px;padding:2px 8px;font-size:11px;margin:2px 2px 2px 0;white-space:nowrap"><b>${label}</b> → ${a.answer}</span>`;
-    }).join('');
+      const answersHtml = answers
+        .map((a) => {
+          const q = a.question?.question || a.question || "";
+          const label = typeof q === "string" ? q.replace("?", "").trim() : "";
+          return `<span style="display:inline-block;background:#1e1e1e;border:1px solid #333;border-radius:6px;padding:2px 8px;font-size:11px;margin:2px 2px 2px 0;white-space:nowrap"><b>${label}</b> → ${a.answer}</span>`;
+        })
+        .join("");
 
-    return `<tr>
-      <td style="white-space:nowrap;color:#aaa;font-size:12px">${r.created_at?.slice(0,16).replace('T',' ')}</td>
-      <td style="color:#ccc">${r.first_name || r.name?.split(' ')[0] || ''}</td>
-      <td style="color:#ccc">${r.last_name || r.name?.split(' ').slice(1).join(' ') || ''}</td>
-      <td style="color:#ccc">${r.email || ''}</td>
-      <td style="color:#ccc">${r.phone || ''}</td>
+      return `<tr>
+      <td style="white-space:nowrap;color:#aaa;font-size:12px">${r.created_at?.slice(0, 16).replace("T", " ")}</td>
+      <td style="color:#ccc">${r.first_name || r.name?.split(" ")[0] || ""}</td>
+      <td style="color:#ccc">${r.last_name || r.name?.split(" ").slice(1).join(" ") || ""}</td>
+      <td style="color:#ccc">${r.email || ""}</td>
+      <td style="color:#ccc">${r.phone || ""}</td>
       <td>${profileHtml}</td>
       <td>${answersHtml}</td>
     </tr>`;
-  }).join('');
+    })
+    .join("");
 
   res.send(`<!DOCTYPE html>
 <html lang="fr"><head><meta charset="UTF-8"><title>Résultats — Trivial YOU</title>
@@ -407,7 +498,7 @@ async function requestLink() {
 </style></head>
 <body>
   <h1>Résultats du quiz</h1>
-  <p class="meta">${rows.length} participant${rows.length !== 1 ? 's' : ''} · ${session.email}</p>
+  <p class="meta">${rows.length} participant${rows.length !== 1 ? "s" : ""} · ${session.email}</p>
   <div class="stats">${statsHtml || '<span style="color:#555">Aucun résultat.</span>'}</div>
   <a class="export-btn" href="/api/results/export">⬇ Exporter CSV</a>
   <table>
