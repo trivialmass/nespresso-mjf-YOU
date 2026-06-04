@@ -10,11 +10,13 @@ const Results = ({ profile, onReplay }) => (
       {/* White card — Figma: left:30 top:54 w:327 h:631 br:32 */}
       <div className="results-card">
 
-        {/* Drink photo — top 298px of card */}
-        {profile?.image
-          ? <img src={profile.image} alt={profile.drink} className="results-card__photo" />
-          : <div className="results-card__photo results-card__photo--placeholder" />
-        }
+        {/* Drink photo */}
+        <div className="results-card__photo-wrap">
+          {profile?.image
+            ? <img src={profile.image} alt={profile.drink} className="results-card__photo" />
+            : <div className="results-card__photo--placeholder" />
+          }
+        </div>
 
         {/* Drink name + tagline — card-relative top:325 left:20 w:284 */}
         <div className="results-card__title-block">
