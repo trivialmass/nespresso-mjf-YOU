@@ -22,7 +22,8 @@
 export const PROFILES = [
   {
     id: 'bold',
-    drink: '3x In, Ice Yuzu Tonic',
+    name: '3x In',
+    drink: 'Ice Yuzu Tonic',
     tagline: 'Bold, fearless, all-in.',
     description: 'Espresso meets yuzu over iced tonic — bold, unapologetic, one of a kind. You don\'t test the water. You dive in. And the pool is always warm.',
     traitCombinations: [
@@ -31,7 +32,8 @@ export const PROFILES = [
   },
   {
     id: 'electric',
-    drink: 'Zesty, Ice Yuzu Tonic',
+    name: 'Zesty',
+    drink: 'Ice Yuzu Tonic',
     tagline: 'Electric, exclusive, unexpected.',
     description: 'Espresso meets yuzu over iced tonic — sharp, sparkling, impossible to ignore. You\'re the one who finds the unexpected twist in every night — and makes it look effortless.',
     traitCombinations: [
@@ -42,7 +44,8 @@ export const PROFILES = [
   },
   {
     id: 'pincolada',
-    drink: 'Creamy, Ice Piña Colada',
+    name: 'Creamy',
+    drink: 'Ice Piña Colada',
     tagline: 'Smooth, exotic, effortless.',
     description: 'Espresso, coconut, pineapple — three islands, one cup. You make every room feel like a holiday.',
     traitCombinations: [
@@ -52,7 +55,8 @@ export const PROFILES = [
   },
   {
     id: 'classic',
-    drink: 'Jazzy, Nespresso Martini',
+    name: 'Jazzy',
+    drink: 'Nespresso Martini',
     tagline: 'Classic, refined, timeless.',
     description: 'Under warm lights and deep basslines, you choose the essence. Espresso shaken over ice — pure, iconic, no compromise. You don\'t chase trends, you set the tone.',
     traitCombinations: [
@@ -61,7 +65,8 @@ export const PROFILES = [
   },
   {
     id: 'pure',
-    drink: '3x Out, Nespresso Martini',
+    name: '3x Out',
+    drink: 'Nespresso Martini',
     tagline: 'Pure, open, undefined.',
     description: 'Espresso shaken over ice — no label needed. The best nights are the ones you didn\'t plan.',
     traitCombinations: [
