@@ -1,6 +1,6 @@
 import zestyBg from './assets/zesty.png';
 import creamyBg from './assets/creamy.png';
-import vinylBg from './assets/vinyl.png';
+import jazzyBg from './assets/jazzy.jpg';
 
 /**
  * Quiz questions.
@@ -9,7 +9,7 @@ import vinylBg from './assets/vinyl.png';
  *
  * Q1: ZESTY?  → right: zesty  / left: mellow
  * Q2: CREAMY? → right: creamy / left: light
- * Q3: VINYL?  → right: vinyl  / left: digital
+ * Q3: JAZZY?  → right: vinyl  / left: digital
  */
 export const mockQuestions = [
   {
@@ -25,9 +25,9 @@ export const mockQuestions = [
     bgImage: creamyBg,
   },
   {
-    question: 'VINYL?',
+    question: 'JAZZY?',
     traitRight: 'vinyl',
     traitLeft: 'digital',
-    bgImage: vinylBg,
+    bgImage: jazzyBg,
   },
 ];
