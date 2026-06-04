@@ -160,14 +160,14 @@
   padding: 0;
   cursor: pointer;
   font-size: 10px;
-  color: rgba(255,255,255,0.75);
+  color: #1C2869;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .rsvp-privacy {
   font-size: 10px;
-  color: rgba(255,255,255,0.75);
+  color: #1C2869;
   line-height: 1.5;
   margin: 6px 0 0;
   text-align: left;
@@ -178,7 +178,7 @@
   align-items: flex-start;
   gap: 8px;
   margin-bottom: 12px;
-}
+  color: #1C2869;}
 
 .rsvp-consent input[type="checkbox"] {
   margin-top: 2px;
@@ -187,7 +187,7 @@
 
 .rsvp-consent label {
   font-size: 12px;
-  color: #fff;
+  color:#1C2869;
   line-height: 1.4;
   cursor: pointer;
 }
