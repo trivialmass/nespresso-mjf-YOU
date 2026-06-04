@@ -102,7 +102,7 @@
     cursor: pointer;
     font-family: Helvetica;
     font-size: 10px;
-    color: rgba(28,40,105,0.5);
+    color: #1C2869;
     letter-spacing: 0.05em;
     text-transform: uppercase;
 }
@@ -112,7 +112,7 @@
     font-weight: 400;
     font-size: 10px;
     line-height: 150%;
-    color: rgba(28,40,105,0.6);
+    color: #1C2869;
     margin: 6px 0 0;
 }
 
