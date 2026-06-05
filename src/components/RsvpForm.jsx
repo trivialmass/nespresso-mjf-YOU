@@ -109,7 +109,11 @@ const RsvpForm = ({ invitation, walkIn, onSubmit }) => {
             <button type="button" className="rsvp-privacy-toggle" onClick={() => setPrivacyOpen(o => !o)}>
               Personal data {privacyOpen ? '▴' : '▾'}
             </button>
-            {privacyOpen && <p className="rsvp-privacy">{privacy.notice}</p>}
+            {privacyOpen && (
+              <p className="rsvp-privacy">
+                {privacy.notice.replace('our privacy policy.', '')}<a href={privacy.legalUrl} target="_blank" rel="noopener noreferrer">our privacy policy</a>.
+              </p>
+            )}
           </div>
           <div className="rsvp-consent">
             <input
