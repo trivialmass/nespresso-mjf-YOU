@@ -71,15 +71,13 @@ $pdo->exec("ALTER TABLE results ADD COLUMN IF NOT EXISTS event_date  VARCHAR(20)
 $pdo->exec("ALTER TABLE results ADD COLUMN IF NOT EXISTS guest_count TINYINT      DEFAULT 0");
 
 // Unique index on (email, event_date) enables upsert: quiz completion updates the RSVP row
-// Remove junk rows with empty email before creating the unique index
-$pdo->exec("DELETE FROM results WHERE email = '' OR email IS NULL");
 try {
     $pdo->exec("
         CREATE UNIQUE INDEX IF NOT EXISTS idx_email_event
         ON results (email(191), event_date)
     ");
 } catch (PDOException $e) {
-    // Index likely already exists — safe to ignore
+    // Index already exists — safe to ignore
 }
 
 // ── Parse body ─────────────────────────────────────────────────────────────
