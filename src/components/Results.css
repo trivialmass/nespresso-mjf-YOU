@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow-y: auto;
   padding: 6.40% 7.69% 5%;  /* top=54/844, sides=30/390 */
   box-sizing: border-box;
