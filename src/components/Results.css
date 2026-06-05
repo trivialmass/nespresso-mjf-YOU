@@ -28,7 +28,7 @@
 .results-card__photo-wrap {
   width: 100%;
   aspect-ratio: 327 / 298;
-  max-height: 36vh;
+  max-height: 20vh;
   overflow: hidden;
   flex-shrink: 0;
 }
