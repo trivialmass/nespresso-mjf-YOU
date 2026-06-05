@@ -1,0 +1,13 @@
+{
+  "id": "session-1780667156774",
+  "startedAt": "2026-06-05T13:45:56.774Z",
+  "cwd": "/Users/leonardm/Documents/Projets/TrivialQuizz/nespresso-mjf-YOU",
+  "context": {},
+  "metrics": {
+    "edits": 1,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  },
+  "restoredAt": "2026-06-05T13:55:51.277Z"
+}

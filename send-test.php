@@ -3,7 +3,9 @@
 require_once __DIR__ . '/php-backend/api/credentials.php';
 require_once __DIR__ . '/php-backend/lib/sendMail.php';
 
-$to = 'janissa@trivialmass.com';
+$to = filter_input(INPUT_GET, 'to', FILTER_VALIDATE_EMAIL) ?: 'leonard@trivialmass.com';
+$tplFilter = $_GET['tpl'] ?? null;
+
 $templates = [
     'invitation_o_july_8' => '[TEST] Invitation O — July 8',
     'invitation_o_july_9' => '[TEST] Invitation O — July 9',
@@ -15,6 +17,10 @@ $templates = [
     'confirmation_july_9' => '[TEST] Confirmation — July 9',
 ];
 
+if ($tplFilter && isset($templates[$tplFilter])) {
+    $templates = [$tplFilter => $templates[$tplFilter]];
+}
+
 $results = [];
 foreach ($templates as $tpl => $subject) {
     $path = __DIR__ . '/assets/mails/' . $tpl . '.html';
@@ -25,6 +31,7 @@ foreach ($templates as $tpl => $subject) {
     $body = file_get_contents($path);
     $ok = sendMail($to, $subject, $body);
     $results[$tpl] = $ok ? 'OK' : 'FAILED';
+    sleep(2);
 }
 
 header('Content-Type: text/plain');
