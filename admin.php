@@ -50,11 +50,13 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS results (
     email       VARCHAR(255),
     phone       VARCHAR(50),
     event_date  VARCHAR(50),
-    guest_count INT DEFAULT 0,
+    guest_count INT       DEFAULT 0,
+    attending   TINYINT(1) DEFAULT 1,
     profile     TEXT,
     answers     TEXT,
     created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
+try { $pdo->exec("ALTER TABLE results ADD COLUMN attending TINYINT(1) DEFAULT 1"); } catch (PDOException $e) {}
 
 // ── Session check ─────────────────────────────────────────────────────────────
 $isAuth       = false;
@@ -137,7 +139,7 @@ if ($isAuth && isset($_GET['export']) && $_GET['export'] === 'csv') {
     $esc  = fn($v) => '"' . str_replace('"', '""', $v) . '"';
 
     $lines   = [];
-    $lines[] = implode(',', array_map($esc, ['Date', 'Prénom', 'Nom', 'Email', 'Tél.', 'Date événement', 'Invités', 'Profil', 'Réponses']));
+    $lines[] = implode(',', array_map($esc, ['Date', 'Prénom', 'Nom', 'Email', 'Tél.', 'Date événement', 'Présence', 'Invités', 'Profil', 'Réponses']));
 
     foreach ($rows as $r) {
         $profile = '';
@@ -160,6 +162,7 @@ if ($isAuth && isset($_GET['export']) && $_GET['export'] === 'csv') {
             $r['email']      ?? '',
             $r['phone']      ?? '',
             $r['event_date'] ?? '',
+            ($r['attending'] ?? 1) ? 'Oui' : 'Non',
             $r['guest_count'] ?? '0',
             $profile,
             $answers,
@@ -408,7 +411,11 @@ function parseAnswers(string $raw): array
     ?>
 
         <h1>Résultats du quiz</h1>
-        <p class="meta"><?= count($rows) ?> participant<?= count($rows) !== 1 ? 's' : '' ?> · <?= htmlspecialchars($sessionEmail) ?></p>
+        <?php
+            $attending_yes = count(array_filter($rows, fn($r) => ($r['attending'] ?? 1) == 1));
+            $attending_no  = count($rows) - $attending_yes;
+        ?>
+        <p class="meta"><?= count($rows) ?> participant<?= count($rows) !== 1 ? 's' : '' ?> · <?= $attending_yes ?> présent<?= $attending_yes !== 1 ? 's' : '' ?> · <?= $attending_no ?> absent<?= $attending_no !== 1 ? 's' : '' ?> · <?= htmlspecialchars($sessionEmail) ?></p>
 
         <div class="stats">
             <?php foreach ($stats as $drink => $count):
@@ -432,6 +439,7 @@ function parseAnswers(string $raw): array
                     <th>Email</th>
                     <th>Tél.</th>
                     <th>Événement</th>
+                    <th>Présence</th>
                     <th>Invités</th>
                     <th>Profil</th>
                     <th>Réponses</th>
@@ -457,6 +465,7 @@ function parseAnswers(string $raw): array
                             <td style="color:#ccc"><?= htmlspecialchars($r['email'] ?? '') ?></td>
                             <td style="color:#ccc"><?= htmlspecialchars($r['phone'] ?? '') ?></td>
                             <td style="color:#ccc;white-space:nowrap"><?= htmlspecialchars($r['event_date'] ?? '') ?></td>
+                            <td style="text-align:center"><?= ($r['attending'] ?? 1) ? '<span style="color:#a5ff02">✓</span>' : '<span style="color:#ff5555">✗</span>' ?></td>
                             <td style="color:#ccc;text-align:center"><?= (int)($r['guest_count'] ?? 0) ?></td>
                             <td><?php if ($drink): ?>
                                     <span class="profile-badge" style="background:<?= $color ?>"><?= htmlspecialchars($drink) ?></span><br>

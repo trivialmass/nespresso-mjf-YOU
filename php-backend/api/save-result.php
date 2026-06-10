@@ -67,13 +67,16 @@ $pdo->exec("
 ");
 
 // Add columns for existing tables that predate this migration
-$pdo->exec("ALTER TABLE results ADD COLUMN IF NOT EXISTS event_date  VARCHAR(20)  DEFAULT ''");
-$pdo->exec("ALTER TABLE results ADD COLUMN IF NOT EXISTS guest_count TINYINT      DEFAULT 0");
+// Wrapped in try/catch: MySQL doesn't support ADD COLUMN IF NOT EXISTS (MariaDB-only)
+try { $pdo->exec("ALTER TABLE results ADD COLUMN event_date  VARCHAR(20) DEFAULT ''"); } catch (PDOException $e) {}
+try { $pdo->exec("ALTER TABLE results ADD COLUMN guest_count TINYINT     DEFAULT 0");  } catch (PDOException $e) {}
+try { $pdo->exec("ALTER TABLE results ADD COLUMN attending   TINYINT(1)  DEFAULT 1");  } catch (PDOException $e) {}
 
 // Unique index on (email, event_date) enables upsert: quiz completion updates the RSVP row
+// No IF NOT EXISTS here — MySQL < 8.0.29 doesn't support it; the catch handles "already exists"
 try {
     $pdo->exec("
-        CREATE UNIQUE INDEX IF NOT EXISTS idx_email_event
+        CREATE UNIQUE INDEX idx_email_event
         ON results (email(191), event_date)
     ");
 } catch (PDOException $e) {
@@ -119,11 +122,12 @@ $answers   = isset($body['answers'])
     : '[]';
 
 $stmt = $pdo->prepare("
-    INSERT INTO results (name, first_name, last_name, company, email, phone, event_date, guest_count, profile, answers)
-    VALUES (:name, :first_name, :last_name, :company, :email, :phone, :event_date, :guest_count, :profile, :answers)
+    INSERT INTO results (name, first_name, last_name, company, email, phone, event_date, guest_count, attending, profile, answers)
+    VALUES (:name, :first_name, :last_name, :company, :email, :phone, :event_date, :guest_count, :attending, :profile, :answers)
     ON DUPLICATE KEY UPDATE
-        profile = IF(VALUES(profile) != '', VALUES(profile), profile),
-        answers = IF(VALUES(answers) != '' AND VALUES(answers) != '[]', VALUES(answers), answers)
+        attending = VALUES(attending),
+        profile = IF(profile != '' AND profile IS NOT NULL, profile, VALUES(profile)),
+        answers = IF(answers != '' AND answers != '[]' AND answers IS NOT NULL, answers, VALUES(answers))
 ");
 $stmt->execute([
     'name'        => $name,
@@ -134,13 +138,14 @@ $stmt->execute([
     'phone'       => $phone,
     'event_date'  => $eventDate,
     'guest_count' => $guestCount,
+    'attending'   => $attending ? 1 : 0,
     'profile'     => $profile,
     'answers'     => $answers,
 ]);
 
 // ── Confirmation email (only on first save = INSERT, not on quiz upsert) ───────
 // rowCount() == 1 → INSERT, 2 → ON DUPLICATE KEY UPDATE, 0 → no change
-$attending = $body['attending'] ?? true; // default true for quiz-complete saves
+$attending = isset($body['attending']) ? (bool)$body['attending'] : true; // default true for quiz-complete saves
 $isNewRow  = $stmt->rowCount() === 1;
 
 if ($isNewRow && $attending && $email && in_array($eventDate, ['July 8', 'July 9'], true)) {

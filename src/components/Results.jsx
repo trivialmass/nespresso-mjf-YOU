@@ -18,30 +18,28 @@ const Results = ({ profile, onReplay }) => (
           }
         </div>
 
-        {/* Drink name + tagline — card-relative top:325 left:20 w:284 */}
         <div className="results-card__title-block">
           <h1 className="results-card__drink-name">{profile?.drink}</h1>
           <p className="results-card__tagline">{profile?.tagline}</p>
         </div>
 
-        {/* Description — card-relative top:415 left:20 w:284 */}
         <p className="results-card__description">{profile?.description}</p>
 
       </div>
 
       {/* CTAs — replay + discover */}
       <div className="results-cta-row">
-        <button className="results-cta results-cta--ghost" onClick={onReplay}>
-          {resultsCta.replay}
-        </button>
         <a
-          className="results-cta results-cta--pink"
+          className="btn btn--primary results-cta"
           href={resultsCta.discoverUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
           {resultsCta.discover}
         </a>
+        <button className="btn btn--ghost results-cta" onClick={onReplay}>
+          {resultsCta.replay}
+        </button>
       </div>
 
       {/* Nespresso × MJF logo — Figma: left:168 top:748 (centered) */}

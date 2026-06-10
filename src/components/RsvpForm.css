@@ -10,7 +10,7 @@
 }
 
 .rsvp-title {
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: 34px;
   font-weight: 700;
   color: var(--navy);
@@ -73,31 +73,9 @@
   background: var(--navy);
 }
 
-/* CONFIRM button — Figma: w:285 h:60 br:50 bg:#C93772 */
+/* CONFIRM button layout — styling comes from .btn .btn--primary .btn--full */
 .rsvp-cta {
-  display: block;
-  width: 100%;
-  height: 60px;
   margin-top: 16px;
-  background: var(--pink-cta);
-  color: #fff;
-  border: none;
-  border-radius: 50px;
-  font-size: 26px;
-  font-family: Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.rsvp-cta:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.rsvp-cta:not(:disabled):hover {
-  opacity: 0.88;
 }
 
 /* Date + concerts label under heading */

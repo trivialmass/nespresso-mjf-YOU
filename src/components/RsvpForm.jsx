@@ -125,7 +125,7 @@ const RsvpForm = ({ invitation, walkIn, onSubmit }) => {
             <label htmlFor="rsvp-consent">{privacy.consentLabel}</label>
           </div>
 
-          <button className="rsvp-cta" type="submit" disabled={!isValid}>
+          <button className="btn btn--primary btn--full rsvp-cta" type="submit" disabled={!isValid}>
             {rsvp.ctaLabel}
           </button>
         </form>

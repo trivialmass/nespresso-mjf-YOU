@@ -1,18 +1,15 @@
-/*
- * Results screen — flex column layout so card grows with content
- */
-
+/* results-frame — layout only, pool-bg__content handles scroll */
 .results-frame {
-  position: absolute;
-  inset: 0;
+  width: 100%;
+  min-height: 100%;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: auto;
-  padding: 6.40% 7.69% 5%;  /* top=54/844, sides=30/390 */
-  box-sizing: border-box;
   gap: 16px;
+  padding: 16px 4%;
+  box-sizing: border-box;
 }
 
 /* ── White card ──────────────────────────────────────────────────────── */
@@ -25,11 +22,10 @@
   flex-direction: column;
 }
 
-/* ── Drink photo — fixed aspect ratio top section ─────────────────────── */
+/* ── Drink photo ─────────────────────────────────────────────────────── */
 .results-card__photo-wrap {
   width: 100%;
   aspect-ratio: 327 / 298;
-  max-height: 20vh;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -38,7 +34,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center -20px;
+  object-position: center;
   display: block;
 }
 
@@ -50,39 +46,37 @@
 
 /* ── Title block ─────────────────────────────────────────────────────── */
 .results-card__title-block {
-  padding: 16px 6.12% 0;
+  padding: 16px 6% 0;
   text-align: center;
 }
 
-/* Drink name */
 .results-card__drink-name {
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(22px, 8.2vw, 32px);
   font-weight: 700;
   color: var(--navy);
   text-transform: uppercase;
-  line-height: 28px;
+  line-height: 1.2;
   margin: 0;
 }
 
-/* Tagline */
 .results-card__tagline {
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(12px, 4.1vw, 16px);
   font-weight: 700;
   color: var(--navy);
-  line-height: 28px;
+  line-height: 1.4;
   margin: 0;
 }
 
 /* ── Description ─────────────────────────────────────────────────────── */
 .results-card__description {
-  padding: 8px 6.12% 20px;
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  padding: 8px 6% 20px;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(12px, 4.1vw, 16px);
   font-weight: 700;
   color: var(--navy);
-  line-height: 28px;
+  line-height: 1.4;
   text-align: center;
   margin: 0;
 }
@@ -91,38 +85,23 @@
 .results-cta-row {
   width: 100%;
   display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
   gap: 10px;
-  flex-shrink: 0;
 }
 
 .results-cta {
-  flex: 1;
-  height: 48px;
-  padding: 0 20px;
-  border-radius: 100px;
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-size: clamp(12px, 4vw, 18px);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1 1 140px;
+  color: #fff;
+  white-space: nowrap;
 }
 
-.results-cta--ghost {
-  background: transparent;
-  border: 2px solid #fff;
-  color: #fff;
-}
-
-.results-cta--pink {
-  background: var(--pink-cta);
-  border: none;
-  color: #fff;
+@media (max-width: 600px) {
+  .results-cta {
+    height: 44px;
+    padding: 0 10px;
+    font-size: clamp(13px, 3.8vw, 15px);
+  }
 }
 
 /* ── Logo ────────────────────────────────────────────────────────────── */

@@ -1,42 +1,42 @@
-/* Quiz intro screen — Figma frame 4, fluid viewport layout */
+/* Quiz intro screen — scroll container */
 .quiz-intro-page {
-  position: fixed;
   inset: 0;
   background: var(--bg-cream);
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin: 0 auto;
+  height: 100dvh;
 }
 
-/* Constrains absolute-positioned content to 440px, centered in the cream bg */
+/* Content column — layout only, page handles scroll */
 .quiz-intro-inner {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: min(100%, 440px);
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100%;
+  min-height: 100%;
+  flex-shrink: 0;
+  max-width: 440px;
+  display: flex;
+  gap: 18px;
+  padding: 24px 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
-/*
- * All positions are expressed as % of Figma frame (390×844):
- *   horizontal %  = px / 390 * 100
- *   vertical   %  = px / 844 * 100
- */
-
-/* Text block — heading + body flow together from Figma top:196 */
+/* Text block — heading + body, sits at top of the flex column */
 .quiz-intro-text-block {
-  position: absolute;
-  left: 7.44%;    /* 29/390 */
-  top: 23.22%;   /* 196/844 */
-  width: 84.87%; /* 331/390 */
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(16px, 6.15vw, 24px); /* Figma gap between heading and body: 24px */
+  gap: clamp(16px, 6.15vw, 24px);
 }
 
 /* Heading — Figma: fs:42 fw:700 uppercase lh:44 */
 .quiz-intro-heading {
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(28px, 10.8vw, 42px);
   font-weight: 700;
   color: var(--navy);
@@ -48,7 +48,7 @@
 
 /* Body text — Figma: fs:22 fw:700 uppercase lh:30 */
 .quiz-intro-body-text {
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(16px, 5.6vw, 22px);
   font-weight: 700;
   color: var(--navy);
@@ -59,43 +59,11 @@
   word-wrap: break-word;
 }
 
-/* CTA — Figma: left:29 top:587 w:331 h:60, br:50, shadow, fs:24 */
+/* CTA layout — styling comes from .btn .btn--primary .btn--full */
 .quiz-intro-cta {
-  position: absolute;
-  left: 7.44%;    /* 29/390 */
-  top: 69.55%;   /* 587/844 */
-  width: 84.87%; /* 331/390 */
-  height: 60px;
-  background: var(--pink-cta);
-  box-shadow: 3px 3px 14px rgba(0, 0, 0, 0.25);
-  border-radius: 50px;
-  border: none;
-  color: #fff;
-  font-size: clamp(18px, 6.2vw, 24px);
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  transition: opacity 0.15s;
 }
 
-.quiz-intro-cta:hover {
-  opacity: 0.88;
-}
-
-.quiz-intro-cta:focus {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
-}
-
-.quiz-intro-cta:active {
-  opacity: 0.75;
-}
-
-/* Nespresso × MJF logo mark — Figma: left:168 top:748 → centered horizontally */
+/* Nespresso × MJF logo mark — centered by flex parent, spaced from CTA */
 .quiz-intro-logo {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 88.63%; /* 748/844 */
+  margin-top: clamp(16px, 12dvh, 101px);
 }

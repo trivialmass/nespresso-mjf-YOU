@@ -1,0 +1,131 @@
+X-Unsent: 1
+Subject: Your attendance is confirmed - Nespresso x Montreux Jazz Festival, Wed 8 July
+MIME-Version: 1.0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light only" />
+  <meta name="supported-color-schemes" content="light only" />
+  <title>Your attendance is confirmed &mdash; Nespresso &times; Montreux Jazz Festival</title>
+  <style type="text/css">
+    @font-face {
+      font-family: 'ICONESSODisplay';
+      src: url('https://nespresso-mjf.trivialmass.com/assets/mails/ICONESSODisplay-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'ICONESSODisplay';
+      src: url('https://nespresso-mjf.trivialmass.com/assets/mails/ICONESSODisplay-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    body, table, td, a { -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+    table, td { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+    img { -ms-interpolation-mode:bicubic; border:0; outline:none; text-decoration:none; }
+    body { margin:0; padding:0; background-color:#749BD1; }
+    :root { color-scheme: light only; }
+    @media (prefers-color-scheme: dark) {
+      body, .mail-outer  { background-color:#749BD1 !important; }
+      .mail-white        { background-color:#FFFFFF !important; color:#1C2869 !important; }
+      .mail-text         { color:#1C2869 !important; }
+    }
+    [data-ogsc] .mail-white { background-color:#FFFFFF !important; color:#1C2869 !important; }
+    [data-ogsc] .mail-text  { color:#1C2869 !important; }
+  </style>
+</head>
+<body bgcolor="#749BD1" style="margin:0;padding:0;background-color:#749BD1;">
+
+  <div style="display:none;max-height:0;overflow:hidden;color:#749BD1;font-size:1px;">
+    Your attendance is confirmed &mdash; Nespresso Terrasse, Montreux Jazz Festival
+  </div>
+
+  <table cellpadding="0" cellspacing="0" border="0" width="100%" role="presentation">
+    <tr>
+      <td align="center" style="padding:0;">
+        <table cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px;" role="presentation">
+
+          <!-- ROW 0: Top banner (JPG) -->
+          <tr>
+            <td width="600" bgcolor="#749BD1" style="padding:0;font-size:0;line-height:0;background-color:#749BD1;">
+              <img src="https://nespresso-mjf.trivialmass.com/assets/mails/bg.gif" width="600" height="150" alt="Nespresso Terrasse — Montreux Jazz Festival" style="display:block;width:100%;max-width:600px;height:auto;border:0;" />
+            </td>
+          </tr>
+
+          <!-- PERSONAL badge -->
+          <tr>
+            <td bgcolor="#FFFFFF" align="center" class="mail-white" style="background-color:#FFFFFF;padding:20px 79px 0;font-family:'ICONESSODisplay','Arial Black',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#1C2869;text-align:center;">
+              PERSONAL
+            </td>
+          </tr>
+
+          <!-- Invitation image -->
+          <tr>
+            <td bgcolor="#FFFFFF" align="center" class="mail-white" style="background-color:#FFFFFF;padding:12px 79px 0;">
+              <img src="https://nespresso-mjf.trivialmass.com/assets/mails/invitation.png" width="300" height="36" alt="INVITATION" style="display:block;width:300px;max-width:100%;height:auto;border:0;" />
+            </td>
+          </tr>
+
+          <!-- MJF title -->
+          <tr>
+            <td bgcolor="#FFFFFF" align="center" class="mail-white" style="background-color:#FFFFFF;padding:10px 79px 24px;font-family:'ICONESSODisplay','Arial Black',sans-serif;font-size:20px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#1C2869;text-align:center;line-height:28px;">
+              MONTREUX JAZZ FESTIVAL
+            </td>
+          </tr>
+
+          <!-- Confirmation body -->
+          <tr>
+            <td bgcolor="#FFFFFF" class="mail-white" style="background-color:#FFFFFF;padding:0 79px 40px;font-family:'ICONESSODisplay','Arial',sans-serif;font-size:14px;font-weight:400;line-height:22px;color:#1C2869;text-align:center;">
+
+              <p style="margin:0 0 20px 0;">Dear &laquo;First_Name&raquo;,</p>
+
+              <p style="margin:0 0 20px 0;">
+                We are thrilled to confirm your place at our VIP evening<br />
+                on the Nespresso Terrasse at the Montreux Jazz Festival.
+              </p>
+
+              <p style="margin:0 0 20px 0;font-size:19px;line-height:28px;font-weight:700;font-family:'ICONESSODisplay','Arial Black',sans-serif;text-transform:uppercase;letter-spacing:1px;">
+                Wednesday July 8<sup style="font-size:10px;line-height:0;vertical-align:super;mso-text-raise:4pt;">th</sup>&nbsp;at&nbsp;17:00
+              </p>
+
+              <p style="margin:0 0 20px 0;">
+                In the coming weeks, you will receive all the details<br />
+                you need to make the most of your evening.
+              </p>
+
+              <p style="margin:0 0 20px 0;">We very much look forward to welcoming you.</p>
+
+              <p style="margin:0 0 20px 0;">
+                Warm regards,<br />
+                <strong>The Nespresso Team</strong>
+              </p>
+
+              <p style="margin:0;font-size:12px;color:#749BD1;">
+                For any questions, please don&rsquo;t hesitate to reach out at<br />
+                <a href="mailto:nespresso-mjf@trivialmass.com" style="color:#1C2869;">nespresso-mjf@trivialmass.com</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- ROW 6: Bottom banner (animated GIF) -->
+          <tr>
+            <td width="600" bgcolor="#749BD1" style="padding:0;font-size:0;line-height:0;background-color:#749BD1;">
+              <img src="https://nespresso-mjf.trivialmass.com/assets/mails/bg-bottom.gif" width="600" height="150" alt="Nespresso — Pool Universe" style="display:block;width:100%;max-width:600px;height:auto;border:0;" />
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

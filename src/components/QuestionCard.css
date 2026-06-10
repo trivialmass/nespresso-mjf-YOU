@@ -59,7 +59,7 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(80px, 25vw, 140px);
   font-weight: 700;
   color: #fff;
@@ -88,7 +88,7 @@
 }
 
 .card-content h2 {
-  font-family: 'Gustavo_Display_Nespresso_Test', Georgia, serif;
+  font-family: 'ICONESSODisplay', Georgia, serif;
   font-size: clamp(14px, 8vw, 36px);
   font-weight: 700;
   color: #fff;

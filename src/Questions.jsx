@@ -7,7 +7,7 @@ import { mockQuestions } from '../client-config/questions.js';
 import { generateProfile } from './services/llmProfile';
 import './Questions.css';
 
-function Questions(userData) {
+function Questions({ userData, onRestart }) {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleIndexes, setVisibleIndexes] = useState([0, 1]);

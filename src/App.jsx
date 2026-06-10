@@ -43,7 +43,7 @@ function App() {
             <h1 className="quiz-intro-heading">{quizIntro.heading}</h1>
             <p className="quiz-intro-body-text">{quizIntro.body}</p>
           </div>
-          <button className="quiz-intro-cta" onClick={handleStartQuiz}>
+          <button className="btn btn--primary btn--full quiz-intro-cta" onClick={handleStartQuiz}>
             {quizIntro.ctaLabel}
           </button>
           <div className="quiz-intro-logo" aria-label="Nespresso × MJF">
