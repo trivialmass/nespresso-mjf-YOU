@@ -5,3 +5,4 @@ dist/
 results.db
 php-backend/.htpasswd
 audit/php-backend/api/credentials.php
+php-backend/api/credentials.php
