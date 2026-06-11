@@ -137,7 +137,7 @@ class XlsxWriter
              . '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
              . '<Default Extension="xml" ContentType="application/xml"/>'
              . '<Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'
-             . '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.stylesheet+xml"/>';
+             . '<Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>';
         for ($i = 1; $i <= $n; $i++) {
             $cts .= '<Override PartName="/xl/worksheets/sheet' . $i . '.xml"'
                   . ' ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>';
