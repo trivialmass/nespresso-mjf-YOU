@@ -133,46 +133,10 @@ if ($isAuth && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) 
     exit;
 }
 
-// ── CSV export ────────────────────────────────────────────────────────────────
-if ($isAuth && isset($_GET['export']) && $_GET['export'] === 'csv') {
-    $rows = $pdo->query("SELECT * FROM results ORDER BY created_at DESC")->fetchAll();
-    $esc  = fn($v) => '"' . str_replace('"', '""', $v) . '"';
-
-    $lines   = [];
-    $lines[] = implode(',', array_map($esc, ['Date', 'Prénom', 'Nom', 'Email', 'Tél.', 'Date événement', 'Présence', 'Invités', 'Profil', 'Réponses']));
-
-    foreach ($rows as $r) {
-        $profile = '';
-        if ($r['profile']) {
-            $p = json_decode($r['profile'], true);
-            if (is_string($p)) $p = json_decode($p, true);
-            $profile = $p['drink'] ?? '';
-        }
-        $answers = '';
-        try {
-            $ans     = json_decode($r['answers'] ?? '[]', true);
-            $answers = implode(' | ', array_map(fn($a) => ($a['question']['question'] ?? $a['question'] ?? '') . ' → ' . ($a['answer'] ?? ''), $ans));
-        } catch (Exception $e) {
-        }
-
-        $lines[] = implode(',', array_map($esc, [
-            substr($r['created_at'] ?? '', 0, 16),
-            $r['first_name'] ?? explode(' ', $r['name'] ?? '')[0] ?? '',
-            $r['last_name']  ?? implode(' ', array_slice(explode(' ', $r['name'] ?? ''), 1)) ?? '',
-            $r['email']      ?? '',
-            $r['phone']      ?? '',
-            $r['event_date'] ?? '',
-            ($r['attending'] ?? 1) ? 'Oui' : 'Non',
-            $r['guest_count'] ?? '0',
-            $profile,
-            $answers,
-        ]));
-    }
-
-    header('Content-Type: text/csv; charset=utf-8');
-    header('Content-Disposition: attachment; filename="resultats-trivial-you.csv"');
-    echo "\xEF\xBB\xBF" . implode("\r\n", $lines);
-    exit;
+// ── XLSX export ───────────────────────────────────────────────────────────────
+if ($isAuth && isset($_GET['export']) && $_GET['export'] === 'xlsx') {
+    require_once __DIR__ . '/php-backend/lib/export.php';
+    exportXlsx($pdo);
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -424,7 +388,7 @@ function parseAnswers(string $raw): array
             <?php endforeach; ?>
         </div>
 
-        <a class="export-btn" href="/admin?export=csv">⬇ Exporter CSV</a>
+        <a class="export-btn" href="/admin?export=xlsx">⬇ Exporter Excel</a>
         <form method="POST" action="/admin" style="display:inline" onsubmit="return confirm('Supprimer toutes les entrées ? Cette action est irréversible.')">
             <input type="hidden" name="action" value="clear_results">
             <button type="submit" class="export-btn" style="background:#ff5555;border:none;cursor:pointer">🗑 Vider les entrées</button>
