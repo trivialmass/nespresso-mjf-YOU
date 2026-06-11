@@ -83,6 +83,15 @@ try {
     // Index already exists — safe to ignore
 }
 
+// ── Rate limiting — max 100 new rows per hour globally (event has ~200 expected registrations)
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM results WHERE created_at > DATE_SUB(NOW(), INTERVAL 1 HOUR)");
+$stmt->execute();
+if ((int)$stmt->fetchColumn() >= 100) {
+    http_response_code(429);
+    echo json_encode(['error' => 'Too many requests']);
+    exit;
+}
+
 // ── Parse body ─────────────────────────────────────────────────────────────
 $body = json_decode(file_get_contents('php://input'), true);
 if (!$body) {
@@ -91,14 +100,21 @@ if (!$body) {
     exit;
 }
 
-$firstName = $body['first_name'] ?? '';
-$lastName  = $body['last_name']  ?? '';
-$name      = $body['name']       ?? trim("$firstName $lastName");
-$company   = $body['company']    ?? '';
-$email     = $body['email']      ?? '';
-$phone     = $body['phone']      ?? '';
+$firstName = substr($body['first_name'] ?? '', 0, 100);
+$lastName  = substr($body['last_name']  ?? '', 0, 100);
+$name      = substr($body['name']       ?? trim("$firstName $lastName"), 0, 200);
+$company   = substr($body['company']    ?? '', 0, 200);
+$email     = substr($body['email']      ?? '', 0, 254);
+$phone     = substr($body['phone']      ?? '', 0, 50);
 $eventDate  = $body['event_date']  ?? '';
 $guestCount = isset($body['guest_count']) ? (int)$body['guest_count'] : 0;
+
+// Validate email
+if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Invalid email']);
+    exit;
+}
 
 // Validate event_date against known event dates
 if ($eventDate !== '' && !in_array($eventDate, ['July 8', 'July 9'], true)) {
@@ -115,11 +131,12 @@ if ($guestCount < 0 || $guestCount > 2) {
 }
 
 $profile   = isset($body['profile'])
-    ? (is_string($body['profile']) ? $body['profile'] : json_encode($body['profile']))
+    ? substr(is_string($body['profile']) ? $body['profile'] : json_encode($body['profile']), 0, 4096)
     : '';
 $answers   = isset($body['answers'])
-    ? (is_string($body['answers']) ? $body['answers'] : json_encode($body['answers']))
+    ? substr(is_string($body['answers']) ? $body['answers'] : json_encode($body['answers']), 0, 8192)
     : '[]';
+$attending = ($body['attending'] === true || $body['attending'] === 1);
 
 $stmt = $pdo->prepare("
     INSERT INTO results (name, first_name, last_name, company, email, phone, event_date, guest_count, attending, profile, answers)
@@ -145,7 +162,6 @@ $stmt->execute([
 
 // ── Confirmation email (only on first save = INSERT, not on quiz upsert) ───────
 // rowCount() == 1 → INSERT, 2 → ON DUPLICATE KEY UPDATE, 0 → no change
-$attending = isset($body['attending']) ? (bool)$body['attending'] : true; // default true for quiz-complete saves
 $isNewRow  = $stmt->rowCount() === 1;
 
 if ($isNewRow && $attending && $email && in_array($eventDate, ['July 8', 'July 9'], true)) {
