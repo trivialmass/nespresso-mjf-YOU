@@ -1,16 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import './App.css';
 import { logoGame } from '../client-config/brand.js';
-import { quizIntro } from '../client-config/content.js';
+import { quizIntro, registrationClosed } from '../client-config/content.js';
 import RsvpForm from './components/RsvpForm.jsx';
 import SwipeTutorial from './components/SwipeTutorial.jsx';
 import Questions from './Questions.jsx';
 import { parseInvitation } from './utils/invitation.js';
+import { isRegistrationClosed } from './utils/registrationCutoff.js';
 import { saveRegistration } from './services/saveResult.js';
 
 function App() {
   const invitation = useMemo(() => parseInvitation(), []);
-  const [step, setStep] = useState(invitation.valid ? 'rsvp' : 'walk-in');
+  const closed = useMemo(() => isRegistrationClosed(invitation.date), [invitation.date]);
+  const [step, setStep] = useState(closed ? 'closed' : (invitation.valid ? 'rsvp' : 'walk-in'));
   const [userData, setUserData] = useState(null);
 
   const handleRsvpSubmit = (formData) => {
@@ -26,6 +28,19 @@ function App() {
     setUserData(null);
     setStep(invitation.valid ? 'rsvp' : 'walk-in');
   };
+
+  if (step === 'closed') {
+    return (
+      <div className="quiz-intro-page">
+        <div className="quiz-intro-inner">
+          <div className="quiz-intro-text-block">
+            <h1 className="quiz-intro-heading">{registrationClosed.heading}</h1>
+            <p className="quiz-intro-body-text">{registrationClosed.body}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (step === 'rsvp') {
     return <RsvpForm invitation={invitation} onSubmit={handleRsvpSubmit} />;

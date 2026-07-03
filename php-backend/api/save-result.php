@@ -109,6 +109,18 @@ $phone     = substr($body['phone']      ?? '', 0, 50);
 $eventDate  = $body['event_date']  ?? '';
 $guestCount = isset($body['guest_count']) ? (int)$body['guest_count'] : 0;
 
+// Registration for the July 9 event closes 2026-07-03 17:00 Europe/Zurich.
+// July 8 and walk-in have no cutoff.
+if ($eventDate === 'July 9') {
+    $tz     = new DateTimeZone('Europe/Zurich');
+    $cutoff = new DateTime('2026-07-03 15:00:00', $tz);
+    if (new DateTime('now', $tz) >= $cutoff) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Registration is now closed. We look forward to seeing you at the Nespresso Pool Bar.']);
+        exit;
+    }
+}
+
 // Validate email
 if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);

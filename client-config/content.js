@@ -10,6 +10,11 @@ export const rsvp = {
   ctaLabel: "CONFIRM",
 };
 
+export const registrationClosed = {
+  heading: "Registration is now closed",
+  body: "We look forward to seeing you at the Nespresso Pool Bar.",
+};
+
 export const quizIntro = {
   heading: "What's your summer blend?",
   body: "Three questions.\nOne signature recipe.\nAttending or not?\nYour summer blend\nis yours to keep.",
