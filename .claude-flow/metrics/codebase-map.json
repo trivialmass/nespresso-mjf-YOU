@@ -1,0 +1,11 @@
+{
+  "timestamp": "2026-08-13T15:18:17.828Z",
+  "projectRoot": "/Users/leonardm/Documents/Projets/TrivialQuizz/nespresso-mjf-YOU",
+  "structure": {
+    "hasPackageJson": true,
+    "hasTsConfig": false,
+    "hasClaudeConfig": true,
+    "hasClaudeFlow": true
+  },
+  "scannedAt": 1786634297828
+}
